@@ -2,6 +2,9 @@
 data/
 ressources/
 
+Chapter1_Introduction/
+**/lectures/
+
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[cod]
