@@ -1,11 +1,6 @@
-data/
-logs/
-models/
 .vscode/
-settings.json
-launch.json
-tasks.json
-.benchmarks/
+data/
+ressources/
 
 # Byte-compiled / optimized / DLL files
 __pycache__/
