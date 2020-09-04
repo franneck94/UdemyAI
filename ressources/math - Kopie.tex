@@ -1,0 +1,14 @@
+\documentclass{article}
+
+\usepackage{tikz}
+\usetikzlibrary{automata,positioning}
+\begin{document}
+
+\begin{flushleft}
+(1) Apply $Epsilon-Greedy$ to get an action $a$ \\
+(2) Collect $(s, a) \rightarrow (r, s')$ for the replay buffer \\
+(3) Train the Neural Network with samples from the replay buffer \\
+(4) Every $N$ steps: $\hat{Q_{s, a}} = Q_{s, a}$
+\end{flushleft}
+
+\end{document}
