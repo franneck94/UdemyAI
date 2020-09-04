@@ -1,9 +1,9 @@
 .vscode/
 data/
 ressources/
-
 Chapter1_Introduction/
 **/lectures/
+*.png
 
 # Byte-compiled / optimized / DLL files
 __pycache__/
