@@ -63,7 +63,7 @@ def save_map(values, name="test.png"):
     fig.savefig("./" + name)
 
 
-def plotting_fn_q_values(state, action, values, ax):
+def plotting_q_values(state, action, values, ax):
     mat = np.full((4, 4), 1)
     mat[1][3] = 0
     mat[2][3] = 0

@@ -35,7 +35,7 @@ class Agent:
         self.batch_size = 32
         self.sync_models = 10000
         self.save_models = 100
-        self.path = os.path.abspath("C:/Users/Jan/Dropbox/_Programmieren/UdemyAIKurs/data")
+        self.path = os.path.abspath("C:/Users/Jan/Dropbox/_Programmieren/UdemyAI/data")
         self.load = False
         if self.load:
             self.model.load_model(self.path)
@@ -70,7 +70,7 @@ class Agent:
                     mean_reward = np.mean(total_rewards[-5:])
                     print("Mean Reward: ", mean_reward)
                     if mean_reward > 490:
-                        self.model.save_model("C:/Users/Jan/Dropbox/_Programmieren/UdemyAIKurs/data/dqn_cartpole.h5")
+                        self.model.save_model("C:/Users/Jan/Dropbox/_Programmieren/UdemyAI/data/dqn_cartpole.h5")
                         return
                     self.target_model.update_model(self.model)
                     print("Episode: ", episode + 1, " Total Reward: ", total_reward, " Epsilon: ", self.epsilon)
@@ -105,7 +105,7 @@ class Agent:
         self.model.train(states, q_values)
 
     def play(self, num_episodes, render=True):
-        self.model.load_model("C:/Users/Jan/Dropbox/_Programmieren/UdemyAIKurs/data/dqn_cartpole.h5")
+        self.model.load_model("C:/Users/Jan/Dropbox/_Programmieren/UdemyAI/data/dqn_cartpole.h5")
         for episode in range(num_episodes):
             state = self.env.reset()
             state = np.reshape(state, (1, state.shape[0]))

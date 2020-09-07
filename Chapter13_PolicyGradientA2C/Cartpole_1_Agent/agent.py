@@ -2,7 +2,7 @@ import gym
 import numpy as np
 import matplotlib.pyplot as plt
 
-from nn import *
+from nn import NN
 
 
 class Agent:

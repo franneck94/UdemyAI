@@ -1,8 +1,8 @@
-from keras.layers import *
-from keras.models import *
-from keras.optimizers import *
+from keras.layers import Activation, Dense
+from keras.models import Sequential
+from keras.optimizers import Adam
 
-from mnistData import *
+from mnistData import MNIST
 
 
 mnist_data = MNIST()

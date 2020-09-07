@@ -3,10 +3,10 @@ import math
 import gym
 import matplotlib.pyplot as plt
 import numpy as np
-from keras.layers import *
-from keras.models import *
-from keras.optimizers import *
-from keras.utils import *
+from keras.layers import Activation, Dense
+from keras.models import Sequential
+from keras.optimizers import Adam
+from keras.utils import to_categorical
 
 
 def reward_func(state, action):
@@ -109,7 +109,7 @@ class Agent:
             reward_means.append(reward_mean)
             if reward_mean > 500:
                 break
-        self.model.save("C:/Users/Jan/Dropbox/_Programmieren/UdemyAIKurs/data/NN_mountain.hd5")
+        self.model.save("C:/Users/Jan/Dropbox/_Programmieren/UdemyAI/data/NN_mountain.hd5")
         return reward_means, reward_bounds
 
     # "Testing" of the Agent

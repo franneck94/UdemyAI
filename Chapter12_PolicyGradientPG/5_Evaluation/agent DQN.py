@@ -1,16 +1,11 @@
-import random
 import collections
+import random
 
 import gym
-import numpy as np
 import matplotlib.pyplot as plt
+import numpy as np
 
-from keras.models import *
-from keras.layers import *
-from keras.optimizers import *
-from keras.utils import *
-
-from dqn import *
+from dqn import DQN
 
 
 class Agent:
@@ -64,7 +59,7 @@ class Agent:
                     mean_reward = np.mean(total_rewards[-5:])
                     print("Mean Reward: ", mean_reward)
                     if mean_reward > 490:
-                        self.model.save_model("C:/Users/Jan/Dropbox/_Programmieren/UdemyAIKurs/data/dqn_cartpole.h5")
+                        self.model.save_model("C:/Users/Jan/Dropbox/_Programmieren/UdemyAI/data/dqn_cartpole.h5")
                         return total_rewards
                     self.target_model.update_model(self.model)
                     print("Episode: ", episode + 1, " Total Reward: ", total_reward, " Epsilon: ", self.epsilon)
@@ -100,7 +95,7 @@ class Agent:
         self.model.train(states, q_values)
 
     def play(self, num_episodes, render=True):
-        self.model.load_model("C:/Users/Jan/Dropbox/_Programmieren/UdemyAIKurs/data/dqn_cartpole.h5")
+        self.model.load_model("C:/Users/Jan/Dropbox/_Programmieren/UdemyAI/data/dqn_cartpole.h5")
         for episode in range(num_episodes):
             state = self.env.reset()
             state = np.reshape(state, (1, state.shape[0]))

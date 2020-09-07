@@ -1,10 +1,10 @@
-import random
 import collections
+import random
 
 import gym
 import numpy as np
 
-from mountainCarDqn import *
+from mountainCarDqn import DQN
 
 
 class Agent:
@@ -67,7 +67,7 @@ class Agent:
                           " Total Reward: ", total_reward,
                           " Epsilon: ", round(self.epsilon, 3))
                     if total_reward > best_total_reward:
-                        self.model.save_model("C:/Users/Jan/Dropbox/_Programmieren/UdemyAIKurs/data/dqn_mountaincar.h5")
+                        self.model.save_model("C:/Users/Jan/Dropbox/_Programmieren/UdemyAI/data/dqn_mountaincar.h5")
                         best_total_reward = total_reward
                         print("NEW BEST REWARD: ", best_total_reward)
                     break
@@ -101,7 +101,7 @@ class Agent:
         self.model.train(states, q_values)
 
     def play(self, num_episodes, render=True):
-        self.model.load_model("C:/Users/Jan/Dropbox/_Programmieren/UdemyAIKurs/data/dqn_mountaincar.h5")
+        self.model.load_model("C:/Users/Jan/Dropbox/_Programmieren/UdemyAI/data/dqn_mountaincar.h5")
         for episode in range(num_episodes):
             state = self.env.reset()
             state = np.reshape(state, (1, state.shape[0]))

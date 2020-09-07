@@ -1,5 +1,3 @@
-#### Abfragen und Logik in Python ####
-
 bin_ich_pleite = None
 bin_ich_reich = None
 

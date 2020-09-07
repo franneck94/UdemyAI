@@ -1,6 +1,6 @@
-from keras.models import *
-from keras.layers import *
-from keras.optimizers import *
+from keras.layers import Activation, Dense, Input
+from keras.models import Model
+from keras.optimizers import Adam
 
 
 class DQN(Model):

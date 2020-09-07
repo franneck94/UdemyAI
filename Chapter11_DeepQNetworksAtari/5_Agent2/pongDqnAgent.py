@@ -1,7 +1,7 @@
-import os
-import time
-import random
 import collections
+import os
+import random
+import time
 
 import numpy as np
 
@@ -35,7 +35,7 @@ class Agent:
         self.batch_size = 32
         self.sync_models = 10000
         self.save_models = 100
-        self.path = os.path.abspath("C:/Users/Jan/Dropbox/_Programmieren/UdemyAIKurs/data/")
+        self.path = os.path.abspath("C:/Users/Jan/Dropbox/_Programmieren/UdemyAI/data/")
         self.path_model = os.path.join(self.path, "dqn_pong.h5")
         self.path_target_model = os.path.join(self.path, "dqn_target_pong.h5")
         self.load = False

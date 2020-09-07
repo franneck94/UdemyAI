@@ -1,12 +1,7 @@
 import gym
 import numpy as np
 
-from keras.models import *
-from keras.layers import *
-from keras.optimizers import *
-from keras.utils import *
-
-from dqn import *
+from dqn import DQN
 
 
 class Agent:

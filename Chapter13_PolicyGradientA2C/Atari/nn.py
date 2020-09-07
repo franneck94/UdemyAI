@@ -1,12 +1,6 @@
-import gym
-import numpy as np
-import matplotlib.pyplot as plt
-import collections
-
-from keras.models import *
-from keras.layers import *
-from keras.layers import *
-from keras.optimizers import *
+from keras.layers import Activation, Conv2D, Dense, Flatten, Input
+from keras.models import Model
+from keras.optimizers import Adam
 
 
 class NN(Model):

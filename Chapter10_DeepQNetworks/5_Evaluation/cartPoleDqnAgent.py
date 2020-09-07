@@ -4,7 +4,7 @@ import collections
 import gym
 import numpy as np
 
-from cartPoleDqn import *
+from cartPoleDqn import DQN
 
 
 class Agent:
@@ -87,6 +87,7 @@ class Agent:
 
     def play(self, num_episodes, render=True):
         for episode in range(num_episodes):
+            total_reward = 0
             state = self.env.reset()
             state = np.reshape(state, (1, state.shape[0]))
             while True:

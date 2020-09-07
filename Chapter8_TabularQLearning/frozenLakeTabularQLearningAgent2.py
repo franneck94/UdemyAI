@@ -1,10 +1,8 @@
-import collections
-
 import gym
 import matplotlib.pyplot as plt
 import numpy as np
 
-from plotting import *
+from plotting import plotting_fn
 
 
 class Agent:

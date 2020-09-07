@@ -1,8 +1,13 @@
-from keras.models import *
-from keras.layers import *
-from keras.optimizers import *
-
-import tensorflow as tf
+from keras.layers import (
+    Activation,
+    Conv2D,
+    Dense,
+    GlobalAveragePooling2D,
+    Input
+)
+from keras.models import Model
+from keras.optimizers import Adam
+from keras.losses import Huber
 
 
 class DQN(Model):
@@ -12,7 +17,7 @@ class DQN(Model):
         self.num_actions = num_actions
         self.lr = lr
         self.model = self.build_model()
-        self.loss = tf.losses.Huber()
+        self.loss = Huber()
         self.model.compile(loss=self.loss, optimizer=Adam(lr=self.lr))
 
     def build_model(self):

@@ -2,7 +2,7 @@ import gym
 import numpy as np
 import matplotlib.pyplot as plt
 
-from nn import *
+from nn import NN
 
 
 class Agent:
@@ -61,15 +61,14 @@ class Agent:
                     total_rewards.append(total_reward)
                     mean_total_rewards = np.mean(total_rewards[-min(len(total_rewards), 10):])
 
-                    print("Episode: ", episode+1,
-                        " Total Reward: ", total_reward,
-                        " Mean: ", mean_total_rewards)
-                    
+                    print("Episode: ", episode + 1,
+                          " Total Reward: ", total_reward,
+                          " Mean: ", mean_total_rewards)
+
                     if mean_total_rewards >= 495.0:
                         return total_rewards
                     break
         return total_rewards
-
 
     def play(self, num_episodes, render=True):
         for episode in range(num_episodes):
@@ -82,6 +81,7 @@ class Agent:
                 state, reward, done, _ = self.env.step(action)
                 if done:
                     break
+
 
 if __name__ == "__main__":
     env = gym.make("CartPole-v1")

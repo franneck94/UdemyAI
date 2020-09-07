@@ -1,10 +1,10 @@
 import gym
 import matplotlib.pyplot as plt
 import numpy as np
-from keras.layers import *
-from keras.models import *
-from keras.optimizers import *
-from keras.utils import *
+from keras.layers import Activation, Dense
+from keras.models import Sequential
+from keras.optimizers import Adam
+from keras.utils import to_categorical
 
 
 class Agent:

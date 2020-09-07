@@ -1,14 +1,14 @@
-import random
 import collections
+import random
 
 import gym
-import numpy as np
 import matplotlib.pyplot as plt
-
+import numpy as np
 from keras.utils import to_categorical
 
-from frozenLakeDqn import *
-from plotting import *
+from plotting import plotting_q_values, save_map
+from frozenLakeDqn import DQN
+
 
 class Agent:
     def __init__(self, env):
@@ -62,7 +62,7 @@ class Agent:
                     last_rewards.append(total_reward)
                     last_rewards_mean = np.mean(last_rewards)
                     if last_rewards_mean == 0.9:
-                        self.model.save_model("C:/Users/Jan/Dropbox/_Programmieren/UdemyAIKurs/Data/dqn_frozenlake.h5")
+                        self.model.save_model("C:/Users/Jan/Dropbox/_Programmieren/UdemyAI/Data/dqn_frozenlake.h5")
                         return
                     break
 
@@ -95,7 +95,7 @@ class Agent:
         self.model.train(states, q_values)
 
     def play(self, num_episodes, render=True):
-        self.model.load_model("C:/Users/Jan/Dropbox/_Programmieren/UdemyAIKurs/Data/dqn_frozenlake.h5")
+        self.model.load_model("C:/Users/Jan/Dropbox/_Programmieren/UdemyAI/Data/dqn_frozenlake.h5")
         fig, ax = plt.subplots(figsize=(10, 10))
         states = np.array(
             [to_categorical(i, num_classes=self.observations).reshape(1, -1) 

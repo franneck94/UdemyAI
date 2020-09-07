@@ -1,10 +1,8 @@
-import matplotlib.pyplot as plt
-import numpy as np
-from keras.layers import *
-from keras.models import *
-from keras.optimizers import *
+from keras.layers import Activation, Conv2D, Dense, Flatten, MaxPooling2D
+from keras.models import Sequential
+from keras.optimizers import Adam
 
-from mnistData import *
+from mnistData import MNIST
 
 
 mnist_data = MNIST()

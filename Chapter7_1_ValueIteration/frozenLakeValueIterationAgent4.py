@@ -2,7 +2,7 @@ import gym
 import matplotlib.pyplot as plt
 import numpy as np
 
-from plotting import *
+from plotting import plotting_q_values, save_map
 
 
 class Agent:

@@ -1,10 +1,8 @@
-import collections
-
 import gym
 import matplotlib.pyplot as plt
 import numpy as np
 
-from plotting import *
+from plotting import plotting_fn
 
 
 class Agent:
@@ -59,7 +57,7 @@ class Agent:
                 break
 
     def test(self, num_episodes):
-        env = gym.make("FrozenLake-v0")
+        self.env = gym.make("FrozenLake-v0")
         sum_rewards = 0.0
         for episode in range(num_episodes):
             state = self.env.reset()

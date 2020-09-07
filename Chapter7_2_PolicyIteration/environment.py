@@ -1,13 +1,13 @@
 import os
 import time
-
 import tkinter as tk
 from tkinter import Button
 
 import numpy as np
-from PIL import ImageTk, Image
+from PIL import Image, ImageTk
 
-PROJECT_PATH = os.path.abspath("C:/Users/Jan/Dropbox/_Programmieren/UdemyAIKurs")
+
+PROJECT_PATH = os.path.abspath("C:/Users/Jan/Dropbox/_Programmieren/UdemyAI")
 PATH = os.path.join(PROJECT_PATH, "Chapter7_2_PolicyIteration")
 
 PhotoImage = ImageTk.PhotoImage

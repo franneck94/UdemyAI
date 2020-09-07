@@ -1,5 +1,3 @@
-#### Dicts in Python ####
-
 # key: value
 noten_klasse_8a = {"armin": 1, "ben": 2, "jan": 1}
 

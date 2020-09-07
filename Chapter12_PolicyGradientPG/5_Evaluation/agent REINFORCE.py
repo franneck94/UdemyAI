@@ -1,13 +1,8 @@
 import gym
-import numpy as np
 import matplotlib.pyplot as plt
+import numpy as np
 
-from keras.models import *
-from keras.layers import *
-from keras.optimizers import *
-from keras.utils import *
-
-from nn import *
+from nn import NN
 
 
 class Agent:

@@ -1,7 +1,5 @@
-import numpy as np
 from keras.datasets import mnist
-from keras.preprocessing.image import ImageDataGenerator
-from keras.utils import *
+from keras.utils import to_categorical
 
 
 class MNIST:
