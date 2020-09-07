@@ -4,13 +4,14 @@ import collections
 import gym
 import numpy as np
 import matplotlib.pyplot as plt
-    
+
 from keras.models import *
 from keras.layers import *
 from keras.optimizers import *
 from keras.utils import *
 
 from dqn import *
+
 
 class Agent:
     def __init__(self, env):
@@ -28,14 +29,14 @@ class Agent:
     def train(self, num_episodes):
 
         for episode in range(num_episodes):
-            
+
             while True:
-                
+
                 if done:
                     pass
 
     def play(self, num_episodes, render=True):
-        
+
         for episode in range(num_episodes):
 
             while True:
@@ -44,6 +45,7 @@ class Agent:
                     self.env.render()
                 if done:
                     break
+
 
 if __name__ == "__main__":
     env = gym.make("CartPole-v1")

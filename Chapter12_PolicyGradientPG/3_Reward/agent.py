@@ -4,13 +4,14 @@ import collections
 import gym
 import numpy as np
 import matplotlib.pyplot as plt
-    
+
 from keras.models import *
 from keras.layers import *
 from keras.optimizers import *
 from keras.utils import *
 
 from dqn import *
+
 
 class Agent:
     def __init__(self, env):
@@ -21,7 +22,7 @@ class Agent:
         self.learning_rate = 1e-2
         self.model = DQN(self.num_observations, self.num_actions, self.learning_rate)
         self.states, self.actions, self.rewards = [], [], []
- 
+
     def get_action(self, state):
         policy = self.model.predict(state)[0]
         action = np.random.choice(self.num_actions, p=policy)
@@ -46,20 +47,21 @@ class Agent:
         self.rewards.append(reward)
 
     def train(self, num_episodes):
-        
+
         for episode in range(num_episodes):
-            
+
             while True:
-                
+
                 if done:
 
     def play(self, num_episodes):
-        
+
         for episode in range(num_episodes):
-            
+
             while True:
-                
+
                 if done:
+
 
 if __name__ == "__main__":
     env = gym.make("CartPole-v1")

@@ -1,5 +1,3 @@
-import numpy as np
-
 states = ["a", "b"]
 actions = ["a", "b"]
 rewards = {"a": {"a": 0, "b": 7}, "b": {"a": -5, "b": 0}}

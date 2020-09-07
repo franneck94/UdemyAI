@@ -4,13 +4,14 @@ import collections
 import gym
 import numpy as np
 import matplotlib.pyplot as plt
-    
+
 from keras.models import *
 from keras.layers import *
 from keras.optimizers import *
 from keras.utils import *
 
 from dqn import *
+
 
 class Agent:
     def __init__(self, env):
@@ -66,7 +67,7 @@ class Agent:
                         self.model.save_model("C:/Users/Jan/Dropbox/_Programmieren/UdemyAIKurs/data/dqn_cartpole.h5")
                         return total_rewards
                     self.target_model.update_model(self.model)
-                    print("Episode: ", episode+1, " Total Reward: ", total_reward, " Epsilon: ", self.epsilon)
+                    print("Episode: ", episode + 1, " Total Reward: ", total_reward, " Epsilon: ", self.epsilon)
                     break
         return total_rewards
 
@@ -113,12 +114,13 @@ class Agent:
                 if done:
                     break
 
+
 if __name__ == "__main__":
     env = gym.make("CartPole-v1")
     agent = Agent(env)
     total_rewards = agent.train(num_episodes=1000)
-    #input("Play?")
-    #agent.play(num_episodes=15, render=True)
+    # input("Play?")
+    # agent.play(num_episodes=15, render=True)
 
     plt.plot(range(len(total_rewards)), total_rewards, color="blue")
     plt.savefig('./agent DQN.png')

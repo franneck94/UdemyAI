@@ -2,7 +2,8 @@ from keras.models import *
 from keras.layers import *
 from keras.optimizers import *
 from keras.utils import *
-   
+
+
 class NN(Model):
     def __init__(self, state_shape, num_actions, lr):
         super(NN, self).__init__()
@@ -31,4 +32,4 @@ class NN(Model):
         self.model.load_weights(path)
 
     def save_model(self, path):
-        self.model.save_weights(path)   
+        self.model.save_weights(path)

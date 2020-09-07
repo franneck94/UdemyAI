@@ -1,5 +1,6 @@
 import gym
 
+
 class Agent:
     def __init__(self, env):
         self.env = env
@@ -24,8 +25,9 @@ class Agent:
                 if done:
                     rewards[episode] = total_reward
                     break
-        
+
         return rewards
+
 
 if __name__ == "__main__":
     env = gym.make("CartPole-v1")

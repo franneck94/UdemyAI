@@ -1,13 +1,13 @@
 import numpy as np
-
-from keras.utils.np_utils import to_categorical
 from keras.datasets import mnist
 from keras.preprocessing.image import ImageDataGenerator
+from keras.utils.np_utils import to_categorical
+
 
 class MNIST:
     x_train, y_train, x_test, y_test = None, None, None, None
     train_size, test_size = 0, 0
-  
+
     def __init__(self):
         (self.x_train, self.y_train), (self.x_test, self.y_test) = mnist.load_data()
         # reshape
@@ -26,14 +26,14 @@ class MNIST:
         self.y_train = to_categorical(self.y_train, 10)
         self.y_test = to_categorical(self.y_test, 10)
 
-    def data_augmentation(self, augment_size=5000): 
+    def data_augmentation(self, augment_size=5000):
         image_generator = ImageDataGenerator(
             rotation_range=10,
-            zoom_range = 0.05, 
+            zoom_range=0.05,
             width_shift_range=0.05,
             height_shift_range=0.05,
             horizontal_flip=False,
-            vertical_flip=False, 
+            vertical_flip=False,
             data_format="channels_last",
             zca_whitening=True)
         # fit data for zca whitening

@@ -19,6 +19,7 @@ POSSIBLE_ACTIONS = [0, 1, 2, 3]  # up, down, left, right
 ACTIONS = [(-1, 0), (1, 0), (0, -1), (0, 1)]  # actions in coordinates
 REWARDS = []
 
+
 class GraphicDisplay(tk.Tk):
     def __init__(self, agent):
         super(GraphicDisplay, self).__init__()
@@ -101,7 +102,7 @@ class GraphicDisplay(tk.Tk):
                 self.canvas.delete(i)
             self.agent.v_values = [[0.0] * WIDTH for _ in range(HEIGHT)]
             self.agent.policy = ([[[0.25, 0.25, 0.25, 0.25]] * WIDTH
-                                    for _ in range(HEIGHT)])
+                                  for _ in range(HEIGHT)])
             self.agent.policy[2][2] = []
             x, y = self.canvas.coords(self.rectangle)
             self.canvas.move(self.rectangle, UNIT / 2 - x, UNIT / 2 - y)

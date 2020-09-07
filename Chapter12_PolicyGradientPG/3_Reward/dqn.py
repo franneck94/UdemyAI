@@ -4,12 +4,13 @@ import collections
 import gym
 import numpy as np
 import matplotlib.pyplot as plt
-    
+
 from keras.models import *
 from keras.layers import *
 from keras.optimizers import *
 from keras.utils import *
-  
+
+
 class DQN(Model):
     def __init__(self, state_shape, num_actions, lr):
         super(DQN, self).__init__()
@@ -24,7 +25,7 @@ class DQN(Model):
         out = Activation("softmax")(x)
         self.model = Model(inputs=state, outputs=out)
         self.model.compile(loss="categorical_crossentropy", optimizer=Adam(lr=self.lr))
- 
+
     def train(self, states, q_values):
         self.model.fit(states, q_values, verbose=0)
 
@@ -38,4 +39,4 @@ class DQN(Model):
         self.model.load_weights(path)
 
     def save_model(self, path):
-        self.model.save_weights(path)   
+        self.model.save_weights(path)

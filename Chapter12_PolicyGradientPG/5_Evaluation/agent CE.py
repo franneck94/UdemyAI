@@ -1,12 +1,13 @@
 import gym
 import numpy as np
 import matplotlib.pyplot as plt
-    
+
 from keras.models import *
 from keras.layers import *
 from keras.optimizers import *
 from keras.utils import *
- 
+
+
 class Agent:
     # Constructor: Env, NN, Obs, Action
     def __init__(self, env):
@@ -102,11 +103,12 @@ class Agent:
                     print("Episode: ", episode, " - Reward: ", total_reward)
                     break
 
+
 if __name__ == "__main__":
     env = gym.make("CartPole-v1")
     agent = Agent(env)
     reward_means, reward_bounds = agent.train(percentile=70.0, num_iterations=25, num_episodes=100)
-    #agent.play(num_episodes=3, render=True)
+    # agent.play(num_episodes=3, render=True)
 
     plt.plot(range(len(reward_means)), reward_means, color="red")
     plt.savefig('./agent CE.png')

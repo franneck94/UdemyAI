@@ -1,6 +1,7 @@
 import gym
 import numpy as np
 
+
 class Agent:
     def __init__(self, env):
         self.env = env
@@ -25,14 +26,15 @@ class Agent:
                 if done:
                     rewards[episode] = total_reward
                     break
-        
+
         return rewards
+
 
 if __name__ == "__main__":
 
-    # "CartPole-v1", "MountainCar-v0", 
-    games = ["MsPacman-v0", "Tennis-ram-v0", 
-            "SpaceInvaders-v0", "Breakout-v0", "TimePilot-ram-v0"]
+    # "CartPole-v1", "MountainCar-v0",
+    games = ["MsPacman-v0", "Tennis-ram-v0",
+             "SpaceInvaders-v0", "Breakout-v0", "TimePilot-ram-v0"]
 
     for game in games:
         env = gym.make(game)

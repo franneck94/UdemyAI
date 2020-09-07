@@ -3,7 +3,8 @@ from keras.layers import *
 from keras.optimizers import *
 
 import tensorflow as tf
-  
+
+
 class DQN(Model):
     def __init__(self, img_shape, num_actions, lr):
         super(DQN, self).__init__()
@@ -47,6 +48,7 @@ class DQN(Model):
 
     def save_model(self, path):
         self.model.save_weights(path)
+
 
 if __name__ == "__main__":
     d = DQN(img_shape=(84, 84, 4), num_actions=2, lr=0.001)

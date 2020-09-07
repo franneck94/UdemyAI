@@ -8,6 +8,7 @@ import numpy as np
 from pongDqn import DQN
 from wrappers import make_env
 
+
 class Agent:
     def __init__(self, game):
         # DQN Env Variables
@@ -72,7 +73,7 @@ class Agent:
                         self.model.save_model("C:/Users/Jan/Dropbox/_Programmieren/UdemyAIKurs/data/dqn_cartpole.h5")
                         return
                     self.target_model.update_model(self.model)
-                    print("Episode: ", episode+1, " Total Reward: ", total_reward, " Epsilon: ", self.epsilon)
+                    print("Episode: ", episode + 1, " Total Reward: ", total_reward, " Epsilon: ", self.epsilon)
                     break
 
     def remember(self, state, action, reward, next_state, done):
@@ -117,6 +118,7 @@ class Agent:
                     self.env.render()
                 if done:
                     break
+
 
 if __name__ == "__main__":
     game = "PongNoFrameskip-v4"

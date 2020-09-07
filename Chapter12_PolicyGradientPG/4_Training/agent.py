@@ -1,12 +1,13 @@
 import gym
 import numpy as np
-    
+
 from keras.models import *
 from keras.layers import *
 from keras.optimizers import *
 from keras.utils import *
 
 from dqn import *
+
 
 class Agent:
     def __init__(self, env):
@@ -53,7 +54,7 @@ class Agent:
         for i in range(episode_length):
             states[i] = self.states[i]
             q_values[i][self.actions[i]] = discounted_rewards[i]
-        
+
         self.model.train(states, q_values)
         self.states, self.actions, self.rewards = [], [], []
 
@@ -80,9 +81,9 @@ class Agent:
                         mean_total_rewards = np.mean(total_rewards[-10])
                     else:
                         mean_total_rewards = np.mean(total_rewards)
-                    print("Episode: ", episode+1,
-                        " Total Reward: ", total_reward,
-                        " Mean: ", mean_total_rewards)
+                    print("Episode: ", episode + 1,
+                          " Total Reward: ", total_reward,
+                          " Mean: ", mean_total_rewards)
                     if mean_total_rewards > 490:
                         return
                     break
@@ -97,6 +98,7 @@ class Agent:
                 next_state, reward, done, _ = self.env.step(action)
                 if done:
                     break
+
 
 if __name__ == "__main__":
     env = gym.make("CartPole-v1")

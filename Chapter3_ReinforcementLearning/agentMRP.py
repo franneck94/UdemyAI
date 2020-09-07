@@ -1,5 +1,6 @@
 import numpy as np
 
+
 states = ["a", "b"]
 rewards = {"a": {"a": 0, "b": 7}, "b": {"a": -5, "b": 0}}
 transitions = {"a": {"a": 0.1, "b": 0.9}, "b": {"a": 0.9, "b": 0.1}}
@@ -19,8 +20,8 @@ while True and i < 10:
     reward = rewards[state][transition]
     total_reward += reward
     state = transition
-    all_states += " -> " + state 
-    print(all_states , "\nReward: ", reward, " Gesamt-Reward: ", total_reward, "\n")
+    all_states += " -> " + state
+    print(all_states, "\nReward: ", reward, " Gesamt-Reward: ", total_reward, "\n")
     i += 1
     if input() != " ":
         break

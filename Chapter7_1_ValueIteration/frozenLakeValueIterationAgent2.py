@@ -1,8 +1,9 @@
 import gym
-import numpy as np
 import matplotlib.pyplot as plt
+import numpy as np
 
 from plotting import *
+
 
 class Agent:
     def __init__(self, env):
@@ -44,7 +45,7 @@ class Agent:
             self.get_samples(num_episodes=num_episodes)
             self.compute_q_values()
             reward_mean = self.test(num_episodes=20) / 20
-            #print(reward_mean)
+            # print(reward_mean)
             if reward_mean >= 0.9:
                 break
 
@@ -69,13 +70,14 @@ class Agent:
             total_reward = 0.0
             while True:
                 if render:
-                    plotting(state, ax)
+                    plotting_fn(state, ax)
                 action = self.get_action(state)
                 state, reward, done, _ = self.env.step(action)
                 total_reward += reward
                 if done:
                     print("Episode: ", episode, " - Reward: ", total_reward)
                     break
+
 
 if __name__ == "__main__":
     env = gym.make("FrozenLake-v0")

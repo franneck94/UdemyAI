@@ -1,8 +1,9 @@
 import gym
-import numpy as np
 import matplotlib.pyplot as plt
+import numpy as np
 
 from plotting import *
+
 
 class Agent:
     def __init__(self, env):
@@ -43,13 +44,14 @@ class Agent:
             total_reward = 0.0
             while True:
                 if render:
-                    plotting(state, ax)
+                    plotting_fn(state, ax)
                 action = self.get_action(state)
                 state, reward, done, _ = self.env.step(action)
                 total_reward += reward
                 if done:
                     print("Episode: ", episode, " - Reward: ", total_reward)
                     break
+
 
 if __name__ == "__main__":
     env = gym.make("FrozenLake-v0")

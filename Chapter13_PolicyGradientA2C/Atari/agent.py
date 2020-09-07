@@ -5,13 +5,14 @@ import collections
 import gym
 import numpy as np
 import matplotlib.pyplot as plt
-        
+
 from keras.models import *
 from keras.layers import *
 from keras.optimizers import *
 
 from nn import *
 from wrappers import *
+
 
 class Agent:
     def __init__(self, game):
@@ -48,10 +49,10 @@ class Agent:
         self.model.train_critic(state, values)
 
     def train(self, num_episodes):
-        print("Start training for: ", self.game, 
-            " With ", self.num_actions, 
-            " Actions and ", self.img_shape, " Imgs.")
-        print("Actions: ", self.env.unwrapped.get_action_meanings()[1:self.num_actions+1])
+        print("Start training for: ", self.game,
+              " With ", self.num_actions,
+              " Actions and ", self.img_shape, " Imgs.")
+        print("Actions: ", self.env.unwrapped.get_action_meanings()[1:self.num_actions + 1])
 
         it = 0
         for episode in range(num_episodes):
@@ -83,16 +84,15 @@ class Agent:
                     current_time = time.time()
                     fps = episode_it / (current_time - start_time)
                     episode_it = 0
-                    
-                    print("Episode: ", episode+1,
-                            "\tSteps: ", it,
-                            "\tReward: ", total_reward,
-                            "\tFPS: ", round(fps))
+
+                    print("Episode: ", episode + 1,
+                          "\tSteps: ", it,
+                          "\tReward: ", total_reward,
+                          "\tFPS: ", round(fps))
                     break
 
-
     def play(self, num_episodes, render=True):
-        for episode in range(1, num_episodes+1):
+        for episode in range(1, num_episodes + 1):
             done = False
             total_reward = 0.0
             state = self.env.reset()
@@ -110,6 +110,7 @@ class Agent:
 
                 if done:
                     break
+
 
 if __name__ == "__main__":
     game = "PongNoFrameskip-v4"

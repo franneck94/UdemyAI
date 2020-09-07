@@ -5,7 +5,8 @@ import gym
 import numpy as np
 
 from cartPoleDqn import *
- 
+
+
 class Agent:
     def __init__(self, env):
         # DQN Env Variables
@@ -33,6 +34,7 @@ class Agent:
 
     def play(self):
         pass
+
 
 if __name__ == "__main__":
     pass

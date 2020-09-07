@@ -8,6 +8,7 @@ import numpy as np
 from pongDqn import DQN
 from wrappers import make_env
 
+
 class Agent:
     def __init__(self, game):
         # DQN Env Variables
@@ -78,7 +79,7 @@ class Agent:
 
                 if done and total_reward < 499:
                     reward = -100
-                
+
                 if state.shape == (1, 84, 84, 4) and next_state.shape == (1, 84, 84, 4):
                     self.remember(state, action, reward, next_state, done)
                 self.epsilon_anneal()
@@ -93,8 +94,8 @@ class Agent:
                     epsiode_it = 0
                     total_rewards.append(total_reward)
                     mean_reward = np.mean(total_rewards[-5:])
-                    
-                    print("Episode: ", episode+1, 
+
+                    print("Episode: ", episode + 1,
                           "\tSteps: ", it,
                           "\tMemSize: ", len(self.memory),
                           "\tEps: ", round(self.epsilon, 8),
@@ -153,6 +154,7 @@ class Agent:
                     self.env.render()
                 if done:
                     break
+
 
 if __name__ == "__main__":
     game = "PongNoFrameskip-v4"

@@ -1,10 +1,11 @@
 import collections
 
 import gym
-import numpy as np
 import matplotlib.pyplot as plt
+import numpy as np
 
 from plotting import *
+
 
 class Agent:
     def __init__(self, env):
@@ -56,8 +57,8 @@ class Agent:
             self.update_q_values(s, a, r, s_next)
             mean_reward = self.test(num_episodes=20)
             if mean_reward > best_mean_reward:
-                print("Iteration: ", iteration, " Old BestMeanReward: ", 
-                    best_mean_reward, " New BestMeanReward: ", mean_reward)
+                print("Iteration: ", iteration, " Old BestMeanReward: ",
+                      best_mean_reward, " New BestMeanReward: ", mean_reward)
                 best_mean_reward = mean_reward
             if mean_reward >= 0.9:
                 break
@@ -84,13 +85,14 @@ class Agent:
             total_reward = 0.0
             while True:
                 if render:
-                    plotting(state, ax)
+                    plotting_fn(state, ax)
                 action = self.get_action(state)
                 state, reward, done, _ = self.env.step(action)
                 total_reward += reward
                 if done:
                     print("Episode: ", episode, " - Reward: ", total_reward)
                     break
+
 
 if __name__ == "__main__":
     env = gym.make("FrozenLake-v0")

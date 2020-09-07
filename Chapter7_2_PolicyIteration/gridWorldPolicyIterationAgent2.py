@@ -2,6 +2,7 @@ import numpy as np
 
 from environment import GraphicDisplay, Env
 
+
 class Agent:
     def __init__(self, env):
         self.env = env
@@ -12,10 +13,10 @@ class Agent:
         self.num_states = len(self.S)
         self.gamma = 0.9
         self.init_prob = 1.0 / self.num_actions
-        self.policy = [[[self.init_prob for _ in range(self.num_actions)] 
+        self.policy = [[[self.init_prob for _ in range(self.num_actions)]
                         for _ in range(self.cols)] for _ in range(self.rows)]
         self.v_values = [[0.0 for _ in range(self.cols)] for _ in range(self.rows)]
-        self.policy[2][2] = [0.0 for _ in ranges(self.num_actions)]
+        self.policy[2][2] = [0.0 for _ in range(self.num_actions)]
 
     def policy_evaluation(self):
         next_v_values = [[0.0 for _ in range(self.cols)] for _ in range(self.rows)]

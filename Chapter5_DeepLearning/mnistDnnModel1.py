@@ -1,10 +1,10 @@
-# Imports
-from keras.models import *
 from keras.layers import *
+from keras.models import *
 from keras.optimizers import *
 
-# Load MNIST dataset
 from mnistData import *
+
+
 mnist_data = MNIST()
 
 num_features = 784

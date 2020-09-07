@@ -4,6 +4,7 @@ import numpy as np
 
 import gym
 
+
 class StartGameWrapper(gym.Wrapper):
     def __init__(self, env):
         super(StartGameWrapper, self).__init__(env)
@@ -13,6 +14,7 @@ class StartGameWrapper(gym.Wrapper):
         self.env.reset()
         observation, _, _, _ = self.env.step(1) # FIRE
         return observation
+
 
 class FrameStack(gym.Wrapper):
     def __init__(self, env, buffer_frames):
@@ -36,19 +38,21 @@ class FrameStack(gym.Wrapper):
         frame_stack = np.zeros(shape=(1, 84, 84, 4), dtype=np.float32)
         return frame_stack
 
+
 def make_env(game, buffer_frames):
     env = gym.make(game)
     env = gym.wrappers.AtariPreprocessing(
-        env=env, 
-        noop_max=30, 
-        frame_skip=4, 
-        screen_size=84, 
-        terminal_on_life_loss=False, 
+        env=env,
+        noop_max=30,
+        frame_skip=4,
+        screen_size=84,
+        terminal_on_life_loss=False,
         grayscale_obs=True,
         scale_obs=True)
     env = FrameStack(env, buffer_frames=buffer_frames)
     env = StartGameWrapper(env)
     return env
+
 
 if __name__ == "__main__":
     game = "PongNoFrameskip-v4"

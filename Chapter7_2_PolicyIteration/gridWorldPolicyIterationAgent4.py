@@ -1,7 +1,8 @@
 import numpy as np
 
 from environment import GraphicDisplay, Env
- 
+
+
 class Agent:
     def __init__(self, env):
         self.env = env
@@ -12,7 +13,7 @@ class Agent:
         self.num_states = len(self.S)
         self.gamma = 0.9
         self.init_prob = 1.0 / self.num_actions
-        self.policy = [[[self.init_prob for _ in range(self.num_actions)] 
+        self.policy = [[[self.init_prob for _ in range(self.num_actions)]
                         for _ in range(self.cols)] for _ in range(self.rows)]
         self.v_values = [[0.0 for _ in range(self.cols)] for _ in range(self.rows)]
         self.policy[2][2] = [0.0 for _ in range(self.num_actions)]
@@ -67,6 +68,7 @@ class Agent:
         if state != [2, 2]:
             action = np.random.choice(self.A, p=self.policy[state[0]][state[1]])
             return action
+
 
 if __name__ == "__main__":
     env = Env()

@@ -4,6 +4,7 @@ import matplotlib.pyplot as plt
 
 from nn import *
 
+
 class Agent:
     def __init__(self, env):
         self.env = env

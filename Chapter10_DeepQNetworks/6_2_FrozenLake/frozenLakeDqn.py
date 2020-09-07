@@ -1,7 +1,8 @@
 from keras.models import *
 from keras.layers import *
 from keras.optimizers import *
-  
+
+
 class DQN(Model):
     def __init__(self, state_shape, num_actions, lr):
         super(DQN, self).__init__()
@@ -31,7 +32,8 @@ class DQN(Model):
         self.model.load_weights(path)
 
     def save_model(self, path):
-        self.model.save_weights(path)   
+        self.model.save_weights(path)
+
 
 if __name__ == "__main__":
     d = DQN(state_shape=4, num_actions=2, lr=0.001)

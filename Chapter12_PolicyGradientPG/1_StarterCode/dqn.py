@@ -4,14 +4,15 @@ import collections
 import gym
 import numpy as np
 import matplotlib.pyplot as plt
-    
+
 from keras.models import *
 from keras.layers import *
 from keras.optimizers import *
 from keras.utils import *
 
 from dqn import *
-  
+
+
 class DQN(Model):
     def __init__(self, state_shape, num_actions, lr):
         super(DQN, self).__init__()
@@ -20,8 +21,8 @@ class DQN(Model):
         self.lr = lr
 
         state = Input(shape=state_shape)
-        
-        out = 
+
+        out =
         self.model = Model(inputs=state, outputs=out)
         self.model.compile(loss=, optimizer=Adam(lr=self.lr))
 
@@ -38,4 +39,4 @@ class DQN(Model):
         self.model.load_weights(path)
 
     def save_model(self, path):
-        self.model.save_weights(path)   
+        self.model.save_weights(path)

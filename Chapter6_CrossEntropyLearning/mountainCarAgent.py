@@ -1,13 +1,13 @@
 import math
 
 import gym
-import numpy as np
 import matplotlib.pyplot as plt
-
+import numpy as np
 from keras.layers import *
 from keras.models import *
 from keras.optimizers import *
 from keras.utils import *
+
 
 def reward_func(state, action):
     min_position = -1.2
@@ -15,11 +15,11 @@ def reward_func(state, action):
     max_speed = 0.07
     goal_position = 0.5
     position, velocity = state
-    velocity += (action-1)*0.001 + math.cos(3*position)*(-0.0025)
+    velocity += (action - 1) * 0.001 + math.cos(3 * position) * (-0.0025)
     velocity = np.clip(velocity, -max_speed, max_speed)
     position += velocity
     position = np.clip(position, min_position, max_position)
-    if (position == min_position and velocity < 0): 
+    if (position == min_position and velocity < 0):
         velocity = 0
 
     done = bool(position >= goal_position)
@@ -28,6 +28,7 @@ def reward_func(state, action):
     if done:
         reward += 100
     return reward
+
 
 class Agent:
     # Constructor: Env, NN, Obs, Action
@@ -126,6 +127,7 @@ class Agent:
                 if done:
                     print("Episode: ", episode, " - Reward: ", total_reward)
                     break
+
 
 if __name__ == "__main__":
     env = gym.make("MountainCar-v0")

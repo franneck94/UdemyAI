@@ -1,13 +1,14 @@
 import gym
 import numpy as np
 import matplotlib.pyplot as plt
-import  collections
- 
+import collections
+
 from keras.models import *
 from keras.layers import *
 from keras.layers import *
 from keras.optimizers import *
-   
+
+
 class NN(Model):
     def __init__(self, img_shape, num_actions, num_values, lr_actor, lr_critic):
         super(NN, self).__init__()

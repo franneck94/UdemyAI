@@ -6,6 +6,7 @@ import numpy as np
 
 from mountainCarDqn import *
 
+
 class Agent:
     def __init__(self, env):
         # DQN Env Variables
@@ -51,7 +52,7 @@ class Agent:
                     print("\nREACHED GOAL!\n")
                 elif not done and position > current_best_position: # "Good"
                     reward = 10
-                    current_best_position = position 
+                    current_best_position = position
                 else: # "Bad"
                     reward = -1
                 self.remember(state, action, reward, next_state, done)
@@ -62,9 +63,9 @@ class Agent:
                     best_total_reward = total_reward
                 if done:
                     self.target_model.update_model(self.model)
-                    print("Episode: ", episode+1, 
-                        " Total Reward: ", total_reward, 
-                        " Epsilon: ", round(self.epsilon, 3))
+                    print("Episode: ", episode + 1,
+                          " Total Reward: ", total_reward,
+                          " Epsilon: ", round(self.epsilon, 3))
                     if total_reward > best_total_reward:
                         self.model.save_model("C:/Users/Jan/Dropbox/_Programmieren/UdemyAIKurs/data/dqn_mountaincar.h5")
                         best_total_reward = total_reward
@@ -113,6 +114,7 @@ class Agent:
                     self.env.render()
                 if done:
                     break
+
 
 if __name__ == "__main__":
     env = gym.make("MountainCar-v0")

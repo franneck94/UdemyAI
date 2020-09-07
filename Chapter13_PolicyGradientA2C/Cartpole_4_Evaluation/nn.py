@@ -1,7 +1,8 @@
 from keras.models import *
 from keras.layers import *
 from keras.optimizers import *
-   
+
+
 class NN(Model):
     def __init__(self, num_observations, num_actions, num_values, lr_actor, lr_critic):
         super(NN, self).__init__()

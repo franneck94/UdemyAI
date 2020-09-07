@@ -1,10 +1,10 @@
-# Imports
-from keras.models import *
 from keras.layers import *
+from keras.models import *
 from keras.optimizers import *
 
-# Load MNIST dataset
 from mnistData import *
+
+
 mnist_data = MNIST()
 x_train, y_train = mnist_data.get_train_set()
 x_test, y_test = mnist_data.get_test_set()
@@ -31,15 +31,15 @@ model.summary()
 lr = 0.001 # (0, 1)
 optimizer = Adam(lr=lr)
 model.compile(
-        loss="categorical_crossentropy",
-        optimizer=optimizer, 
-        metrics=["accuracy"])
+    loss="categorical_crossentropy",
+    optimizer=optimizer,
+    metrics=["accuracy"])
 model.fit(
-        x_train, 
-        y_train, 
-        verbose=1,
-        batch_size=128, 
-        epochs=10)
+    x_train,
+    y_train,
+    verbose=1,
+    batch_size=128,
+    epochs=10)
 
 # Test the DNN
 acc = model.evaluate(x_test, y_test, verbose=0)

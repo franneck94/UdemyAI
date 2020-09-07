@@ -1,11 +1,11 @@
 import gym
-import numpy as np
 import matplotlib.pyplot as plt
-
+import numpy as np
 from keras.layers import *
 from keras.models import *
 from keras.optimizers import *
 from keras.utils import *
+
 
 class Agent:
     # Constructor: Env, NN, Obs, Action
@@ -101,6 +101,7 @@ class Agent:
                 if done:
                     print("Episode: ", episode, " - Reward: ", total_reward)
                     break
+
 
 if __name__ == "__main__":
     env = gym.make("CartPole-v1")

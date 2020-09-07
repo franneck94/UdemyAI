@@ -6,6 +6,7 @@ import numpy as np
 
 from cartPoleDqn import *
 
+
 class Agent:
     def __init__(self, env):
         # DQN Env Variables
@@ -50,7 +51,7 @@ class Agent:
                 state = next_state
                 if done:
                     self.target_model.update_model(self.model)
-                    print("Episode: ", episode+1, " Total Reward: ", total_reward, " Epsilon: ", self.epsilon)
+                    print("Episode: ", episode + 1, " Total Reward: ", total_reward, " Epsilon: ", self.epsilon)
                     break
 
     def remember(self, state, action, reward, next_state, done):
@@ -61,6 +62,7 @@ class Agent:
 
     def play(self):
         pass
+
 
 if __name__ == "__main__":
     env = gym.make("CartPole-v1")

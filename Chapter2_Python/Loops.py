@@ -23,7 +23,7 @@ print("\n")
 bin_ich_pleite = False
 kontostand = 10
 
-while bin_ich_pleite == False:
+while bin_ich_pleite is False:
     print("Ich bin nicht pleite!", kontostand)
     kontostand -= 1
     if kontostand <= 0:

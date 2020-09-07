@@ -1,8 +1,9 @@
 import gym
 import numpy as np
 import matplotlib.pyplot as plt
- 
+
 from nn import *
+
 
 class Agent:
     def __init__(self, env):
@@ -27,7 +28,6 @@ class Agent:
 
             while True:
 
-
                 if done:
                     break
 
@@ -36,9 +36,9 @@ class Agent:
 
             while True:
 
-
                 if done:
                     break
+
 
 if __name__ == "__main__":
     env = gym.make("CartPole-v1")

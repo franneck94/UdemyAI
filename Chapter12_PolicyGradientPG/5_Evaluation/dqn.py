@@ -3,6 +3,7 @@ from keras.layers import *
 from keras.optimizers import *
 from keras.utils import *
   
+
 class DQN(Model):
     def __init__(self, state_shape, num_actions, lr):
         super(DQN, self).__init__()
