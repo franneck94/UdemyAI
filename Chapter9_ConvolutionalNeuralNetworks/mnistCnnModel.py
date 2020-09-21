@@ -1,4 +1,8 @@
-from keras.layers import Activation, Conv2D, Dense, Flatten, MaxPooling2D
+from keras.layers import Activation
+from keras.layers import Conv2D
+from keras.layers import Dense
+from keras.layers import Flatten
+from keras.layers import MaxPooling2D
 from keras.models import Sequential
 from keras.optimizers import Adam
 

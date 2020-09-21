@@ -1,4 +1,4 @@
-import MyModule # Alternative
+import MyModule  # Alternative
 
 
 l1 = [-2, 1, 2, -10, 22, -10]

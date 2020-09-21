@@ -1,8 +1,7 @@
 import collections
 
-import numpy as np
-
 import gym
+import numpy as np
 
 
 class StartGameWrapper(gym.Wrapper):

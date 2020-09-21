@@ -1,13 +1,12 @@
-import time
-import random
 import collections
+import random
+import time
 
 import gym
-import numpy as np
 import matplotlib.pyplot as plt
-
-from keras.models import *
+import numpy as np
 from keras.layers import *
+from keras.models import *
 from keras.optimizers import *
 
 from nn import *

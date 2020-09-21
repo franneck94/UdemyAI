@@ -6,8 +6,9 @@ import matplotlib.pyplot as plt
 import numpy as np
 from keras.utils import to_categorical
 
-from plotting import plotting_q_values, save_map
 from frozenLakeDqn import DQN
+from plotting import plotting_q_values
+from plotting import save_map
 
 
 class Agent:
@@ -56,8 +57,8 @@ class Agent:
                 state = next_state
                 if done:
                     self.target_model.update_model(self.model)
-                    print("Episode: ", episode+1, 
-                          " Total Reward: ", total_reward, 
+                    print("Episode: ", episode + 1,
+                          " Total Reward: ", total_reward,
                           " Epsilon: ", round(self.epsilon, 3))
                     last_rewards.append(total_reward)
                     last_rewards_mean = np.mean(last_rewards)
@@ -98,8 +99,8 @@ class Agent:
         self.model.load_model("C:/Users/Jan/Dropbox/_Programmieren/UdemyAI/Data/dqn_frozenlake.h5")
         fig, ax = plt.subplots(figsize=(10, 10))
         states = np.array(
-            [to_categorical(i, num_classes=self.observations).reshape(1, -1) 
-            for i in range(self.observations)])
+            [to_categorical(i, num_classes=self.observations).reshape(1, -1)
+             for i in range(self.observations)])
         values = np.array([self.model.predict(state) for state in states])
         values = np.squeeze(values)
         save_map(values, name="dqn_frozenlake.png")
@@ -115,6 +116,7 @@ class Agent:
                     plotting_q_values(state_, action, values, ax)
                 if done:
                     break
+
 
 if __name__ == "__main__":
     env = gym.make("FrozenLake-v0")

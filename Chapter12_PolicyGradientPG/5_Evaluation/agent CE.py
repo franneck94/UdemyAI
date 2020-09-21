@@ -1,9 +1,9 @@
 import gym
-import numpy as np
 import matplotlib.pyplot as plt
-
+import numpy as np
+from keras.layers import Activation
+from keras.layers import Dense
 from keras.models import Sequential
-from keras.layers import Activation, Dense
 from keras.optimizers import Adam
 from keras.utils import to_categorical
 

@@ -4,7 +4,9 @@ import tkinter as tk
 from tkinter import Button
 
 import numpy as np
-from PIL import Image, ImageTk
+
+from PIL import Image
+from PIL import ImageTk
 
 
 PROJECT_PATH = os.path.abspath("C:/Users/Jan/Dropbox/_Programmieren/UdemyAI")

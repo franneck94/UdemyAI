@@ -2,7 +2,8 @@ import gym
 import matplotlib.pyplot as plt
 import numpy as np
 
-from plotting import plotting_q_values, save_map
+from plotting import plotting_q_values
+from plotting import save_map
 
 
 class Agent:

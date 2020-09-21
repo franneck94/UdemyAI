@@ -1,6 +1,7 @@
 import numpy as np
 
-from environment import GraphicDisplay, Env
+from environment import Env
+from environment import GraphicDisplay
 
 
 class Agent:

@@ -1,4 +1,6 @@
-from keras.layers import Activation, Dense, Input
+from keras.layers import Activation
+from keras.layers import Dense
+from keras.layers import Input
 from keras.models import Model
 from keras.optimizers import Adam
 

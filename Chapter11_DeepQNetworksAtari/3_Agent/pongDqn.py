@@ -1,13 +1,11 @@
-from keras.layers import (
-    Activation,
-    Conv2D,
-    Dense,
-    GlobalAveragePooling2D,
-    Input
-)
+from keras.layers import Activation
+from keras.layers import Conv2D
+from keras.layers import Dense
+from keras.layers import GlobalAveragePooling2D
+from keras.layers import Input
+from keras.losses import Huber
 from keras.models import Model
 from keras.optimizers import Adam
-from keras.losses import Huber
 
 
 class DQN(Model):

@@ -1,4 +1,5 @@
-from keras.layers import Activation, Dense
+from keras.layers import Activation
+from keras.layers import Dense
 from keras.models import Sequential
 
 from mnistData import MNIST

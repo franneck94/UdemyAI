@@ -1,4 +1,6 @@
-from keras.layers import Activation, Dense, Input
+from keras.layers import Activation
+from keras.layers import Dense
+from keras.layers import Input
 from keras.models import Model
 from keras.optimizers import Adam
 
@@ -32,4 +34,4 @@ class DQN(Model):
         self.model.load_weights(path)
 
     def save_model(self, path):
-        self.model.save_weights(path)   
+        self.model.save_weights(path)
