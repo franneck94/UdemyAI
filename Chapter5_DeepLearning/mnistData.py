@@ -3,9 +3,6 @@ from keras.utils import to_categorical
 
 
 class MNIST:
-    x_train, y_train, x_test, y_test = None, None, None, None
-    train_size, test_size = 0, 0
-
     def __init__(self):
         (self.x_train, self.y_train), (self.x_test, self.y_test) = mnist.load_data()
         # reshape

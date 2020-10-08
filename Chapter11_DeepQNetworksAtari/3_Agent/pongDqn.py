@@ -10,7 +10,7 @@ from keras.optimizers import Adam
 
 class DQN(Model):
     def __init__(self, img_shape, num_actions, lr):
-        super(DQN, self).__init__()
+        super().__init__()
         self.img_shape = img_shape
         self.num_actions = num_actions
         self.lr = lr

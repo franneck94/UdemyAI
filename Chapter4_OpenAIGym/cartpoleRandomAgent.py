@@ -11,7 +11,7 @@ class Agent:
         return action
 
     def play(self, episodes, render=True):
-        rewards = [0 for i in range(episodes)]
+        rewards = [0.0 for i in range(episodes)]
 
         for episode in range(episodes):
             state = self.env.reset()

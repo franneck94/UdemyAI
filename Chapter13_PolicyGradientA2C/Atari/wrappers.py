@@ -9,7 +9,7 @@ import numpy as np
 class FireResetEnv(gym.Wrapper):
     def __init__(self, env=None):
         """For environments where the user need to press FIRE for the game to start."""
-        super(FireResetEnv, self).__init__(env)
+        super().__init__(env)
         assert env.unwrapped.get_action_meanings()[1] == 'FIRE'
         assert len(env.unwrapped.get_action_meanings()) >= 3
 
@@ -30,7 +30,7 @@ class FireResetEnv(gym.Wrapper):
 class MaxAndSkipEnv(gym.Wrapper):
     def __init__(self, env=None, skip=4):
         """Return only every `skip`-th frame"""
-        super(MaxAndSkipEnv, self).__init__(env)
+        super().__init__(env)
         # most recent raw observations (for max pooling across time steps)
         self._obs_buffer = collections.deque(maxlen=2)
         self._skip = skip
@@ -57,7 +57,7 @@ class MaxAndSkipEnv(gym.Wrapper):
 
 class ProcessFrame84(gym.ObservationWrapper):
     def __init__(self, env=None):
-        super(ProcessFrame84, self).__init__(env)
+        super().__init__(env)
         self.observation_space = gym.spaces.Box(low=0, high=255, shape=(84, 84, 1), dtype=np.uint8)
 
     def observation(self, obs):

@@ -14,7 +14,13 @@ class Agent:
         self.gamma = 0.99
         self.lr_actor = 1e-3
         self.lr_critic = 5e-3
-        self.model = NN(self.num_observations, self.num_actions, self.num_values, self.lr_actor, self.lr_critic)
+        self.model = NN(
+            self.num_observations,
+            self.num_actions,
+            self.num_values,
+            self.lr_actor,
+            self.lr_critic
+        )
 
     def get_action(self, state):
         policy = self.model.predict_actor(state)[0]

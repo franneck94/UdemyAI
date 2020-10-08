@@ -19,7 +19,6 @@ WIDTH = 5  # grid width
 TRANSITION_PROB = 1
 POSSIBLE_ACTIONS = [0, 1, 2, 3]  # up, down, left, right
 ACTIONS = [(-1, 0), (1, 0), (0, -1), (0, 1)]  # actions in coordinates
-REWARDS = []
 
 
 class GraphicDisplay(tk.Tk):

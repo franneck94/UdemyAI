@@ -11,7 +11,7 @@ class Agent:
         return action
 
     def play(self, episodes, render=True):
-        rewards = [0 for i in range(episodes)]
+        rewards = [0.0 for i in range(episodes)]
 
         for episode in range(episodes):
             state = self.env.reset()
@@ -31,15 +31,17 @@ class Agent:
 
 
 if __name__ == "__main__":
-
-    # "CartPole-v1", "MountainCar-v0",
-    games = ["MsPacman-v0", "Tennis-ram-v0",
-             "SpaceInvaders-v0", "Breakout-v0", "TimePilot-ram-v0"]
+    games = [
+        "CartPole-v1",
+        "MountainCar-v0",
+        "PongNoFrameskip-v4",
+        "Breakout-v0",
+    ]
 
     for game in games:
         env = gym.make(game)
         agent = Agent(env)
-        rewards = agent.play(episodes=10, render=True)
+        rewards = agent.play(episodes=3, render=True)
 
         rewards_mean = np.mean(rewards)
         rewards_min = np.min(rewards)

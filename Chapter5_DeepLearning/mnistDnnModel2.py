@@ -29,19 +29,26 @@ model.add(Activation("softmax"))
 model.summary()
 
 # Train the DNN
-lr = 0.001 # (0, 1)
-optimizer = Adam(lr=lr)
+optimizer = Adam(
+    lr=0.001 # (0, 1)
+)
 model.compile(
     loss="categorical_crossentropy",
     optimizer=optimizer,
-    metrics=["accuracy"])
+    metrics=["accuracy"]
+)
 model.fit(
     x_train,
     y_train,
     verbose=1,
     batch_size=128,
-    epochs=10)
+    epochs=10
+)
 
 # Test the DNN
-acc = model.evaluate(x_test, y_test, verbose=0)
+acc = model.evaluate(
+    x_test,
+    y_test,
+    verbose=0
+)
 print("Test accuracy: ", acc)

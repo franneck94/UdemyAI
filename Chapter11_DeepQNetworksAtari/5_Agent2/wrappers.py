@@ -6,7 +6,7 @@ import numpy as np
 
 class StartGameWrapper(gym.Wrapper):
     def __init__(self, env):
-        super(StartGameWrapper, self).__init__(env)
+        super().__init__(env)
         self.env.reset()
 
     def reset(self, **kwargs):
@@ -17,7 +17,7 @@ class StartGameWrapper(gym.Wrapper):
 
 class FrameStack(gym.Wrapper):
     def __init__(self, env, buffer_frames):
-        super(FrameStack, self).__init__(env)
+        super().__init__(env)
         self.buffer_frames = buffer_frames
         self.frames = collections.deque(maxlen=self.buffer_frames)
         low = np.repeat(self.observation_space.low[np.newaxis, ...], self.buffer_frames, axis=0)

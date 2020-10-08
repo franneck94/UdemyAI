@@ -34,7 +34,7 @@ class Agent:
     def compute_q_values(self):
         pass
 
-    def train(self, num_iterations, num_episodes):
+    def train(self, num_iterations):
         pass
 
     def test(self, num_episodes):

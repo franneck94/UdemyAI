@@ -36,18 +36,21 @@ optimizer = Adam(lr=lr)
 model.compile(
     loss="categorical_crossentropy",
     optimizer=optimizer,
-    metrics=["accuracy"])
+    metrics=["accuracy"]
+)
 model.fit(
     x_train,
     y_train,
     verbose=1,
     batch_size=128,
     epochs=1,
-    validation_data=(x_test, y_test))
+    validation_data=(x_test, y_test)
+)
 
 # Test the CNN
 score = model.evaluate(
     x_test,
     y_test,
-    verbose=0)
+    verbose=0
+)
 print("Test accuracy: ", score[1])

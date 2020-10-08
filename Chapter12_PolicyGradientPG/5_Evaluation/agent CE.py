@@ -18,14 +18,14 @@ class Agent:
 
     # Keras NN Model
     def get_model(self):
-        m = Sequential()
-        m.add(Dense(100, input_dim=self.observations)) # Input: State s
-        m.add(Activation("relu"))
-        m.add(Dense(self.actions)) # Output: Action [L, R]
-        m.add(Activation("softmax"))
-        m.summary()
-        m.compile(optimizer=Adam(lr=0.001), loss="categorical_crossentropy", metrics=["accuracy"])
-        return m
+        model = Sequential()
+        model.add(Dense(100, input_dim=self.observations)) # Input: State s
+        model.add(Activation("relu"))
+        model.add(Dense(self.actions)) # Output: Action [L, R]
+        model.add(Activation("softmax"))
+        model.summary()
+        model.compile(optimizer=Adam(lr=0.001), loss="categorical_crossentropy", metrics=["accuracy"])
+        return model
 
     # Based on the state/observation, get the action
     def get_action(self, observation):
