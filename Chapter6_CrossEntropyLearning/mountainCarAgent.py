@@ -3,14 +3,28 @@ import math
 import gym
 import matplotlib.pyplot as plt
 import numpy as np
-from keras.layers import Activation
-from keras.layers import Dense
-from keras.models import Sequential
-from keras.optimizers import Adam
-from keras.utils import to_categorical
+from tensorflow.keras.layers import Activation
+from tensorflow.keras.layers import Dense
+from tensorflow.keras.models import Sequential
+from tensorflow.keras.optimizers import Adam
+from tensorflow.keras.utils import to_categorical
 
 
 def reward_func(state, action):
+    """Custom reward function for the mountain car game.
+
+    Parameters
+    ----------
+    state : np.ndarray
+        [description]
+    action : int
+        L = 0, R = 1
+
+    Returns
+    -------
+    float
+        Reward of the action
+    """
     min_position = -1.2
     max_position = 0.6
     max_speed = 0.07
@@ -32,38 +46,49 @@ def reward_func(state, action):
 
 
 class Agent:
-    # Constructor: Env, NN, Obs, Action
+    """Agent class for the cross-entropy learning algorithm.
+    """
+
     def __init__(self, env):
+        """Set up the environment, the neural network and member variables.
+
+        Parameters
+        ----------
+        env : gym.Environment
+            The game environment
+        """
         self.env = env
         self.observations = self.env.observation_space.shape[0]
         self.actions = self.env.action_space.n
         self.model = self.get_model()
 
-    # Keras NN Model
     def get_model(self):
+        """Returns a keras NN model.
+        """
         model = Sequential()
-        model.add(Dense(100, input_dim=self.observations)) # Input: State s
+        model.add(Dense(units=100, input_dim=self.observations))
         model.add(Activation("relu"))
-        model.add(Dense(self.actions)) # Output: Action [L, R]
+        model.add(Dense(units=self.actions)) # Output: Action [L, R]
         model.add(Activation("softmax"))
         model.summary()
         model.compile(
-            optimizer=Adam(lr=0.001),
+            optimizer=Adam(lr=0.002),
             loss="categorical_crossentropy",
             metrics=["accuracy"]
         )
         return model
 
-    # Based on the state/observation, get the action
-    def get_action(self, observation):
-        # get an action from our policy
-        observation = observation.reshape(1, -1)
-        action = self.model.predict(observation)[0] # [0.9, 0.1]
-        action = np.random.choice(self.actions, p=action) # [L=0, R=1], p[0.9, 0.1]
+    def get_action(self, state):
+        """Based on the state, get an action.
+        """
+        state = state.reshape(1, -1) # [4,] => [1, 4]
+        action = self.model(state, training=False).numpy()[0]
+        action = np.random.choice(self.actions, p=action) # choice([0, 1], [0.5044534  0.49554658])
         return action
 
-    # Sample "random" games
     def get_samples(self, num_episodes):
+        """Sample games.
+        """
         rewards = [0.0 for i in range(num_episodes)]
         episodes = [[] for i in range(num_episodes)]
 
@@ -73,7 +98,7 @@ class Agent:
 
             while True:
                 action = self.get_action(state)
-                new_state, _, done, _ = self.env.step(action)
+                new_state, reward, done, _ = self.env.step(action)
                 reward = reward_func(state, action)
                 total_reward += reward
                 episodes[episode].append((state, action))
@@ -84,41 +109,40 @@ class Agent:
 
         return rewards, episodes
 
-    # Helper function for the train function
     def filter_episodes(self, rewards, episodes, percentile):
-        # [1, 2, 3, 4, 5, 6, ,7 ,8, 9, 10]
-        # bound = 7
-        # keep: 7 ,8, 9, 10
+        """Helper function for the training.
+        """
         reward_bound = np.percentile(rewards, percentile)
         x_train, y_train = [], []
-        for r, e in zip(rewards, episodes):
-            if r >= reward_bound:
-                obs = [step[0] for step in e]
-                acts = [step[1] for step in e]
-                x_train.extend(obs)
-                y_train.extend(acts)
+        for reward, episode in zip(rewards, episodes):
+            if reward >= reward_bound:
+                observation = [step[0] for step in episode]
+                action = [step[1] for step in episode]
+                x_train.extend(observation)
+                y_train.extend(action)
         x_train = np.asarray(x_train)
-        y_train = to_categorical(y_train, num_classes=self.actions) # L=0 => [1, 0]
+        y_train = to_categorical(y_train, num_classes=self.actions) # L = 0 => [1, 0]
         return x_train, y_train, reward_bound
 
-    # Sample random games and train the NN
     def train(self, percentile, num_iterations, num_episodes):
+        """Play games and train the NN.
+        """
         reward_means, reward_bounds = [], []
         for _ in range(num_iterations):
-            rewards, episodes = self.get_samples(num_episodes=num_episodes)
+            rewards, episodes = self.get_samples(num_episodes)
             x_train, y_train, reward_bound = self.filter_episodes(rewards, episodes, percentile)
-            self.model.fit(x_train, y_train)
+            self.model((x_train, y_train), training=True)
             reward_mean = np.mean(rewards)
-            print("Rewards Mean: ", reward_mean, " - Rewards Bound: ", reward_bound)
+            print(f"Reward mean: {reward_mean}, reward bound: {reward_bound}")
             reward_bounds.append(reward_bound)
             reward_means.append(reward_mean)
             if reward_mean > 500:
                 break
-        self.model.save("C:/Users/Jan/Dropbox/_Programmieren/UdemyAI/data/NN_mountain.hd5")
         return reward_means, reward_bounds
 
-    # "Testing" of the Agent
     def play(self, num_episodes, render=True):
+        """Test the trained agent.
+        """
         for episode in range(num_episodes):
             state = self.env.reset()
             total_reward = 0.0
@@ -126,18 +150,19 @@ class Agent:
                 if render:
                     self.env.render()
                 action = self.get_action(state)
-                state, _, done, _ = self.env.step(action)
+                state, reward, done, _ = self.env.step(action)
                 reward = reward_func(state, action)
                 total_reward += reward
                 if done:
-                    print("Episode: ", episode, " - Reward: ", total_reward)
+                    print(f"Total reward: {total_reward} in epsiode {episode + 1}")
                     break
 
 
 if __name__ == "__main__":
     env = gym.make("MountainCar-v0")
     agent = Agent(env)
-    reward_means, reward_bounds = agent.train(percentile=90.0, num_iterations=50, num_episodes=100)
+
+    reward_means, reward_bounds = agent.train(percentile=90.0, num_iterations=50, num_episodes=30)
     input("Weiter?")
     agent.play(num_episodes=10, render=True)
 

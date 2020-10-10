@@ -35,13 +35,13 @@ if __name__ == "__main__":
         "CartPole-v1",
         "MountainCar-v0",
         "PongNoFrameskip-v4",
-        "Breakout-v0",
+        "Breakout-v0"
     ]
 
     for game in games:
         env = gym.make(game)
         agent = Agent(env)
-        rewards = agent.play(episodes=3, render=True)
+        rewards = agent.play(episodes=10, render=True)
 
         rewards_mean = np.mean(rewards)
         rewards_min = np.min(rewards)

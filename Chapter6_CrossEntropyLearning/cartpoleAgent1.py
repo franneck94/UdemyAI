@@ -1,40 +1,55 @@
 import gym
 import matplotlib.pyplot as plt
 import numpy as np
-from keras.layers import Activation
-from keras.layers import Dense
-from keras.models import Sequential
-from keras.optimizers import Adam
-from keras.utils import to_categorical
+from tensorflow.keras.layers import Activation
+from tensorflow.keras.layers import Dense
+from tensorflow.keras.models import Sequential
+from tensorflow.keras.optimizers import Adam
+from tensorflow.keras.utils import to_categorical
 
 
 class Agent:
-    # Constructor: Env, NN, Obs, Action
+    """Agent class for the cross-entropy learning algorithm.
+    """
+
     def __init__(self, env):
+        """Set up the environment, the neural network and member variables.
+
+        Parameters
+        ----------
+        env : gym.Environment
+            The game environment
+        """
         pass
 
-    # Keras NN Model
     def get_model(self):
+        """Keras NN Model.
+        """
         pass
 
-    # Based on the state/observation, get the action
     def get_action(self):
+        """Based on the state, get an action.
+        """
         pass
 
-    # Sample "random" games
     def get_samples(self):
+        """Sample games.
+        """
         pass
 
-    # Helper function for the train function
     def filter_episodes(self):
+        """Helper function for the training.
+        """
         pass
 
-    # Sample random games and train the NN
     def train(self):
+        """Play games and train the NN.
+        """
         pass
 
-    # "Testing" of the Agent
     def play(self):
+        """Test the trained agent.
+        """
         pass
 
 

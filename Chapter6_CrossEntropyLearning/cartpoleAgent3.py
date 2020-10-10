@@ -1,27 +1,37 @@
 import gym
 import matplotlib.pyplot as plt
 import numpy as np
-from keras.layers import Activation
-from keras.layers import Dense
-from keras.models import Sequential
-from keras.optimizers import Adam
-from keras.utils import to_categorical
+from tensorflow.keras.layers import Activation
+from tensorflow.keras.layers import Dense
+from tensorflow.keras.models import Sequential
+from tensorflow.keras.optimizers import Adam
+from tensorflow.keras.utils import to_categorical
 
 
 class Agent:
-    # Constructor: Env, NN, Obs, Action
+    """Agent class for the cross-entropy learning algorithm.
+    """
+
     def __init__(self, env):
+        """Set up the environment, the neural network and member variables.
+
+        Parameters
+        ----------
+        env : gym.Environment
+            The game environment
+        """
         self.env = env
         self.observations = self.env.observation_space.shape[0]
         self.actions = self.env.action_space.n
         self.model = self.get_model()
 
-    # Keras NN Model
     def get_model(self):
+        """Returns a keras NN model.
+        """
         model = Sequential()
-        model.add(Dense(100, input_dim=self.observations)) # Input: State s
+        model.add(Dense(units=100, input_dim=self.observations))
         model.add(Activation("relu"))
-        model.add(Dense(self.actions)) # Output: Action [L, R]
+        model.add(Dense(units=self.actions)) # Output: Action [L, R]
         model.add(Activation("softmax"))
         model.summary()
         model.compile(
@@ -31,35 +41,32 @@ class Agent:
         )
         return model
 
-    # Based on the state/observation, get the action
-    def get_action(self, observation):
-        # get an action from our policy
-        observation = observation.reshape(1, -1)
-        action = self.model.predict(observation)[0] # [0.9, 0.1]
-        action = np.random.choice(self.actions, p=action) # [L=0, R=1], p[0.9, 0.1]
+    def get_action(self, state):
+        """Based on the state, get an action.
+        """
+        state = state.reshape(1, -1) # [4,] => [1, 4]
+        action = self.model(state, training=False).numpy()[0]
+        action = np.random.choice(self.actions, p=action) # choice([0, 1], [0.5044534  0.49554658])
         return action
 
-    # Sample "random" games
     def get_samples(self):
-        # play some "random" games with our current policy
+        """Sample games.
+        """
         pass
 
-    # Helper function for the train function
     def filter_episodes(self):
-        # filter an episode by the reward
-        # x, y trainset for the NN
+        """Helper function for the training.
+        """
         pass
 
-    # Sample random games and train the NN
     def train(self):
-        # for iteration time:
-        #     x,y = get_smaples()
-        #     nn train(x, y)
-        #     monitor performance
+        """Play games and train the NN.
+        """
         pass
 
-    # "Testing" of the Agent
     def play(self, num_episodes, render=True):
+        """Test the trained agent.
+        """
         for episode in range(num_episodes):
             state = self.env.reset()
             total_reward = 0.0
@@ -70,12 +77,14 @@ class Agent:
                 state, reward, done, _ = self.env.step(action)
                 total_reward += reward
                 if done:
-                    print("Episode: ", episode, " - Reward: ", total_reward)
+                    print(f"Total reward: {total_reward} in epsiode {episode + 1}")
                     break
 
 
 if __name__ == "__main__":
     env = gym.make("CartPole-v1")
     agent = Agent(env)
+    print(agent.observations)
+    print(agent.actions)
     agent.train()
     agent.play(num_episodes=10)
