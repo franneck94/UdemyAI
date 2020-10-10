@@ -1,13 +1,13 @@
-from keras.datasets import mnist
-from keras.utils import to_categorical
+from tensorflow.keras.datasets import mnist
+from tensorflow.keras.utils import to_categorical
 
 
 class MNIST:
     def __init__(self):
         (self.x_train, self.y_train), (self.x_test, self.y_test) = mnist.load_data()
         # reshape
-        self.x_train = self.x_train.reshape(self.x_train.shape[0], 784)
-        self.x_test = self.x_test.reshape(self.x_test.shape[0], 784)
+        self.x_train = self.x_train.reshape(self.x_train.shape[0], 28, 28, 1)
+        self.x_test = self.x_test.reshape(self.x_test.shape[0], 28, 28, 1)
         # convert from int to float
         self.x_train = self.x_train.astype('float32')
         self.x_test = self.x_test.astype('float32')
