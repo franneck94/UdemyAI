@@ -6,7 +6,7 @@ import numpy as np
 from tensorflow.keras.layers import Activation
 from tensorflow.keras.layers import Dense
 from tensorflow.keras.models import Sequential
-from tensorflow.keras.optimizers import Adam
+from tensorflow.keras.optimizers import Adam, RMSprop
 from tensorflow.keras.utils import to_categorical
 
 
@@ -72,7 +72,7 @@ class Agent:
         model.add(Activation("softmax"))
         model.summary()
         model.compile(
-            optimizer=Adam(lr=0.002),
+            optimizer=RMSprop(),
             loss="categorical_crossentropy",
             metrics=["accuracy"]
         )
@@ -162,7 +162,7 @@ if __name__ == "__main__":
     env = gym.make("MountainCar-v0")
     agent = Agent(env)
 
-    reward_means, reward_bounds = agent.train(percentile=90.0, num_iterations=50, num_episodes=30)
+    reward_means, reward_bounds = agent.train(percentile=70.0, num_iterations=20, num_episodes=50)
     input("Weiter?")
     agent.play(num_episodes=10, render=True)
 
