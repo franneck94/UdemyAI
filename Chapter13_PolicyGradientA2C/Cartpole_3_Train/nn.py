@@ -1,8 +1,8 @@
-from keras.layers import Activation
-from keras.layers import Dense
-from keras.layers import Input
-from keras.models import Model
-from keras.optimizers import Adam
+from tensorflow.keras.layers import Activation
+from tensorflow.keras.layers import Dense
+from tensorflow.keras.layers import Input
+from tensorflow.keras.models import Model
+from tensorflow.keras.optimizers import Adam
 
 
 class NN(Model):
@@ -22,13 +22,13 @@ class NN(Model):
         actor_out = Activation("softmax")(actor_x)
         self.actor = Model(inputs=state, outputs=actor_out)
         self.actor.summary()
-        self.actor.compile(loss="categorical_crossentropy", optimizer=Adam(lr=self.lr_actor))
+        self.actor.compile(loss="categorical_crossentropy", optimizer=Adam(learning_rate=self.lr_actor))
 
         critic_x = Dense(self.num_values)(x)
         critic_out = Activation("linear")(critic_x)
         self.critic = Model(inputs=state, outputs=critic_out)
         self.critic.summary()
-        self.critic.compile(loss="mse", optimizer=Adam(lr=self.lr_critic))
+        self.critic.compile(loss="mse", optimizer=Adam(learning_rate=self.lr_critic))
 
     # Actor Functions
     def train_actor(self, states, actions):

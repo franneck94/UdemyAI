@@ -2,69 +2,74 @@ import collections
 import random
 
 import gym
-import matplotlib.pyplot as plt
 import numpy as np
-from keras.utils import to_categorical
 
-from frozenLakeDqn import DQN
-from plotting import plotting_q_values
-from plotting import save_map
+from mountainCarDqn import DQN
 
 
 class Agent:
     def __init__(self, env):
         # DQN Env Variables
         self.env = env
-        self.observations = self.env.observation_space.n
+        self.observations = self.env.observation_space.shape
         self.actions = self.env.action_space.n
         # DQN Agent Variables
-        self.replay_buffer_size = 2000
-        self.train_start = 2000
+        self.replay_buffer_size = 5000
+        self.train_start = 5000
         self.memory = collections.deque(maxlen=self.replay_buffer_size)
-        self.gamma = 0.95
+        self.gamma = 0.9
         self.epsilon = 1.0
         self.epsilon_min = 0.01
         self.epsilon_decay = 0.995
         # DQN Network Variables
         self.state_shape = self.observations
-        self.learning_rate = 1e-3
+        self.learning_rate = 1e-4
         self.model = DQN(self.state_shape, self.actions, self.learning_rate)
         self.target_model = DQN(self.state_shape, self.actions, self.learning_rate)
         self.target_model.update_model(self.model)
-        self.batch_size = 16
+        self.batch_size = 32
 
     def get_action(self, state):
         if np.random.rand() <= self.epsilon:
             return np.random.randint(self.actions)
         else:
-            return np.argmax(self.model.predict(state))
+            return np.argmax(self.model(state))
 
     def train(self, num_episodes):
-        last_rewards = collections.deque(maxlen=10)
+        best_total_reward = 0.0
         for episode in range(num_episodes):
             total_reward = 0.0
             state = self.env.reset()
-            state = to_categorical(state, num_classes=self.observations)
             state = np.reshape(state, (1, state.shape[0]))
+            current_best_position = state[0][0]
             while True:
                 action = self.get_action(state)
                 next_state, reward, done, _ = self.env.step(action)
-                next_state = to_categorical(next_state, num_classes=self.observations)
                 next_state = np.reshape(next_state, (1, next_state.shape[0]))
+                position = next_state[0][0]
+                if done and position >= 0.5: # Winning
+                    reward = 100
+                    print("\nREACHED GOAL!\n")
+                elif not done and position > current_best_position: # "Good"
+                    reward = 10
+                    current_best_position = position
+                else: # "Bad"
+                    reward = -1
                 self.remember(state, action, reward, next_state, done)
                 self.replay()
                 total_reward += reward
                 state = next_state
+                if episode == 0:
+                    best_total_reward = total_reward
                 if done:
                     self.target_model.update_model(self.model)
                     print("Episode: ", episode + 1,
                           " Total Reward: ", total_reward,
                           " Epsilon: ", round(self.epsilon, 3))
-                    last_rewards.append(total_reward)
-                    last_rewards_mean = np.mean(last_rewards)
-                    if last_rewards_mean == 0.9:
-                        self.model.save_model("C:/Users/Jan/Dropbox/_Programmieren/UdemyAI/Data/dqn_frozenlake.h5")
-                        return
+                    if total_reward > best_total_reward:
+                        self.model.save_model("C:/Users/Jan/Dropbox/_Programmieren/UdemyAI/data/dqn_mountaincar.h5")
+                        best_total_reward = total_reward
+                        print("NEW BEST REWARD: ", best_total_reward)
                     break
 
     def remember(self, state, action, reward, next_state, done):
@@ -82,8 +87,8 @@ class Agent:
         states = np.concatenate(states)
         states_next = np.concatenate(states_next)
 
-        q_values = self.model.predict(states)
-        q_values_next = self.target_model.predict(states_next)
+        q_values = self.model(states)
+        q_values_next = self.target_model(states_next)
 
         for i in range(self.batch_size):
             a = actions[i]
@@ -96,31 +101,24 @@ class Agent:
         self.model.train(states, q_values)
 
     def play(self, num_episodes, render=True):
-        self.model.load_model("C:/Users/Jan/Dropbox/_Programmieren/UdemyAI/Data/dqn_frozenlake.h5")
-        fig, ax = plt.subplots(figsize=(10, 10))
-        states = np.array(
-            [to_categorical(i, num_classes=self.observations).reshape(1, -1)
-             for i in range(self.observations)])
-        values = np.array([self.model.predict(state) for state in states])
-        values = np.squeeze(values)
-        save_map(values, name="dqn_frozenlake.png")
+        self.model.load_model("C:/Users/Jan/Dropbox/_Programmieren/UdemyAI/data/dqn_mountaincar.h5")
         for episode in range(num_episodes):
             state = self.env.reset()
+            state = np.reshape(state, (1, state.shape[0]))
             while True:
-                state_ = state
-                state = to_categorical(state, num_classes=self.observations)
-                state = np.reshape(state, (1, state.shape[0]))
                 action = self.get_action(state)
-                state, reward, done, _ = self.env.step(action)
+                next_state, _, done, _ = self.env.step(action)
+                next_state = np.reshape(next_state, (1, next_state.shape[0]))
+                state = next_state
                 if render:
-                    plotting_q_values(state_, action, values, ax)
+                    self.env.render()
                 if done:
                     break
 
 
 if __name__ == "__main__":
-    env = gym.make("FrozenLake-v0")
+    env = gym.make("MountainCar-v0")
     agent = Agent(env)
-    agent.train(num_episodes=5000)
+    agent.train(num_episodes=500)
     input("Play?")
-    agent.play(num_episodes=3, render=True)
+    agent.play(num_episodes=10, render=True)

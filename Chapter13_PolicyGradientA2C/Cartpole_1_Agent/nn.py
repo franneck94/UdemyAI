@@ -1,8 +1,8 @@
-from keras.layers import Activation
-from keras.layers import Dense
-from keras.layers import Input
-from keras.models import Model
-from keras.optimizers import Adam
+from tensorflow.keras.layers import Activation
+from tensorflow.keras.layers import Dense
+from tensorflow.keras.layers import Input
+from tensorflow.keras.models import Model
+from tensorflow.keras.optimizers import Adam
 
 
 class NN(Model):

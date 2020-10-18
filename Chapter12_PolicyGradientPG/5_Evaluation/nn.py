@@ -1,8 +1,8 @@
-from keras.layers import Activation
-from keras.layers import Dense
-from keras.layers import Input
-from keras.models import Model
-from keras.optimizers import Adam
+from tensorflow.keras.layers import Activation
+from tensorflow.keras.layers import Dense
+from tensorflow.keras.layers import Input
+from tensorflow.keras.models import Model
+from tensorflow.keras.optimizers import Adam
 
 
 class NN(Model):
@@ -18,7 +18,7 @@ class NN(Model):
         x = Dense(self.num_actions)(x)
         out = Activation("softmax")(x)
         self.model = Model(inputs=state, outputs=out)
-        self.model.compile(loss="categorical_crossentropy", optimizer=Adam(lr=self.lr))
+        self.model.compile(loss="categorical_crossentropy", optimizer=Adam(learning_rate=self.lr))
 
     def train(self, states, q_values):
         self.model.fit(states, q_values, verbose=0)

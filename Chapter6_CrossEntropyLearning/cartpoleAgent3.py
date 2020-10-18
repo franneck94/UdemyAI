@@ -35,7 +35,7 @@ class Agent:
         model.add(Activation("softmax"))
         model.summary()
         model.compile(
-            optimizer=Adam(lr=0.001),
+            optimizer=Adam(learning_rate=0.001),
             loss="categorical_crossentropy",
             metrics=["accuracy"]
         )

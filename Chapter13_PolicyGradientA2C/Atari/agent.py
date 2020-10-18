@@ -5,9 +5,9 @@ import time
 import gym
 import matplotlib.pyplot as plt
 import numpy as np
-from keras.layers import *
-from keras.models import *
-from keras.optimizers import *
+from tensorflow.keras.layers import *
+from tensorflow.keras.models import *
+from tensorflow.keras.optimizers import *
 
 from nn import *
 from wrappers import *

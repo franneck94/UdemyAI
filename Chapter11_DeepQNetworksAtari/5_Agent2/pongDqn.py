@@ -1,11 +1,11 @@
-from keras.layers import Activation
-from keras.layers import Conv2D
-from keras.layers import Dense
-from keras.layers import GlobalAveragePooling2D
-from keras.layers import Input
-from keras.losses import Huber
-from keras.models import Model
-from keras.optimizers import Adam
+from tensorflow.keras.layers import Activation
+from tensorflow.keras.layers import Conv2D
+from tensorflow.keras.layers import Dense
+from tensorflow.keras.layers import GlobalAveragePooling2D
+from tensorflow.keras.layers import Input
+from tensorflow.keras.losses import Huber
+from tensorflow.keras.models import Model
+from tensorflow.keras.optimizers import Adam
 
 
 class DQN(Model):
@@ -16,7 +16,7 @@ class DQN(Model):
         self.lr = lr
         self.model = self.build_model()
         self.loss = Huber()
-        self.model.compile(loss=self.loss, optimizer=Adam(lr=self.lr))
+        self.model.compile(loss=self.loss, optimizer=Adam(learning_rate=self.lr))
 
     def build_model(self):
         img = Input(shape=self.img_shape)
@@ -54,5 +54,5 @@ class DQN(Model):
 
 
 if __name__ == "__main__":
-    d = DQN(img_shape=(84, 84, 4), num_actions=2, lr=0.001)
+    d = DQN(img_shape=(84, 84, 4), num_actions=2, learning_rate=0.001)
     d.model.summary()

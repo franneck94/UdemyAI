@@ -1,8 +1,8 @@
-from keras.layers import Activation
-from keras.layers import Dense
-from keras.layers import Input
-from keras.models import Model
-from keras.optimizers import Adam
+from tensorflow.keras.layers import Activation
+from tensorflow.keras.layers import Dense
+from tensorflow.keras.layers import Input
+from tensorflow.keras.models import Model
+from tensorflow.keras.optimizers import Adam
 
 
 class NN(Model):
@@ -28,7 +28,7 @@ class NN(Model):
         self.actor.summary()
         self.actor.compile(
             loss="categorical_crossentropy",
-            optimizer=Adam(lr=self.lr_actor)
+            optimizer=Adam(learning_rate=self.lr_actor)
         )
 
         critic_x = Dense(self.num_values)(x)
@@ -41,7 +41,7 @@ class NN(Model):
         self.critic.compile(
             loss="mse",
             optimizer=Adam(
-                lr=self.lr_critic
+                learning_rate=self.lr_critic
             )
         )
 

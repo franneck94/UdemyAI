@@ -1,11 +1,11 @@
 import gym
 import matplotlib.pyplot as plt
 import numpy as np
-from keras.layers import Activation
-from keras.layers import Dense
-from keras.models import Sequential
-from keras.optimizers import Adam
-from keras.utils import to_categorical
+from tensorflow.keras.layers import Activation
+from tensorflow.keras.layers import Dense
+from tensorflow.keras.models import Sequential
+from tensorflow.keras.optimizers import Adam
+from tensorflow.keras.utils import to_categorical
 
 
 class Agent:
@@ -24,7 +24,7 @@ class Agent:
         model.add(Dense(self.actions)) # Output: Action [L, R]
         model.add(Activation("softmax"))
         model.summary()
-        model.compile(optimizer=Adam(lr=0.001), loss="categorical_crossentropy", metrics=["accuracy"])
+        model.compile(optimizer=Adam(learning_rate=0.001), loss="categorical_crossentropy", metrics=["accuracy"])
         return model
 
     # Based on the state/observation, get the action
