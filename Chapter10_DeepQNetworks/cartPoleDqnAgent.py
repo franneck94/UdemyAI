@@ -1,6 +1,7 @@
 import collections
 import os
 import random
+from typing import Deque
 
 import gym
 import numpy as np
@@ -22,11 +23,11 @@ class Agent:
         # DQN Agent Variables
         self.replay_buffer_size = 50_000
         self.train_start = 1_000
-        self.memory = collections.deque(maxlen=self.replay_buffer_size)
+        self.memory: Deque = collections.deque(maxlen=self.replay_buffer_size)
         self.gamma = 0.95
         self.epsilon = 1.0
         self.epsilon_min = 0.01
-        self.epsilon_decay = 0.999
+        self.epsilon_decay = 0.995
         # DQN Network Variables
         self.state_shape = self.observations
         self.learning_rate = 1e-3
@@ -50,6 +51,8 @@ class Agent:
             return np.argmax(self.dqn(state))
 
     def train(self, num_episodes):
+        last_rewards: Deque = collections.deque(maxlen=10)
+        best_reward_mean = 0.0
         for episode in range(1, num_episodes + 1):
             total_reward = 0.0
             state = self.env.reset()
@@ -67,9 +70,13 @@ class Agent:
                 if done:
                     if total_reward < 500:
                         total_reward += 100
+                    last_rewards.append(total_reward)
                     self.target_dqn.update_model(self.dqn)
                     print(f"Episode: {episode} Reward: {total_reward} Epsilon: {self.epsilon}")
-                    self.dqn.save_model(MODEL_PATH)
+                    current_reward_mean = np.mean(last_rewards)
+                    if current_reward_mean > best_reward_mean:
+                        best_reward_mean = current_reward_mean
+                        self.dqn.save_model(MODEL_PATH)
                     break
 
     def remember(self, state, action, reward, next_state, done):
@@ -123,5 +130,5 @@ if __name__ == "__main__":
     env = gym.make("CartPole-v1")
     agent = Agent(env)
     agent.train(num_episodes=200)
-    input("Play?")
-    agent.play(num_episodes=10, render=True)
+    # input("Play?")
+    # agent.play(num_episodes=10, render=True)

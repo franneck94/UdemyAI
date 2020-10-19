@@ -1,6 +1,7 @@
 import collections
 import os
 import random
+from typing import Deque
 
 import gym
 import matplotlib.pyplot as plt
@@ -14,23 +15,23 @@ from plotting import save_map
 
 PROJECT_PATH = os.path.abspath("C:/Users/Jan/Dropbox/_Programmieren/UdemyAI")
 MODELS_PATH = os.path.join(PROJECT_PATH, "models")
-MODEL_PATH = os.path.join(MODELS_PATH, "dqn_mountain_car.h5")
+MODEL_PATH = os.path.join(MODELS_PATH, "dqn_frozen_lake.h5")
 
 
 class Agent:
     def __init__(self, env: gym.Env):
         # DQN Env Variables
         self.env = env
-        self.observations = self.env.observation_space.shape
+        self.observations = self.env.observation_space.n
         self.actions = self.env.action_space.n
         # DQN Agent Variables
-        self.replay_buffer_size = 75_000
-        self.train_start = 5_000
-        self.memory = collections.deque(maxlen=self.replay_buffer_size)
-        self.gamma = 0.95
+        self.replay_buffer_size = 50_000
+        self.train_start = 1_000
+        self.memory: Deque = collections.deque(maxlen=self.replay_buffer_size)
+        self.gamma = 0.995
         self.epsilon = 1.0
-        self.epsilon_min = 0.01
-        self.epsilon_decay = 0.999
+        self.epsilon_min = 0.05
+        self.epsilon_decay = 0.9995
         # DQN Network Variables
         self.state_shape = self.observations
         self.learning_rate = 1e-3
@@ -54,7 +55,8 @@ class Agent:
             return np.argmax(self.dqn(state))
 
     def train(self, num_episodes):
-        last_rewards = collections.deque(maxlen=10)
+        last_rewards: Deque = collections.deque(maxlen=10)
+        best_reward_mean = 0.0
         for episode in range(1, num_episodes + 1):
             total_reward = 0.0
             state = self.env.reset()
@@ -73,10 +75,10 @@ class Agent:
                     self.target_dqn.update_model(self.dqn)
                     print(f"Episode: {episode} Reward: {total_reward} Epsilon: {self.epsilon}")
                     last_rewards.append(total_reward)
-                    last_rewards_mean = np.mean(last_rewards)
-                    if last_rewards_mean >= 0.9:
+                    current_reward_mean = np.mean(last_rewards)
+                    if current_reward_mean > best_reward_mean:
+                        best_reward_mean = current_reward_mean
                         self.dqn.save_model(MODEL_PATH)
-                        return
                     break
 
     def remember(self, state, action, reward, next_state, done):

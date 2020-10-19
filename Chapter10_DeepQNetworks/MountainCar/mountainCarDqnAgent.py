@@ -1,7 +1,7 @@
 import collections
-import math
 import os
 import random
+from typing import Deque
 
 import gym
 import numpy as np
@@ -15,16 +15,17 @@ MODEL_PATH = os.path.join(MODELS_PATH, "dqn_mountain_car.h5")
 
 
 def reward_func(next_state, done, current_best_position):
-    # Custom Reward
-    position = next_state[0]
+    position, velocity = next_state
     if done and position >= 0.5: # Winning
         reward = 100
         print("REACHED GOAL!")
     elif not done and abs(position) > current_best_position: # "Good"
         reward = 10
         current_best_position = position
+    elif not done: # "Okay"
+        reward = abs(velocity)
     else: # "Bad"
-        reward = -1
+        reward = -100
     return reward
 
 
@@ -37,7 +38,7 @@ class Agent:
         # DQN Agent Variables
         self.replay_buffer_size = 75_000
         self.train_start = 5_000
-        self.memory = collections.deque(maxlen=self.replay_buffer_size)
+        self.memory: Deque = collections.deque(maxlen=self.replay_buffer_size)
         self.gamma = 0.95
         self.epsilon = 1.0
         self.epsilon_min = 0.01
@@ -65,6 +66,8 @@ class Agent:
             return np.argmax(self.dqn(state))
 
     def train(self, num_episodes):
+        last_rewards: Deque = collections.deque(maxlen=10)
+        best_reward_mean = 0.0
         for episode in range(1, num_episodes + 1):
             total_reward = 0.0
             current_best_position = -np.inf
@@ -82,7 +85,10 @@ class Agent:
                 if done:
                     self.target_dqn.update_model(self.dqn)
                     print(f"Episode: {episode} Reward: {total_reward} Epsilon: {self.epsilon}")
-                    self.dqn.save_model(MODEL_PATH)
+                    current_reward_mean = np.mean(last_rewards)
+                    if current_reward_mean > best_reward_mean:
+                        best_reward_mean = current_reward_mean
+                        self.dqn.save_model(MODEL_PATH)
                     break
 
     def remember(self, state, action, reward, next_state, done):
@@ -135,6 +141,6 @@ class Agent:
 if __name__ == "__main__":
     env = gym.make("MountainCar-v0")
     agent = Agent(env)
-    agent.train(num_episodes=500)
+    agent.train(num_episodes=100)
     input("Play?")
     agent.play(num_episodes=10, render=True)
