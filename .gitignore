@@ -1,6 +1,7 @@
 .vscode/
 data/
 ressources/
+models/
 Chapter1_Introduction/
 **/lectures/
 *.png

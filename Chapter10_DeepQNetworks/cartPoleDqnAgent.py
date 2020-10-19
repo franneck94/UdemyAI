@@ -1,10 +1,16 @@
 import collections
+import os
 import random
 
 import gym
 import numpy as np
 
 from cartPoleDqn import DQN
+
+
+PROJECT_PATH = os.path.abspath("C:/Users/Jan/Dropbox/_Programmieren/UdemyAI")
+MODELS_PATH = os.path.join(PROJECT_PATH, "models")
+MODEL_PATH = os.path.join(MODELS_PATH, "dqn_cartpole.h5")
 
 
 class Agent:
@@ -63,6 +69,7 @@ class Agent:
                         total_reward += 100
                     self.target_dqn.update_model(self.dqn)
                     print(f"Episode: {episode} Reward: {total_reward} Epsilon: {self.epsilon}")
+                    self.dqn.save_model(MODEL_PATH)
                     break
 
     def remember(self, state, action, reward, next_state, done):
@@ -94,11 +101,14 @@ class Agent:
         self.dqn.fit(states, q_values)
 
     def play(self, num_episodes, render=True):
+        self.dqn.load_model(MODEL_PATH)
         for episode in range(1, num_episodes + 1):
             total_reward = 0.0
             state = self.env.reset()
             state = np.reshape(state, newshape=(1, -1)).astype(np.float32)
             while True:
+                if render:
+                    self.env.render()
                 action = self.get_action(state)
                 next_state, reward, done, _ = self.env.step(action)
                 next_state = np.reshape(next_state, newshape=(1, -1)).astype(np.float32)
@@ -112,6 +122,6 @@ class Agent:
 if __name__ == "__main__":
     env = gym.make("CartPole-v1")
     agent = Agent(env)
-    agent.train(num_episodes=100)
+    agent.train(num_episodes=200)
     input("Play?")
     agent.play(num_episodes=10, render=True)
