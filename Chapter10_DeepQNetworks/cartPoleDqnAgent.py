@@ -70,13 +70,14 @@ class Agent:
                 if done:
                     if total_reward < 500:
                         total_reward += 100
-                    last_rewards.append(total_reward)
                     self.target_dqn.update_model(self.dqn)
                     print(f"Episode: {episode} Reward: {total_reward} Epsilon: {self.epsilon}")
+                    last_rewards.append(total_reward)
                     current_reward_mean = np.mean(last_rewards)
                     if current_reward_mean > best_reward_mean:
                         best_reward_mean = current_reward_mean
                         self.dqn.save_model(MODEL_PATH)
+                        print(f"New best mean: {best_reward_mean}")
                     break
 
     def remember(self, state, action, reward, next_state, done):
@@ -129,6 +130,6 @@ class Agent:
 if __name__ == "__main__":
     env = gym.make("CartPole-v1")
     agent = Agent(env)
-    agent.train(num_episodes=200)
+    # agent.train(num_episodes=200)
     # input("Play?")
-    # agent.play(num_episodes=10, render=True)
+    agent.play(num_episodes=30, render=True)

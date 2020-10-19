@@ -85,6 +85,7 @@ class Agent:
                 if done:
                     self.target_dqn.update_model(self.dqn)
                     print(f"Episode: {episode} Reward: {total_reward} Epsilon: {self.epsilon}")
+                    last_rewards.append(total_reward)
                     current_reward_mean = np.mean(last_rewards)
                     if current_reward_mean > best_reward_mean:
                         best_reward_mean = current_reward_mean
