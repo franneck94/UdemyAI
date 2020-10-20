@@ -1,35 +1,43 @@
 import numpy as np
 import tensorflow as tf
 from tensorflow.keras.layers import Activation
+from tensorflow.keras.layers import Conv2D
 from tensorflow.keras.layers import Dense
+from tensorflow.keras.layers import GlobalAveragePooling2D
 from tensorflow.keras.layers import Input
 from tensorflow.keras.models import Model
+from tensorflow.keras.losses import Huber
 from tensorflow.keras.optimizers import Adam
 
 
 class DQN(tf.keras.Model):
-def __init__(self, state_shape: int, num_actions: int, learning_rate: float) -> None:
+    def __init__(self, img_shape: tuple, num_actions: int, learning_rate: float) -> None:
         super().__init__()
-        self.state_shape = state_shape
+        self.img_shape = img_shape
         self.num_actions = num_actions
         self.learning_rate = learning_rate
+        self.loss = Huber()
+        self.optimizer = Adam(learning_rate=self.learning_rate)
         self.internal_model = self.build_model()
 
     def build_model(self) -> tf.keras.Model:
-        input_state = Input(shape=self.state_shape)
-        x = Dense(units=24)(input_state)
+        img = Input(shape=self.img_shape)
+        x = Conv2D(filters=16, kernel_size=3, strides=2, padding="same")(img)
         x = Activation("relu")(x)
-        x = Dense(units=24)(x)
+        x = Conv2D(filters=32, kernel_size=3, strides=2, padding="same")(img)
         x = Activation("relu")(x)
-        q_value_pred = Dense(self.num_actions)(x)
-        model = Model(
-            inputs=input_state,
-            outputs=q_value_pred
-        )
-        model.compile(
-            loss="mse",
-            optimizer=Adam(learning_rate=self.learning_rate)
-        )
+        x = Conv2D(filters=64, kernel_size=3, strides=2, padding="same")(x)
+        x = Activation("relu")(x)
+        x = Conv2D(filters=128, kernel_size=3, strides=2, padding="same")(x)
+        x = Activation("relu")(x)
+        x = Conv2D(filters=256, kernel_size=3, strides=1, padding="same")(x)
+        x = Activation("relu")(x)
+        x = GlobalAveragePooling2D()(x)
+        x = Dense(256)(x)
+        x = Activation("relu")(x)
+        out = Dense(self.num_actions)(x)
+        model = Model(inputs=img, outputs=out)
+        model.compile(loss=self.loss, optimizer=self.optimizer)
         return model
 
     def call(self, inputs: np.ndarray) -> np.ndarray:
@@ -50,7 +58,7 @@ def __init__(self, state_shape: int, num_actions: int, learning_rate: float) -> 
 
 if __name__ == "__main__":
     d = DQN(
-        state_shape=4,
+        img_shape=(84, 84, 1),
         num_actions=2,
         learning_rate=0.001
     )
