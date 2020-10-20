@@ -52,9 +52,9 @@ class DQN(tf.keras.Model):
 
 
 if __name__ == "__main__":
-    d = DQN(
+    dqn = DQN(
         state_shape=4,
         num_actions=2,
         learning_rate=0.001
     )
-    d.internal_model.summary()
+    dqn.internal_model.summary()

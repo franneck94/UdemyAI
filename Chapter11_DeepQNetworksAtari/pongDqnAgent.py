@@ -1,14 +1,15 @@
-import collections
 import os
+os.environ['TF_CPP_MIN_LOG_LEVEL'] = '3' 
+
+import collections
 import random
-import time
 from typing import Deque
 
 import gym
 import numpy as np
 
 from pongDqn import DQN
-from wrappers import make_env
+from pongDqnWrappers import make_env
 
 
 PROJECT_PATH = os.path.abspath("C:/Users/Jan/Dropbox/_Programmieren/UdemyAI")
@@ -33,7 +34,7 @@ class Agent:
         self.gamma = 0.95
         self.epsilon = 1.0
         self.epsilon_min = 0.01
-        self.epsilon_steps = 100_000
+        self.epsilon_steps = 50_000
         self.epsilon_step = (self.epsilon - self.epsilon_min) / self.epsilon_steps
         # DQN Network Variables
         self.learning_rate = 1e-3
@@ -41,7 +42,7 @@ class Agent:
         self.target_dqn = DQN(self.img_shape, self.actions, self.learning_rate)
         self.target_dqn.update_model(self.dqn)
         self.batch_size = 32
-        self.sync_models = 10_000
+        self.sync_models = 5_000
 
     def get_action(self, state):
         if np.random.rand() <= self.epsilon:
@@ -56,17 +57,12 @@ class Agent:
 
         for episode in range(1, num_episodes + 1):
             frame_it += 1
-            start_time = time.time()
             total_reward = 0.0
             state = self.env.reset()
-            state = state.astype(np.float32)
-            state = np.concatenate((state, state, state, state), axis=3)
 
             while True:
                 action = self.get_action(state)
                 next_state, reward, done, _ = self.env.step(action)
-                next_state = next_state.astype(np.float32)
-                next_state = np.reshape(next_state, newshape=(1, -1))
                 self.remember(state, action, reward, next_state, done)
                 self.replay()
                 total_reward += reward
@@ -76,14 +72,13 @@ class Agent:
                     self.target_dqn.update_model(self.dqn)
 
                 if done:
-                    current_time = time.time()
-                    fps = episode / (current_time - start_time)
                     last_rewards.append(total_reward)
                     current_reward_mean = np.mean(last_rewards)
                     print(
-                        f"Episode: {episode} Reward: {total_reward} MeanReward: {current_reward_mean} "
-                        f"Epsilon: {round(self.epsilon, 8)} tMemSize: {len(self.memory)} FPS: {round(fps)}"
+                        f"Episode: {episode} Reward: {total_reward} MeanReward: {round(current_reward_mean, 2)}\t"
+                        f"Epsilon: {round(self.epsilon, 8)} MemSize: {len(self.memory)}"
                     )
+
                     if current_reward_mean > best_reward_mean:
                         best_reward_mean = current_reward_mean
                         self.dqn.save_model(MODEL_PATH)
@@ -107,8 +102,8 @@ class Agent:
         minibatch = random.sample(self.memory, self.batch_size)
         states, actions, rewards, states_next, dones = zip(*minibatch)
 
-        states = np.concatenate(states).astype(np.float32)
-        states_next = np.concatenate(states_next).astype(np.float32)
+        states = np.concatenate(states)
+        states_next = np.concatenate(states_next)
 
         q_values = self.dqn(states)
         q_values_next = self.target_dqn(states_next)
@@ -129,16 +124,11 @@ class Agent:
         for episode in range(1, num_episodes + 1):
             total_reward = 0.0
             state = self.env.reset()
-            state = np.concatenate((state, state, state, state), axis=3)
-            state = state.astype(np.float32)
             while True:
                 if render:
                     self.env.render()
                 action = self.get_action(state)
                 next_state, reward, done, _ = self.env.step(action)
-                next_state = np.reshape([next_state], (1, 84, 84, 1))
-                next_state = next_state.astype(np.float32)
-                state = np.append(next_state, state[:, :, :, :3], axis=3)
                 total_reward += reward
                 state = next_state
                 if done:

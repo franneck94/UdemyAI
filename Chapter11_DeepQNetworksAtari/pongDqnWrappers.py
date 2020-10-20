@@ -3,6 +3,7 @@ from typing import Any, Deque, Tuple
 
 import gym
 import numpy as np
+import matplotlib.pyplot as plt
 
 
 class StartGameWrapper(gym.Wrapper):
@@ -21,6 +22,8 @@ class FrameStack(gym.Wrapper):
         super().__init__(env)
         self.num_buffer_frames = num_buffer_frames
         self.frames: Deque = collections.deque(maxlen=self.num_buffer_frames)
+        for _ in range(self.num_buffer_frames):
+            self.frames.append(np.zeros(shape=(84, 84), dtype=np.float32))
         low = np.repeat(
             self.observation_space.low[np.newaxis, ...],
             repeats=self.num_buffer_frames,
@@ -42,12 +45,18 @@ class FrameStack(gym.Wrapper):
         self.frames.append(observation)
         frame_stack = np.asarray(self.frames, dtype=np.float32)
         frame_stack = np.moveaxis(frame_stack, source=0, destination=-1)
-        frame_stack = np.reshape(frame_stack, newshape=(1, 84, 84, -1))
+        frame_stack = np.expand_dims(frame_stack, axis=0)
+        # fig, axs = plt.subplots(4)
+        # for idx in range(self.num_buffer_frames):
+        #     axs[idx].imshow(frame_stack[0, :, :, idx], cmap="gray")
+        # plt.show()
         return frame_stack, reward, done, info
 
     def reset(self, **kwargs: Any) -> np.ndarray:
         _ = self.env.reset(**kwargs)
         self.frames = collections.deque(maxlen=self.num_buffer_frames)
+        for _ in range(self.num_buffer_frames):
+            self.frames.append(np.zeros(shape=(84, 84), dtype=np.float32))
         frame_stack = np.zeros(shape=(1, 84, 84, 4), dtype=np.float32)
         return frame_stack
 
@@ -63,7 +72,7 @@ def make_env(game: str, num_buffer_frames: int):
         grayscale_obs=True,
         scale_obs=True
     )
-    env = FrameStack(env,num_buffer_frames)
+    env = FrameStack(env, num_buffer_frames)
     env = StartGameWrapper(env)
     return env
 

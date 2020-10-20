@@ -29,9 +29,6 @@ class DQN(tf.keras.Model):
         x = Conv2D(filters=64, kernel_size=3, strides=2, padding="same")(x)
         x = Activation("relu")(x)
         x = Conv2D(filters=128, kernel_size=3, strides=2, padding="same")(x)
-        x = Activation("relu")(x)
-        x = Conv2D(filters=256, kernel_size=3, strides=1, padding="same")(x)
-        x = Activation("relu")(x)
         x = GlobalAveragePooling2D()(x)
         x = Dense(256)(x)
         x = Activation("relu")(x)
@@ -57,9 +54,9 @@ class DQN(tf.keras.Model):
 
 
 if __name__ == "__main__":
-    d = DQN(
-        img_shape=(84, 84, 1),
+    dqn = DQN(
+        img_shape=(84, 84, 4),
         num_actions=2,
         learning_rate=0.001
     )
-    d.internal_model.summary()
+    dqn.internal_model.summary()
