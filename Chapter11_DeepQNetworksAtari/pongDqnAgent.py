@@ -1,5 +1,5 @@
 import os
-os.environ['TF_CPP_MIN_LOG_LEVEL'] = '3' 
+os.environ['TF_CPP_MIN_LOG_LEVEL'] = '3'
 
 import collections
 import random
@@ -23,18 +23,18 @@ class Agent:
         # DQN Env Variables
         self.game = game
         self.num_buffer_frames = 4
-        self.img_shape = (84, 84, self.num_buffer_frames)
+        self.img_shape = (64, 64, self.num_buffer_frames)
         self.env = make_env(self.game, self.num_buffer_frames)
         self.observations = self.env.observation_space.shape
         self.actions = 4
         # DQN Agent Variables
-        self.replay_buffer_size = 50_000
-        self.train_start = 1_000
+        self.replay_buffer_size = 100_000
+        self.train_start = 10_000
         self.memory: Deque = collections.deque(maxlen=self.replay_buffer_size)
-        self.gamma = 0.95
+        self.gamma = 0.99
         self.epsilon = 1.0
-        self.epsilon_min = 0.01
-        self.epsilon_steps = 50_000
+        self.epsilon_min = 0.05
+        self.epsilon_steps = 100_000
         self.epsilon_step = (self.epsilon - self.epsilon_min) / self.epsilon_steps
         # DQN Network Variables
         self.learning_rate = 1e-3
@@ -42,7 +42,7 @@ class Agent:
         self.target_dqn = DQN(self.img_shape, self.actions, self.learning_rate)
         self.target_dqn.update_model(self.dqn)
         self.batch_size = 32
-        self.sync_models = 5_000
+        self.sync_models = 10_000
 
     def get_action(self, state):
         if np.random.rand() <= self.epsilon:
@@ -63,6 +63,7 @@ class Agent:
             while True:
                 action = self.get_action(state)
                 next_state, reward, done, _ = self.env.step(action)
+                self.epsilon_anneal()
                 self.remember(state, action, reward, next_state, done)
                 self.replay()
                 total_reward += reward

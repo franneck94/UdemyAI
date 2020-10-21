@@ -3,11 +3,11 @@ import tensorflow as tf
 from tensorflow.keras.layers import Activation
 from tensorflow.keras.layers import Conv2D
 from tensorflow.keras.layers import Dense
-from tensorflow.keras.layers import GlobalAveragePooling2D
+from tensorflow.keras.layers import Flatten
 from tensorflow.keras.layers import Input
 from tensorflow.keras.models import Model
 from tensorflow.keras.losses import Huber
-from tensorflow.keras.optimizers import Adam
+from tensorflow.keras.optimizers import RMSprop
 
 
 class DQN(tf.keras.Model):
@@ -17,19 +17,21 @@ class DQN(tf.keras.Model):
         self.num_actions = num_actions
         self.learning_rate = learning_rate
         self.loss = Huber()
-        self.optimizer = Adam(learning_rate=self.learning_rate)
+        self.optimizer = RMSprop(
+            lr=0.00025,
+            rho=0.95,
+            epsilon=0.01
+        )
         self.internal_model = self.build_model()
 
     def build_model(self) -> tf.keras.Model:
         img = Input(shape=self.img_shape)
-        x = Conv2D(filters=16, kernel_size=3, strides=2, padding="same")(img)
+        x = Conv2D(filters=32, kernel_size=8, strides=4, padding="same")(img)
         x = Activation("relu")(x)
-        x = Conv2D(filters=32, kernel_size=3, strides=2, padding="same")(img)
+        x = Conv2D(filters=64, kernel_size=4, strides=2, padding="same")(x)
         x = Activation("relu")(x)
-        x = Conv2D(filters=64, kernel_size=3, strides=2, padding="same")(x)
-        x = Activation("relu")(x)
-        x = Conv2D(filters=128, kernel_size=3, strides=2, padding="same")(x)
-        x = GlobalAveragePooling2D()(x)
+        x = Conv2D(filters=64, kernel_size=3, strides=1, padding="same")(x)
+        x = Flatten()(x)
         x = Dense(256)(x)
         x = Activation("relu")(x)
         out = Dense(self.num_actions)(x)
@@ -55,7 +57,7 @@ class DQN(tf.keras.Model):
 
 if __name__ == "__main__":
     dqn = DQN(
-        img_shape=(84, 84, 4),
+        img_shape=(64, 64, 4),
         num_actions=2,
         learning_rate=0.001
     )
