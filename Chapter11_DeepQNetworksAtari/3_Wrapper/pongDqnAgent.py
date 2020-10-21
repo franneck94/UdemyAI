@@ -17,24 +17,19 @@ TARGET_MODEL_PATH = os.path.join(MODELS_PATH, "target_dqn_pong.h5")
 
 
 class Agent:
-    def __init__(self, game: str):
+    def __init__(self, env: gym.Env):
         # DQN Env Variables
-        self.game = game
-        self.num_buffer_frames = 4
-        self.env = make_env(self.game, self.num_buffer_frames)
-        self.img_size = 84
-        self.img_shape = (self.img_size, self.img_size, self.num_buffer_frames)
+        self.env = env
         self.observations = self.env.observation_space.shape
         self.actions = self.env.action_space.n
         # DQN Agent Variables
-        self.replay_buffer_size = 100_000
-        self.train_start = 20_000
+        self.replay_buffer_size = 50_000
+        self.train_start = 1_000
         self.memory: Deque = collections.deque(maxlen=self.replay_buffer_size)
         self.gamma = 0.95
         self.epsilon = 1.0
         self.epsilon_min = 0.01
-        self.epsilon_steps = 100_000
-        self.epsilon_step = (self.epsilon - self.epsilon_min) / self.epsilon_steps
+        self.epsilon_decay = 0.995
         # DQN Network Variables
         self.state_shape = self.observations
         self.learning_rate = 1e-3
@@ -50,7 +45,6 @@ class Agent:
         )
         self.target_dqn.update_model(self.dqn)
         self.batch_size = 32
-        self.sync_models = 10_000
 
     def get_action(self, state):
         if np.random.rand() <= self.epsilon:
@@ -61,47 +55,37 @@ class Agent:
     def train(self, num_episodes):
         last_rewards: Deque = collections.deque(maxlen=10)
         best_reward_mean = 0.0
-        frame_it = 0
-
         for episode in range(1, num_episodes + 1):
             total_reward = 0.0
             state = self.env.reset()
-
+            state = np.reshape(state, newshape=(1, -1)).astype(np.float32)
             while True:
                 action = self.get_action(state)
                 next_state, reward, done, _ = self.env.step(action)
-                self.epsilon_anneal()
+                next_state = np.reshape(next_state, newshape=(1, -1)).astype(np.float32)
+                if done and total_reward < 499:
+                    reward = -100
                 self.remember(state, action, reward, next_state, done)
                 self.replay()
                 total_reward += reward
                 state = next_state
-
-                if frame_it & self.sync_models == 0:
-                    self.target_dqn.update_model(self.dqn)
-
                 if done:
+                    if total_reward < 500:
+                        total_reward += 100
+                    self.target_dqn.update_model(self.dqn)
+                    print(f"Episode: {episode} Reward: {total_reward} Epsilon: {self.epsilon}")
                     last_rewards.append(total_reward)
                     current_reward_mean = np.mean(last_rewards)
-                    print(
-                        f"Episode: {episode} Reward: {total_reward} MeanReward: {round(current_reward_mean, 2)} "
-                        f"Epsilon: {round(self.epsilon, 8)} MemSize: {len(self.memory)}"
-                    )
-
                     if current_reward_mean > best_reward_mean:
                         best_reward_mean = current_reward_mean
                         self.dqn.save_model(MODEL_PATH)
-                        self.target_dqn.save_model(TARGET_MODEL_PATH)
                         print(f"New best mean: {best_reward_mean}")
                     break
 
-    def epsilon_anneal(self):
-        if len(self.memory) < self.train_start:
-            return
-        if self.epsilon > self.epsilon_min:
-            self.epsilon -= self.epsilon_step
-
     def remember(self, state, action, reward, next_state, done):
         self.memory.append((state, action, reward, next_state, done))
+        if self.epsilon > self.epsilon_min:
+            self.epsilon *= self.epsilon_decay
 
     def replay(self):
         if len(self.memory) < self.train_start:
@@ -110,8 +94,8 @@ class Agent:
         minibatch = random.sample(self.memory, self.batch_size)
         states, actions, rewards, states_next, dones = zip(*minibatch)
 
-        states = np.concatenate(states)
-        states_next = np.concatenate(states_next)
+        states = np.concatenate(states).astype(np.float32)
+        states_next = np.concatenate(states_next).astype(np.float32)
 
         q_values = self.dqn(states)
         q_values_next = self.target_dqn(states_next)
@@ -128,16 +112,16 @@ class Agent:
 
     def play(self, num_episodes, render=True):
         self.dqn.load_model(MODEL_PATH)
-        self.target_dqn.load_model(TARGET_MODEL_PATH)
-
         for episode in range(1, num_episodes + 1):
             total_reward = 0.0
             state = self.env.reset()
+            state = np.reshape(state, newshape=(1, -1)).astype(np.float32)
             while True:
                 if render:
                     self.env.render()
                 action = self.get_action(state)
                 next_state, reward, done, _ = self.env.step(action)
+                next_state = np.reshape(next_state, newshape=(1, -1)).astype(np.float32)
                 total_reward += reward
                 state = next_state
                 if done:
@@ -146,8 +130,8 @@ class Agent:
 
 
 if __name__ == "__main__":
-    game = "PongNoFrameskip-v4"
-    agent = Agent(game)
-    agent.train(num_episodes=3_000)
-    input("Play?")
+    env = gym.make("CartPole-v1")
+    agent = Agent(env)
+    # agent.train(num_episodes=200)
+    # input("Play?")
     agent.play(num_episodes=30, render=True)
