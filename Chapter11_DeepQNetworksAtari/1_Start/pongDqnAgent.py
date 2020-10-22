@@ -46,13 +46,13 @@ class Agent:
         self.target_dqn.update_model(self.dqn)
         self.batch_size = 32
 
-    def get_action(self, state):
+    def get_action(self, state: np.ndarray):
         if np.random.rand() <= self.epsilon:
             return np.random.randint(self.actions)
         else:
             return np.argmax(self.dqn(state))
 
-    def train(self, num_episodes):
+    def train(self, num_episodes: int):
         last_rewards: Deque = collections.deque(maxlen=10)
         best_reward_mean = 0.0
         for episode in range(1, num_episodes + 1):
@@ -110,7 +110,7 @@ class Agent:
 
         self.dqn.fit(states, q_values)
 
-    def play(self, num_episodes, render=True):
+    def play(self, num_episodes: int, render: bool = True):
         self.dqn.load_model(MODEL_PATH)
         for episode in range(1, num_episodes + 1):
             total_reward = 0.0
@@ -125,7 +125,7 @@ class Agent:
                 total_reward += reward
                 state = next_state
                 if done:
-                    print(f"Episode: {episode} Reward: {total_reward} Epsilon: {self.epsilon}")
+                    print(f"Episode: {episode} Reward: {total_reward}")
                     break
 
 

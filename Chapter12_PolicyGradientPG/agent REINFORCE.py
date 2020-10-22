@@ -15,7 +15,7 @@ class Agent:
         self.model = NN(self.num_observations, self.num_actions, self.learning_rate)
         self.actions, self.states, self.rewards = [], [], []
 
-    def get_action(self, state):
+    def get_action(self, state: np.ndarray):
         policy = self.model.predict(state)[0]
         action = np.random.choice(self.num_actions, p=policy)
         return action
@@ -54,7 +54,7 @@ class Agent:
         self.model.train(states, q_values)
         self.states, self.actions, self.rewards = [], [], []
 
-    def train(self, num_episodes):
+    def train(self, num_episodes: int):
         total_rewards = []
         for episode in range(num_episodes):
             total_reward = 0.0
@@ -85,7 +85,7 @@ class Agent:
                     break
         return total_rewards
 
-    def play(self, num_episodes, render=True):
+    def play(self, num_episodes: int, render: bool = True):
         for episode in range(num_episodes):
             state = self.env.reset()
             while True:

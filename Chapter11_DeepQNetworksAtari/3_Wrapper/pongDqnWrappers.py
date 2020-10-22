@@ -54,8 +54,8 @@ class FrameStackWrapper(gym.Wrapper):
         return frame_stack
 
 
-def make_env(game: str, num_buffer_frames: int):
-    env = gym.make(game)
+def make_env(env_name: str, num_buffer_frames: int):
+    env = gym.make(env_name)
     env = gym.wrappers.AtariPreprocessing(
         env=env,
         noop_max=20,
@@ -71,6 +71,6 @@ def make_env(game: str, num_buffer_frames: int):
 
 
 if __name__ == "__main__":
-    game = "PongNoFrameskip-v4"
+    env_name = "PongNoFrameskip-v4"
     num_buffer_frames = 4
-    env = make_env(game, num_buffer_frames)
+    env = make_env(env_name, num_buffer_frames)

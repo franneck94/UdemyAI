@@ -17,18 +17,18 @@ TARGET_MODEL_PATH = os.path.join(MODELS_PATH, "target_dqn_pong.h5")
 
 
 class Agent:
-    def __init__(self, game: str):
+    def __init__(self, env_name: str):
         # DQN Env Variables
-        self.game = game
+        self.env_name = env_name
         self.num_buffer_frames = 4
-        self.env = make_env(self.game, self.num_buffer_frames)
+        self.env = make_env(self.env_name, self.num_buffer_frames)
         self.img_size = 84
         self.img_shape = (self.img_size, self.img_size, self.num_buffer_frames)
         self.observations = self.env.observation_space.shape
         self.actions = self.env.action_space.n
         # DQN Agent Variables
         self.replay_buffer_size = 100_000
-        self.train_start = 20_000
+        self.train_start = 10_000
         self.memory: Deque = collections.deque(maxlen=self.replay_buffer_size)
         self.gamma = 0.95
         self.epsilon = 1.0
@@ -36,15 +36,14 @@ class Agent:
         self.epsilon_steps = 100_000
         self.epsilon_step = (self.epsilon - self.epsilon_min) / self.epsilon_steps
         # DQN Network Variables
-        self.state_shape = self.observations
         self.learning_rate = 1e-3
         self.dqn = DQN(
-            self.state_shape,
+            self.img_shape,
             self.actions,
             self.learning_rate
         )
         self.target_dqn = DQN(
-            self.state_shape,
+            self.img_shape,
             self.actions,
             self.learning_rate
         )
@@ -52,13 +51,13 @@ class Agent:
         self.batch_size = 32
         self.sync_models = 10_000
 
-    def get_action(self, state):
+    def get_action(self, state: np.ndarray):
         if np.random.rand() <= self.epsilon:
             return np.random.randint(self.actions)
         else:
             return np.argmax(self.dqn(state))
 
-    def train(self, num_episodes):
+    def train(self, num_episodes: int):
         last_rewards: Deque = collections.deque(maxlen=10)
         best_reward_mean = 0.0
         frame_it = 0
@@ -126,7 +125,7 @@ class Agent:
 
         self.dqn.fit(states, q_values)
 
-    def play(self, num_episodes, render=True):
+    def play(self, num_episodes: int, render: bool = True):
         self.dqn.load_model(MODEL_PATH)
         self.target_dqn.load_model(TARGET_MODEL_PATH)
 
@@ -141,13 +140,13 @@ class Agent:
                 total_reward += reward
                 state = next_state
                 if done:
-                    print(f"Episode: {episode} Reward: {total_reward} Epsilon: {self.epsilon}")
+                    print(f"Episode: {episode} Reward: {total_reward}")
                     break
 
 
 if __name__ == "__main__":
-    game = "PongNoFrameskip-v4"
-    agent = Agent(game)
+    env_name = "PongNoFrameskip-v4"
+    agent = Agent(env_name)
     agent.train(num_episodes=3_000)
     input("Play?")
     agent.play(num_episodes=30, render=True)

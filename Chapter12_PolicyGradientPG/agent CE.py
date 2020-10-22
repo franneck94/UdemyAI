@@ -36,7 +36,7 @@ class Agent:
         return action
 
     # Sample "random" games
-    def get_samples(self, num_episodes):
+    def get_samples(self, num_episodes: int):
         rewards = [0.0 for i in range(num_episodes)]
         episodes = [[] for i in range(num_episodes)]
 
@@ -89,7 +89,7 @@ class Agent:
         return reward_means, reward_bounds
 
     # "Testing" of the Agent
-    def play(self, num_episodes, render=True):
+    def play(self, num_episodes: int, render: bool = True):
         for episode in range(num_episodes):
             state = self.env.reset()
             total_reward = 0.0

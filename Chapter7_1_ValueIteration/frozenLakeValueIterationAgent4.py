@@ -27,7 +27,7 @@ class Agent:
         action = self.env.action_space.sample()
         return action
 
-    def get_samples(self, num_episodes):
+    def get_samples(self, num_episodes: int):
         for _ in range(num_episodes):
             action = self.get_random_action()
             new_state, reward, done, _ = self.env.step(action)
@@ -61,7 +61,7 @@ class Agent:
             if reward_mean >= 0.9:
                 break
 
-    def test(self, num_episodes):
+    def test(self, num_episodes: int):
         sum_rewards = 0.0
         for _ in range(num_episodes):
             state = self.env.reset()
@@ -75,7 +75,7 @@ class Agent:
                     break
         return sum_rewards
 
-    def play(self, num_episodes, render=True):
+    def play(self, num_episodes: int, render: bool = True):
         fig, ax = plt.subplots(figsize=(10, 10))
         for episode in range(num_episodes):
             state = self.env.reset()

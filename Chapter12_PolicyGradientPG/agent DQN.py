@@ -30,13 +30,13 @@ class Agent:
         self.target_model.update_model(self.model)
         self.batch_size = 32
 
-    def get_action(self, state):
+    def get_action(self, state: np.ndarray):
         if np.random.rand() <= self.epsilon:
             return np.random.randint(self.actions)
         else:
             return np.argmax(self.model.predict(state))
 
-    def train(self, num_episodes):
+    def train(self, num_episodes: int):
         total_rewards = []
         for episode in range(num_episodes):
             total_reward = 0.0
@@ -94,7 +94,7 @@ class Agent:
 
         self.model.train(states, q_values)
 
-    def play(self, num_episodes, render=True):
+    def play(self, num_episodes: int, render: bool = True):
         self.model.load_model("C:/Users/Jan/Dropbox/_Programmieren/UdemyAI/data/dqn_cartpole.h5")
         for episode in range(num_episodes):
             state = self.env.reset()

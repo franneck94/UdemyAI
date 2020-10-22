@@ -61,6 +61,7 @@ def save_map(values, name="test.png"):
                 ax.text(posy, posx - 0.2, "U: " +
                         str(round(values[s][a], 3)), weight=weight, ha='center', va='bottom')
     fig.savefig("./" + name)
+    plt.close()
 
 
 def plotting_q_values(state, action, values, ax):

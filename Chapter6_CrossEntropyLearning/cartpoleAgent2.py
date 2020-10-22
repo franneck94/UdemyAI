@@ -30,7 +30,7 @@ class Agent:
         """
         pass
 
-    def get_action(self, state):
+    def get_action(self, state: np.ndarray):
         """Based on the state, get an action.
         """
         action = self.env.action_space.sample()
@@ -51,7 +51,7 @@ class Agent:
         """
         pass
 
-    def play(self, num_episodes, render=True):
+    def play(self, num_episodes: int, render: bool = True):
         """Test the trained agent.
         """
         for episode in range(num_episodes):

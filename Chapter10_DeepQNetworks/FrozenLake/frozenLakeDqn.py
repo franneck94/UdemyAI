@@ -8,7 +8,7 @@ from tensorflow.keras.optimizers import Adam
 
 
 class DQN(tf.keras.Model):
-def __init__(self, state_shape: int, num_actions: int, learning_rate: float) -> None:
+    def __init__(self, state_shape: int, num_actions: int, learning_rate: float):
         super().__init__()
         self.state_shape = state_shape
         self.num_actions = num_actions
@@ -17,7 +17,7 @@ def __init__(self, state_shape: int, num_actions: int, learning_rate: float) -> 
 
     def build_model(self) -> tf.keras.Model:
         input_state = Input(shape=self.state_shape)
-        x = Dense(units=24)(input_state)
+        x = Dense(units=12)(input_state)
         x = Activation("relu")(x)
         x = Dense(units=24)(x)
         x = Activation("relu")(x)
@@ -35,16 +35,16 @@ def __init__(self, state_shape: int, num_actions: int, learning_rate: float) -> 
     def call(self, inputs: np.ndarray) -> np.ndarray:
         return self.internal_model(inputs).numpy()
 
-    def fit(self, states: np.ndarray, q_values: np.ndarray) -> None:
+    def fit(self, states: np.ndarray, q_values: np.ndarray):
         self.internal_model.fit(x=states, y=q_values, verbose=0)
 
-    def update_model(self, other_model: tf.keras.Model) -> None:
+    def update_model(self, other_model: tf.keras.Model):
         self.internal_model.set_weights(other_model.get_weights())
 
-    def load_model(self, path: str) -> None:
+    def load_model(self, path: str):
         self.internal_model.load_weights(path)
 
-    def save_model(self, path: str) -> None:
+    def save_model(self, path: str):
         self.internal_model.save_weights(path)
 
 

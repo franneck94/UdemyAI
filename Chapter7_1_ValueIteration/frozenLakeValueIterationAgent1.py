@@ -25,7 +25,7 @@ class Agent:
         action = self.env.action_space.sample()
         return action
 
-    def get_samples(self, num_episodes):
+    def get_samples(self, num_episodes: int):
         pass
 
     def compute_q_values(self):
@@ -34,10 +34,10 @@ class Agent:
     def train(self, num_iterations, num_episodes):
         pass
 
-    def test(self, num_episodes):
+    def test(self, num_episodes: int):
         pass
 
-    def play(self, num_episodes, render=True):
+    def play(self, num_episodes: int, render: bool = True):
         fig, ax = plt.subplots()
         for episode in range(num_episodes):
             state = self.env.reset()

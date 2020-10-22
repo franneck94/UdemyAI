@@ -41,15 +41,15 @@ class Agent:
         )
         return model
 
-    def get_action(self, state):
+    def get_action(self, state: np.ndarray):
         """Based on the state, get an action.
         """
         state = state.reshape(1, -1) # [4,] => [1, 4]
-        action = self.model(state, training=False).numpy()[0]
+        action = self.model(state).numpy()[0]
         action = np.random.choice(self.actions, p=action) # choice([0, 1], [0.5044534  0.49554658])
         return action
 
-    def get_samples(self, num_episodes):
+    def get_samples(self, num_episodes: int):
         """Sample games.
         """
         rewards = [0.0 for i in range(num_episodes)]
@@ -92,7 +92,7 @@ class Agent:
             if reward_mean > 500:
                 break
 
-    def play(self, num_episodes, render=True):
+    def play(self, num_episodes: int, render: bool = True):
         """Test the trained agent.
         """
         for episode in range(num_episodes):

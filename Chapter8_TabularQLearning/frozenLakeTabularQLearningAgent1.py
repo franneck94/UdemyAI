@@ -28,7 +28,7 @@ class Agent:
         action = self.env.action_space.sample()
         return action
 
-    def get_sample(self, num_episodes):
+    def get_sample(self, num_episodes: int):
         pass
 
     def compute_q_values(self):
@@ -37,7 +37,7 @@ class Agent:
     def train(self, num_iterations):
         pass
 
-    def test(self, num_episodes):
+    def test(self, num_episodes: int):
         self.env = gym.make("FrozenLake-v0")
         sum_rewards = 0.0
         for episode in range(num_episodes):
@@ -52,7 +52,7 @@ class Agent:
                     break
         return sum_rewards / num_episodes
 
-    def play(self, num_episodes, render=True):
+    def play(self, num_episodes: int, render: bool = True):
         fig, ax = plt.subplots()
         for episode in range(num_episodes):
             state = self.env.reset()

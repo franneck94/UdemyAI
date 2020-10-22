@@ -22,7 +22,7 @@ class Agent:
             self.lr_critic
         )
 
-    def get_action(self, state):
+    def get_action(self, state: np.ndarray):
         policy = self.model.predict_actor(state)[0]
         action = np.random.choice(self.num_actions, p=policy)
         return action
@@ -44,7 +44,7 @@ class Agent:
         self.model.train_actor(state, advantages)
         self.model.train_critic(state, values)
 
-    def train(self, num_episodes):
+    def train(self, num_episodes: int):
         total_rewards = []
         for episode in range(num_episodes):
             total_reward = 0.0
@@ -76,7 +76,7 @@ class Agent:
                     break
         return total_rewards
 
-    def play(self, num_episodes, render=True):
+    def play(self, num_episodes: int, render: bool = True):
         for episode in range(num_episodes):
             state = self.env.reset()
             while True:

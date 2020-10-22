@@ -25,7 +25,7 @@ class Agent:
         self.lr_critic = 1e-4
         self.model = NN(self.img_shape, self.num_actions, self.num_values, self.lr_actor, self.lr_critic)
 
-    def get_action(self, state):
+    def get_action(self, state: np.ndarray):
         policy = self.model.predict_actor(state)[0]
         action = np.random.choice(self.num_actions, p=policy)
         return action
@@ -47,7 +47,7 @@ class Agent:
         self.model.train_actor(state, advantages)
         self.model.train_critic(state, values)
 
-    def train(self, num_episodes):
+    def train(self, num_episodes: int):
         print("Start training for: ", self.game,
               " With ", self.num_actions,
               " Actions and ", self.img_shape, " Imgs.")
@@ -90,7 +90,7 @@ class Agent:
                           "\tFPS: ", round(fps))
                     break
 
-    def play(self, num_episodes, render=True):
+    def play(self, num_episodes: int, render: bool = True):
         for episode in range(1, num_episodes + 1):
             done = False
             total_reward = 0.0

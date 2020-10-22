@@ -37,13 +37,13 @@ class Agent:
         self.target_dqn.update_model(self.dqn)
         self.batch_size = 32
 
-    def get_action(self, state):
+    def get_action(self, state: np.ndarray):
         if np.random.rand() <= self.epsilon:
             return np.random.randint(self.actions)
         else:
             return np.argmax(self.dqn(state))
 
-    def train(self, num_episodes):
+    def train(self, num_episodes: int):
         pass
 
     def remember(self, state, action, reward, next_state, done):
@@ -52,7 +52,7 @@ class Agent:
     def replay(self):
         pass
 
-    def play(self, num_episodes, render=True):
+    def play(self, num_episodes: int, render: bool = True):
         pass
 
 
