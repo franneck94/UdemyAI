@@ -2,7 +2,7 @@ import gym
 import matplotlib.pyplot as plt
 import numpy as np
 
-from nn import NN
+from cartpolePolicyNN import NN
 
 
 class Agent:

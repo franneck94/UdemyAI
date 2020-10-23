@@ -15,13 +15,13 @@ print(f"Train shape: {x_train.shape}, Test shape: {x_test.shape}")
 # Define the DNN
 model = Sequential()
 # Hidden Layer 1
-model.add(Dense(512, input_shape=(784,)))
+model.add(Dense(units=512, input_shape=(784,)))
 model.add(Activation("relu"))
 # Hidden Layer 2
-model.add(Dense(512))
+model.add(Dense(units=512))
 model.add(Activation("relu"))
 # Output Layer
-model.add(Dense(10))
+model.add(Dense(units=10))
 model.add(Activation("softmax"))
 
 # Print the DNN layers

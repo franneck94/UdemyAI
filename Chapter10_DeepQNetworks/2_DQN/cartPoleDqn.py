@@ -1,4 +1,3 @@
-import tensorflow as tf
 from tensorflow.keras.layers import Activation
 from tensorflow.keras.layers import Dense
 from tensorflow.keras.layers import Input
@@ -6,7 +5,7 @@ from tensorflow.keras.models import Model
 from tensorflow.keras.optimizers import Adam
 
 
-class DQN(tf.keras.Model):
+class DQN(Model):
     def __init__(self, state_shape, num_actions, learning_rate):
         super().__init__()
         self.state_shape = state_shape

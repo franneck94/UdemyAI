@@ -1,5 +1,4 @@
 import numpy as np
-import tensorflow as tf
 from tensorflow.keras.layers import Activation
 from tensorflow.keras.layers import Conv2D
 from tensorflow.keras.layers import Dense
@@ -10,7 +9,7 @@ from tensorflow.keras.losses import Huber
 from tensorflow.keras.optimizers import RMSprop
 
 
-class DQN(tf.keras.Model):
+class DQN(Model):
     def __init__(self, img_shape: tuple, num_actions: int, learning_rate: float):
         super().__init__()
         self.img_shape = img_shape
@@ -24,7 +23,7 @@ class DQN(tf.keras.Model):
         )
         self.internal_model = self.build_model()
 
-    def build_model(self) -> tf.keras.Model:
+    def build_model(self) -> Model:
         input_img = Input(shape=self.img_shape)
         x = Conv2D(filters=32, kernel_size=8, strides=4, padding="same")(input_img)
         x = Activation("relu")(x)
@@ -52,7 +51,7 @@ class DQN(tf.keras.Model):
     def fit(self, states: np.ndarray, q_values: np.ndarray):
         self.internal_model.fit(x=states, y=q_values, verbose=0)
 
-    def update_model(self, other_model: tf.keras.Model):
+    def update_model(self, other_model: Model):
         self.internal_model.set_weights(other_model.get_weights())
 
     def load_model(self, path: str):

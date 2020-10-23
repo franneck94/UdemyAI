@@ -31,7 +31,7 @@ model.add(Activation("relu"))
 model.add(MaxPooling2D(pool_size=(2, 2)))
 # Output Layer
 model.add(Flatten())
-model.add(Dense(10))
+model.add(Dense(units=10))
 model.add(Activation("softmax"))
 
 # Print the DNN layers

@@ -1,5 +1,4 @@
 import numpy as np
-import tensorflow as tf
 from tensorflow.keras.layers import Activation
 from tensorflow.keras.layers import Dense
 from tensorflow.keras.layers import Input
@@ -7,7 +6,7 @@ from tensorflow.keras.models import Model
 from tensorflow.keras.optimizers import Adam
 
 
-class DQN(tf.keras.Model):
+class DQN(Model):
     def __init__(self, state_shape: int, num_actions: int, learning_rate: float):
         super().__init__()
         self.state_shape = state_shape
@@ -15,7 +14,7 @@ class DQN(tf.keras.Model):
         self.learning_rate = learning_rate
         self.internal_model = self.build_model()
 
-    def build_model(self) -> tf.keras.Model:
+    def build_model(self) -> Model:
         input_state = Input(shape=self.state_shape)
         x = Dense(units=12)(input_state)
         x = Activation("relu")(x)
@@ -38,7 +37,7 @@ class DQN(tf.keras.Model):
     def fit(self, states: np.ndarray, q_values: np.ndarray):
         self.internal_model.fit(x=states, y=q_values, verbose=0)
 
-    def update_model(self, other_model: tf.keras.Model):
+    def update_model(self, other_model: Model):
         self.internal_model.set_weights(other_model.get_weights())
 
     def load_model(self, path: str):
