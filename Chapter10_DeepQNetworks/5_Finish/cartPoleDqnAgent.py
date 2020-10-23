@@ -62,14 +62,14 @@ class Agent:
                 next_state, reward, done, _ = self.env.step(action)
                 next_state = np.reshape(next_state, newshape=(1, -1)).astype(np.float32)
                 if done and total_reward < 499:
-                    reward = -100
+                    reward = -100.0
                 self.remember(state, action, reward, next_state, done)
                 self.replay()
                 total_reward += reward
                 state = next_state
                 if done:
                     if total_reward < 500:
-                        total_reward += 100
+                        total_reward += 100.0
                     self.target_dqn.update_model(self.dqn)
                     print(f"Episode: {episode} Reward: {total_reward} Epsilon: {self.epsilon}")
                     last_rewards.append(total_reward)

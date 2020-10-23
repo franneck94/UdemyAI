@@ -25,7 +25,7 @@ def reward_func(next_state, done, current_best_position):
     elif not done: # "Okay"
         reward = abs(velocity)
     else: # "Bad"
-        reward = -100
+        reward = -100.0
     return reward
 
 

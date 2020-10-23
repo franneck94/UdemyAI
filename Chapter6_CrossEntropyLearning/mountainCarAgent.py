@@ -41,7 +41,7 @@ def reward_func(state, action):
     reward = abs(velocity)
 
     if done:
-        reward += 100
+        reward += 100.0
     return reward
 
 
