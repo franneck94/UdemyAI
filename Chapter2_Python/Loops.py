@@ -1,3 +1,5 @@
+#### Schleifen in Python ####
+
 # i = 0, 1, 2, 3, 4
 for i in range(5):
     print("Das ist der ", i, " Durchlauf!")
@@ -21,7 +23,7 @@ print("\n")
 bin_ich_pleite = False
 kontostand = 10
 
-while bin_ich_pleite is False:
+while bin_ich_pleite == False:
     print("Ich bin nicht pleite!", kontostand)
     kontostand -= 1
     if kontostand <= 0:

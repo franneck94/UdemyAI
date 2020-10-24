@@ -1,3 +1,6 @@
+#### Datentypen in Python ####
+# Variablen erstellen
+
 # int name = 100;
 kontostand = 100
 kontostand2 = 137.4

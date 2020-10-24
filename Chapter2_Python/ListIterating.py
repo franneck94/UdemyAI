@@ -1,4 +1,5 @@
 #### Schleifen (für Listen) in Python ####
+
 noten = [1, 1, 3, 4, 5, 6, 2, 1]
 
 for i in noten:

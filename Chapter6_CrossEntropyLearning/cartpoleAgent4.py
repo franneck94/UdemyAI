@@ -1,5 +1,4 @@
 import gym
-import matplotlib.pyplot as plt
 import numpy as np
 from tensorflow.keras.layers import Activation
 from tensorflow.keras.layers import Dense
@@ -68,7 +67,7 @@ class Agent:
                 if done:
                     rewards[episode] = total_reward
                     break
-        
+
         return rewards, episodes
 
     def filter_episodes(self, rewards, episodes, percentile):
