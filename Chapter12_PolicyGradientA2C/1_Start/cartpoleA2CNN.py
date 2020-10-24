@@ -6,26 +6,30 @@ from tensorflow.keras.models import Model
 from tensorflow.keras.optimizers import Adam
 
 
-class NN(Model):
-    def __init__(self, state_shape, num_actions, learning_rate):
-        super(NN, self).__init__()
+class DQN(Model):
+    def __init__(self, state_shape: int, num_actions: int, learning_rate: float):
+        super().__init__()
         self.state_shape = state_shape
         self.num_actions = num_actions
         self.learning_rate = learning_rate
+        self.internal_model = self.build_model()
 
-        state = Input(shape=(state_shape,))
-        x = Dense(24)(state)
+    def build_model(self) -> Model:
+        input_state = Input(shape=self.state_shape)
+        x = Dense(units=24)(input_state)
         x = Activation("relu")(x)
-        x = Dense(self.num_actions)(x)
-        out = Activation("softmax")(x)
-        self.internal_model = Model(
-            inputs=state,
-            outputs=out
+        x = Dense(units=24)(x)
+        x = Activation("relu")(x)
+        q_value_pred = Dense(self.num_actions)(x)
+        model = Model(
+            inputs=input_state,
+            outputs=q_value_pred
         )
-        self.internal_model.compile(
-            loss="categorical_crossentropy",
+        model.compile(
+            loss="mse",
             optimizer=Adam(learning_rate=self.learning_rate)
         )
+        return model
 
     def call(self, inputs: np.ndarray) -> np.ndarray:
         return self.internal_model(inputs).numpy()
@@ -41,3 +45,12 @@ class NN(Model):
 
     def save_model(self, path: str):
         self.internal_model.save_weights(path)
+
+
+if __name__ == "__main__":
+    dqn = DQN(
+        state_shape=4,
+        num_actions=2,
+        learning_rate=0.001
+    )
+    dqn.internal_model.summary()

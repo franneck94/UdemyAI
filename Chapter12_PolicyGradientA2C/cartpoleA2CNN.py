@@ -7,26 +7,28 @@ from tensorflow.keras.optimizers import Adam
 
 
 class Actor(Model):
-    def __init__(self, num_observations, num_actions, num_values, learning_rate_actor):
+    def __init__(self, num_observations: int, num_actions: int, learning_rate: float):
         super().__init__()
         self.num_observations = num_observations
         self.num_actions = num_actions
-        self.num_values = num_values
-        self.learning_rate_actor = learning_rate_actor
+        self.learning_rate = learning_rate
+        self.internal_model = self.build_model()
 
-        state = Input(shape=(num_observations,))
-        x = Dense(24)(state)
+    def build_model(self) -> Model:
+        actor_in = Input(shape=self.num_observations)
+        x = Dense(units=24)(actor_in)
         x = Activation("relu")(x)
         x = Dense(self.num_actions)(x)
         actor_out = Activation("softmax")(x)
-        self.internal_model = Model(
-            inputs=state,
+        model = Model(
+            inputs=actor_in,
             outputs=actor_out
         )
-        self.internal_model.compile(
+        model.compile(
             loss="categorical_crossentropy",
-            optimizer=Adam(learning_rate=self.learning_rate_actor)
+            optimizer=Adam(learning_rate=self.learning_rate)
         )
+        return model
 
     def call(self, states: np.ndarray) -> np.ndarray:
         return self.internal_model(states).numpy()
@@ -45,26 +47,27 @@ class Actor(Model):
 
 
 class Critic(Model):
-    def __init__(self, num_observations, num_actions, num_values, learning_rate_critic):
+    def __init__(self, num_observations: int, num_values: int, learning_rate: float):
         super().__init__()
         self.num_observations = num_observations
-        self.num_actions = num_actions
         self.num_values = num_values
-        self.learning_rate_critic = learning_rate_critic
+        self.learning_rate = learning_rate
+        self.internal_model = self.build_model()
 
-        state = Input(shape=(num_observations,))
-        x = Dense(24)(state)
+    def build_model(self) -> Model:
+        critic_in = Input(shape=self.num_observations)
+        x = Dense(units=24)(critic_in)
         x = Activation("relu")(x)
-        x = Dense(self.num_values)(x)
-        critic_out = Activation("linear")(x)
-        self.internal_model = Model(
-            inputs=state,
+        critic_out = Dense(self.num_values)(x)
+        model = Model(
+            inputs=critic_in,
             outputs=critic_out
         )
-        self.internal_model.compile(
+        model.compile(
             loss="mse",
-            optimizer=Adam(learning_rate=self.learning_rate_critic)
+            optimizer=Adam(learning_rate=self.learning_rate)
         )
+        return model
 
     def call(self, states: np.ndarray) -> np.ndarray:
         return self.internal_model(states).numpy()
@@ -80,3 +83,18 @@ class Critic(Model):
 
     def save_model(self, path: str):
         self.internal_model.save_weights(path)
+
+
+if __name__ == "__main__":
+    actor = Actor(
+        num_observations=4,
+        num_actions=2,
+        learning_rate=0.001
+    )
+    actor.internal_model.summary()
+    critic = Critic(
+        num_observations=4,
+        num_values=1,
+        learning_rate=0.005
+    )
+    critic.internal_model.summary()
