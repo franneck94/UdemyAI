@@ -56,5 +56,5 @@ class Agent:
 if __name__ == "__main__":
     env = gym.make("CartPole-v1")
     agent = Agent(env)
-    agent.train()
-    agent.play()
+    # agent.train()
+    # agent.play()
