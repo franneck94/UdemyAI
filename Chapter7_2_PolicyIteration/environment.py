@@ -24,8 +24,8 @@ ACTIONS = [(-1, 0), (1, 0), (0, -1), (0, 1)]  # actions in coordinates
 class GraphicDisplay(tk.Tk):
     def __init__(self, agent):
         super(GraphicDisplay, self).__init__()
-        self.title('Policy Iteration')
-        self.geometry('{0}x{1}'.format(HEIGHT * UNIT, HEIGHT * UNIT + 50))
+        self.title("Policy Iteration")
+        self.geometry("{0}x{1}".format(HEIGHT * UNIT, HEIGHT * UNIT + 50))
         self.texts = []
         self.arrows = []
         self.env = Env()
@@ -40,7 +40,7 @@ class GraphicDisplay(tk.Tk):
         self.text_reward(2, 1, "R : -1.0")
 
     def _build_canvas(self):
-        canvas = tk.Canvas(self, bg='white',
+        canvas = tk.Canvas(self, bg="white",
                            height=HEIGHT * UNIT,
                            width=WIDTH * UNIT)
         # buttons
@@ -108,8 +108,8 @@ class GraphicDisplay(tk.Tk):
             x, y = self.canvas.coords(self.rectangle)
             self.canvas.move(self.rectangle, UNIT / 2 - x, UNIT / 2 - y)
 
-    def text_value(self, row, col, contents, font='Helvetica', size=10,
-                   style='normal', anchor="nw"):
+    def text_value(self, row, col, contents, font="Helvetica", size=10,
+                   style="normal", anchor="nw"):
         origin_x, origin_y = 85, 70
         x, y = origin_y + (UNIT * col), origin_x + (UNIT * row)
         font = (font, str(size), style)
@@ -117,8 +117,8 @@ class GraphicDisplay(tk.Tk):
                                        font=font, anchor=anchor)
         return self.texts.append(text)
 
-    def text_reward(self, row, col, contents, font='Helvetica', size=10,
-                    style='normal', anchor="nw"):
+    def text_reward(self, row, col, contents, font="Helvetica", size=10,
+                    style="normal", anchor="nw"):
         origin_x, origin_y = 5, 5
         x, y = origin_y + (UNIT * col), origin_x + (UNIT * row)
         font = (font, str(size), style)

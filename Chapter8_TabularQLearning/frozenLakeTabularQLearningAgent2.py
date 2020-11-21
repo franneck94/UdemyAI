@@ -40,11 +40,11 @@ class Agent:
         return (old_state, action, reward, new_state)
 
     def update_q_values(self, s, a, r, s_next):
-        # Q(s', a') = q_prime
+        # Q(s", a") = q_prime
         q_prime = self.get_value(s_next)
         update_q = r + self.gamma * q_prime
         q = self.values[s][a]
-        # Q(s,a) = (1 - allpha) * Q(s,a) + alpha * (r + gamma * max(a') Q(s',a'))
+        # Q(s,a) = (1 - allpha) * Q(s,a) + alpha * (r + gamma * max(a") Q(s",a"))
         q = (1 - self.alpha) * q + self.alpha * update_q
         self.values[s][a] = q
 
