@@ -68,6 +68,7 @@ class Agent:
             state = self.env.reset()
 
             while True:
+                frame_it += 1
                 action = self.get_action(state)
                 next_state, reward, done, _ = self.env.step(action)
                 self.epsilon_anneal()
@@ -76,7 +77,7 @@ class Agent:
                 total_reward += reward
                 state = next_state
 
-                if frame_it & self.sync_models == 0:
+                if frame_it and self.sync_models == 0:
                     self.target_dqn.update_model(self.dqn)
 
                 if done:
