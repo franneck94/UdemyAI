@@ -10,7 +10,7 @@ from pongDqn import DQN
 from pongDqnWrappers import make_env
 
 
-PROJECT_PATH = os.path.abspath("C:/Users/Jan/Dropbox/_Programmieren/UdemyAI")
+PROJECT_PATH = os.path.abspath("C:/Users/Jan/Dropbox/_Coding/UdemyAI")
 MODELS_PATH = os.path.join(PROJECT_PATH, "models")
 MODEL_PATH = os.path.join(MODELS_PATH, "dqn_pong.h5")
 TARGET_MODEL_PATH = os.path.join(MODELS_PATH, "target_dqn_pong.h5")

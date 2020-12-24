@@ -9,7 +9,7 @@ from PIL import Image
 from PIL import ImageTk
 
 
-PROJECT_PATH = os.path.abspath("C:/Users/Jan/Dropbox/_Programmieren/UdemyAI")
+PROJECT_PATH = os.path.abspath("C:/Users/Jan/Dropbox/_Coding/UdemyAI")
 PATH = os.path.join(PROJECT_PATH, "Chapter7_2_PolicyIteration")
 
 PhotoImage = ImageTk.PhotoImage

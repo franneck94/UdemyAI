@@ -10,7 +10,7 @@ from cartpoleA2CNN import Actor
 from cartpoleA2CNN import Critic
 
 
-PROJECT_PATH = os.path.abspath("C:/Users/Jan/Dropbox/_Programmieren/UdemyAI")
+PROJECT_PATH = os.path.abspath("C:/Users/Jan/Dropbox/_Coding/UdemyAI")
 MODELS_PATH = os.path.join(PROJECT_PATH, "models")
 ACTOR_PATH = os.path.join(MODELS_PATH, "actor_cartpole.h5")
 CRITIC_PATH = os.path.join(MODELS_PATH, "critic_cartpole.h5")
