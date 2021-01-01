@@ -3,7 +3,7 @@
 Dies ist der Code zu meinem Udemy Kurs:
 *Artificial Intelligence und Reinforcement Learning in Python* von Jan Schaffranek.
 
-Erhalte den Kurs vom 01.12.2020 bis zum 31.12.2020 zum aktuellen Bestpreis.
+Der aktuelle Rabatt-Code lautet: FRANNECK_JAN_2021.
 Rabatt-Link: [AI Kurs im Rabatt](https://www.udemy.com/course/artificial-intelligence-und-reinforcement-learning-in-python/?couponCode=FRANNECK_JAN_2021)
 
 ## Bewertungen von Kursteilnehmern
