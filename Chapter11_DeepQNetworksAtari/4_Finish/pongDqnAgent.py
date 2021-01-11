@@ -3,7 +3,6 @@ import os
 import random
 from typing import Deque
 
-import gym
 import numpy as np
 
 from pongDqn import DQN
@@ -28,7 +27,7 @@ class Agent:
         self.actions = self.env.action_space.n
         # DQN Agent Variables
         self.replay_buffer_size = 100_000
-        self.train_start = 20_000
+        self.train_start = 10_000
         self.memory: Deque = collections.deque(maxlen=self.replay_buffer_size)
         self.gamma = 0.95
         self.epsilon = 1.0
@@ -36,21 +35,20 @@ class Agent:
         self.epsilon_steps = 100_000
         self.epsilon_step = (self.epsilon - self.epsilon_min) / self.epsilon_steps
         # DQN Network Variables
-        self.state_shape = self.observations
         self.learning_rate = 1e-3
         self.dqn = DQN(
-            self.state_shape,
+            self.img_shape,
             self.actions,
             self.learning_rate
         )
         self.target_dqn = DQN(
-            self.state_shape,
+            self.img_shape,
             self.actions,
             self.learning_rate
         )
         self.target_dqn.update_model(self.dqn)
         self.batch_size = 32
-        self.sync_models = 10_000
+        self.sync_models = 1_000
 
     def get_action(self, state: np.ndarray):
         if np.random.rand() <= self.epsilon:
@@ -77,7 +75,7 @@ class Agent:
                 total_reward += reward
                 state = next_state
 
-                if frame_it and self.sync_models == 0:
+                if frame_it % self.sync_models == 0:
                     self.target_dqn.update_model(self.dqn)
 
                 if done:
@@ -130,6 +128,7 @@ class Agent:
     def play(self, num_episodes: int, render: bool = True):
         self.dqn.load_model(MODEL_PATH)
         self.target_dqn.load_model(TARGET_MODEL_PATH)
+        self.epsilon = 0.0
 
         for episode in range(1, num_episodes + 1):
             total_reward = 0.0

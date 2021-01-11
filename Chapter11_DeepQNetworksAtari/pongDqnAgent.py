@@ -3,7 +3,6 @@ import os
 import random
 from typing import Deque
 
-import gym
 import numpy as np
 
 from pongDqn import DQN
@@ -49,7 +48,7 @@ class Agent:
         )
         self.target_dqn.update_model(self.dqn)
         self.batch_size = 32
-        self.sync_models = 10_000
+        self.sync_models = 1_000
 
     def get_action(self, state: np.ndarray):
         if np.random.rand() <= self.epsilon:
@@ -76,7 +75,7 @@ class Agent:
                 total_reward += reward
                 state = next_state
 
-                if frame_it and self.sync_models == 0:
+                if frame_it % self.sync_models == 0:
                     self.target_dqn.update_model(self.dqn)
 
                 if done:
@@ -129,6 +128,7 @@ class Agent:
     def play(self, num_episodes: int, render: bool = True):
         self.dqn.load_model(MODEL_PATH)
         self.target_dqn.load_model(TARGET_MODEL_PATH)
+        self.epsilon = 0.0
 
         for episode in range(1, num_episodes + 1):
             total_reward = 0.0
