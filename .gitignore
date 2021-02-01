@@ -2,6 +2,7 @@
 data/
 ressources/
 models/
+lectures/
 Chapter1_Introduction/
 **/lectures/
 *.png
