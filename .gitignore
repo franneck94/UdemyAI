@@ -2,12 +2,11 @@
 data/
 ressources/
 models/
-lectures/
 Chapter1_Introduction/
-**/lectures/
 *.png
 *.txt
 !requirements.txt
+*.pdf
 
 # Byte-compiled / optimized / DLL files
 __pycache__/
