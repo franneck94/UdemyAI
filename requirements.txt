@@ -1,7 +1,7 @@
 # Libraries
 tensorflow==2.4.*
 scikit-learn
-numpy==1.19.2
+numpy==1.19.*
 matplotlib
 pygame
 gym
