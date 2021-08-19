@@ -1,25 +1,23 @@
 import matplotlib.pyplot as plt
 
 
-noten_jan = [56, 64, 78, 100]
-noten_ben = [86, 94, 98, 90]
+grades_jan = [56, 64, 78, 100]
+grades_ben = [86, 94, 98, 90]
 
 # Plot
-#             x,            y
-plt.plot([1, 2, 3, 4], noten_jan, color="blue")
-plt.plot([1, 2, 3, 4], noten_ben, color="red")
+plt.plot(range(len(grades_jan)), grades_jan, color="blue")
+plt.plot(range(len(grades_ben)), grades_ben, color="red")
 plt.legend(["Jan", "Ben"])
-plt.xlabel("Fach")
-plt.ylabel("Note in %")
+plt.xlabel("Course")
+plt.ylabel("Grade in %")
 plt.title("Jan vs. Ben")
 plt.show()
 
-# Scatter Plot
-#               x            y
-plt.scatter([1, 2, 3, 4], noten_jan, color="blue")
-plt.scatter([1, 2, 3, 4], noten_ben, color="red")
+# Scatter
+plt.scatter(range(len(grades_jan)), grades_jan, color="blue")
+plt.scatter(range(len(grades_ben)), grades_ben, color="red")
 plt.legend(["Jan", "Ben"])
-plt.xlabel("Fach")
-plt.ylabel("Note in %")
+plt.xlabel("Course")
+plt.ylabel("Grade in %")
 plt.title("Jan vs. Ben")
 plt.show()

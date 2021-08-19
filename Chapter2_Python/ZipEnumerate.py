@@ -1,16 +1,29 @@
-list_a = [10, 20, 30]
-list_b = ["Jan", "Peter", "Max"]
-list_c = [True, False, True]
+list_a = [100.0, 200.0, -10.0]
+list_b = [False, False, True]
 
-for val_a, val_b, val_c in zip(list_a, list_b, list_c):
-    print(val_a, val_b, val_c)
+# index
+for idx in range(len(list_a)):
+    print(idx, list_a[idx], list_b[idx])
 
-print("\n")
 
-for i in range(len(list_a)):
-    print(i, list_a[i])
+print("")
 
-print("\n")
 
-for i, val in enumerate(list_a):
-    print(i, val)
+# values for multiple iterables
+for val_a, val_b in zip(list_a, list_b):
+    print(val_a, val_b)
+
+
+print("")
+
+
+# index and value
+for idx, val in enumerate(list_a):
+    print(idx, val)
+
+
+print("")
+
+# index and values for multiple iterables
+for idx, (val_a, val_b) in enumerate(zip(list_a, list_b)):
+    print(idx, val_a, val_b)

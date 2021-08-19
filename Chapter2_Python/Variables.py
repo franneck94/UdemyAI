@@ -1,6 +1,11 @@
-my_age = 26 # int
-my_favourite_number = 1337.5 # float
-my_name = "Jan Schaffranek" # str
-am_i_cool = True # bool
-am_i_uncool = False # bool
-my_state = None # None
+# 1. var names cannot contain whitespaces
+# 2. var names cannot start with a number
+
+my_age = 27  # int
+price = 0.5  # float
+my_name_is_jan = True  # bool
+my_name_is_peter = False  # bool
+my_name = "Jan Schaffranek"  # str
+
+print(my_age)
+print(price)

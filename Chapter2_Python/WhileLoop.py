@@ -1,6 +1,5 @@
-start_value = 0
-end_value = 10
+bank_account = 1000.0
 
-while start_value < end_value:
-    start_value += 2
-    print("current value is: ", start_value)
+while bank_account > 0.0:
+    bank_account = bank_account - 100.0
+    print(bank_account)

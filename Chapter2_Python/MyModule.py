@@ -1,8 +1,18 @@
-def list_max(my_list):
-    result = my_list[0]
+def list_max(input_list):
+    max_value = input_list[0]
 
-    for i in range(1, len(my_list)):
-        if my_list[i] > result:
-            result = my_list[i]
+    for i in range(1, len(input_list)):
+        if input_list[i] > max_value:
+            max_value = input_list[i]
 
-    return result
+    print(max_value)
+
+
+def list_min(input_list):
+    max_value = input_list[0]
+
+    for i in range(1, len(input_list)):
+        if input_list[i] < max_value:
+            max_value = input_list[i]
+
+    print(max_value)
