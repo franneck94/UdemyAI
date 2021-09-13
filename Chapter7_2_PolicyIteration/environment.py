@@ -33,35 +33,46 @@ class GraphicDisplay(tk.Tk):
         self.evaluation_count = 0
         self.improvement_count = 0
         self.is_moving = 0
-        (self.up, self.down, self.left, self.right), self.shapes = self.load_images()
+        (
+            self.up,
+            self.down,
+            self.left,
+            self.right,
+        ), self.shapes = self.load_images()
         self.canvas = self._build_canvas()
         self.text_reward(2, 2, "R : 1.0")
         self.text_reward(1, 2, "R : -1.0")
         self.text_reward(2, 1, "R : -1.0")
 
     def _build_canvas(self):
-        canvas = tk.Canvas(self, bg="white",
-                           height=HEIGHT * UNIT,
-                           width=WIDTH * UNIT)
+        canvas = tk.Canvas(
+            self, bg="white", height=HEIGHT * UNIT, width=WIDTH * UNIT
+        )
         # buttons
-        iteration_button = Button(self, text="Evaluate",
-                                  command=self.evaluate_policy)
+        iteration_button = Button(
+            self, text="Evaluate", command=self.evaluate_policy
+        )
         iteration_button.configure(width=10, activebackground="#33B5E5")
-        canvas.create_window(WIDTH * UNIT * 0.13, HEIGHT * UNIT + 10,
-                             window=iteration_button)
-        policy_button = Button(self, text="Improve",
-                               command=self.improve_policy)
+        canvas.create_window(
+            WIDTH * UNIT * 0.13, HEIGHT * UNIT + 10, window=iteration_button
+        )
+        policy_button = Button(
+            self, text="Improve", command=self.improve_policy
+        )
         policy_button.configure(width=10, activebackground="#33B5E5")
-        canvas.create_window(WIDTH * UNIT * 0.37, HEIGHT * UNIT + 10,
-                             window=policy_button)
+        canvas.create_window(
+            WIDTH * UNIT * 0.37, HEIGHT * UNIT + 10, window=policy_button
+        )
         policy_button = Button(self, text="move", command=self.move_by_policy)
         policy_button.configure(width=10, activebackground="#33B5E5")
-        canvas.create_window(WIDTH * UNIT * 0.62, HEIGHT * UNIT + 10,
-                             window=policy_button)
+        canvas.create_window(
+            WIDTH * UNIT * 0.62, HEIGHT * UNIT + 10, window=policy_button
+        )
         policy_button = Button(self, text="reset", command=self.reset)
         policy_button.configure(width=10, activebackground="#33B5E5")
-        canvas.create_window(WIDTH * UNIT * 0.87, HEIGHT * UNIT + 10,
-                             window=policy_button)
+        canvas.create_window(
+            WIDTH * UNIT * 0.87, HEIGHT * UNIT + 10, window=policy_button
+        )
 
         # create grids
         for col in range(0, WIDTH * UNIT, UNIT):  # 0~400 by 80
@@ -87,9 +98,15 @@ class GraphicDisplay(tk.Tk):
         right = PhotoImage(Image.open(PATH + "/img/right.png").resize((13, 13)))
         left = PhotoImage(Image.open(PATH + "/img/left.png").resize((13, 13)))
         down = PhotoImage(Image.open(PATH + "/img/down.png").resize((13, 13)))
-        rectangle = PhotoImage(Image.open(PATH + "/img/rectangle.png").resize((65, 65)))
-        triangle = PhotoImage(Image.open(PATH + "/img/triangle.png").resize((65, 65)))
-        circle = PhotoImage(Image.open(PATH + "/img/circle.png").resize((65, 65)))
+        rectangle = PhotoImage(
+            Image.open(PATH + "/img/rectangle.png").resize((65, 65))
+        )
+        triangle = PhotoImage(
+            Image.open(PATH + "/img/triangle.png").resize((65, 65))
+        )
+        circle = PhotoImage(
+            Image.open(PATH + "/img/circle.png").resize((65, 65))
+        )
         return (up, down, left, right), (rectangle, triangle, circle)
 
     def reset(self):
@@ -102,28 +119,47 @@ class GraphicDisplay(tk.Tk):
             for i in self.arrows:
                 self.canvas.delete(i)
             self.agent.v_values = [[0.0] * WIDTH for _ in range(HEIGHT)]
-            self.agent.policy = ([[[0.25, 0.25, 0.25, 0.25]] * WIDTH
-                                  for _ in range(HEIGHT)])
+            self.agent.policy = [
+                [[0.25, 0.25, 0.25, 0.25]] * WIDTH for _ in range(HEIGHT)
+            ]
             self.agent.policy[2][2] = []
             x, y = self.canvas.coords(self.rectangle)
             self.canvas.move(self.rectangle, UNIT / 2 - x, UNIT / 2 - y)
 
-    def text_value(self, row, col, contents, font="Helvetica", size=10,
-                   style="normal", anchor="nw"):
+    def text_value(
+        self,
+        row,
+        col,
+        contents,
+        font="Helvetica",
+        size=10,
+        style="normal",
+        anchor="nw",
+    ):
         origin_x, origin_y = 85, 70
         x, y = origin_y + (UNIT * col), origin_x + (UNIT * row)
         font = (font, str(size), style)
-        text = self.canvas.create_text(x, y, fill="black", text=contents,
-                                       font=font, anchor=anchor)
+        text = self.canvas.create_text(
+            x, y, fill="black", text=contents, font=font, anchor=anchor
+        )
         return self.texts.append(text)
 
-    def text_reward(self, row, col, contents, font="Helvetica", size=10,
-                    style="normal", anchor="nw"):
+    def text_reward(
+        self,
+        row,
+        col,
+        contents,
+        font="Helvetica",
+        size=10,
+        style="normal",
+        anchor="nw",
+    ):
         origin_x, origin_y = 5, 5
         x, y = origin_y + (UNIT * col), origin_x + (UNIT * row)
         font = (font, str(size), style)
-        text = self.canvas.create_text(x, y, fill="black", text=contents,
-                                       font=font, anchor=anchor)
+        text = self.canvas.create_text(
+            x, y, fill="black", text=contents, font=font, anchor=anchor
+        )
         return self.texts.append(text)
 
     def rectangle_move(self, action):
@@ -156,8 +192,9 @@ class GraphicDisplay(tk.Tk):
 
             x, y = self.find_rectangle()
             while len(self.agent.policy[x][y]) != 0:
-                self.after(100,
-                           self.rectangle_move(self.agent.get_action([x, y])))
+                self.after(
+                    100, self.rectangle_move(self.agent.get_action([x, y]))
+                )
                 x, y = self.find_rectangle()
             self.is_moving = 0
 
@@ -167,20 +204,24 @@ class GraphicDisplay(tk.Tk):
 
         if policy[0] > 0:  # up
             origin_x, origin_y = 50 + (UNIT * row), 10 + (UNIT * col)
-            self.arrows.append(self.canvas.create_image(origin_x, origin_y,
-                                                        image=self.up))
+            self.arrows.append(
+                self.canvas.create_image(origin_x, origin_y, image=self.up)
+            )
         if policy[1] > 0:  # down
             origin_x, origin_y = 50 + (UNIT * row), 90 + (UNIT * col)
-            self.arrows.append(self.canvas.create_image(origin_x, origin_y,
-                                                        image=self.down))
+            self.arrows.append(
+                self.canvas.create_image(origin_x, origin_y, image=self.down)
+            )
         if policy[2] > 0:  # left
             origin_x, origin_y = 10 + (UNIT * row), 50 + (UNIT * col)
-            self.arrows.append(self.canvas.create_image(origin_x, origin_y,
-                                                        image=self.left))
+            self.arrows.append(
+                self.canvas.create_image(origin_x, origin_y, image=self.left)
+            )
         if policy[3] > 0:  # right
             origin_x, origin_y = 90 + (UNIT * row), 50 + (UNIT * col)
-            self.arrows.append(self.canvas.create_image(origin_x, origin_y,
-                                                        image=self.right))
+            self.arrows.append(
+                self.canvas.create_image(origin_x, origin_y, image=self.right)
+            )
 
     def draw_from_policy(self, policy):
         for i in range(HEIGHT):
@@ -239,10 +280,20 @@ class Env:
 
     @staticmethod
     def check_boundary(state):
-        state[0] = (0 if state[0] < 0 else WIDTH - 1
-                    if state[0] > WIDTH - 1 else state[0])
-        state[1] = (0 if state[1] < 0 else HEIGHT - 1
-                    if state[1] > HEIGHT - 1 else state[1])
+        state[0] = (
+            0
+            if state[0] < 0
+            else WIDTH - 1
+            if state[0] > WIDTH - 1
+            else state[0]
+        )
+        state[1] = (
+            0
+            if state[1] < 0
+            else HEIGHT - 1
+            if state[1] > HEIGHT - 1
+            else state[1]
+        )
         return state
 
     def get_all_states(self):

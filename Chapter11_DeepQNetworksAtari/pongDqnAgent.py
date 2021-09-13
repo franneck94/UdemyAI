@@ -1,5 +1,7 @@
 import tensorflow as tf
-physical_devices = tf.config.list_physical_devices('GPU')
+
+
+physical_devices = tf.config.list_physical_devices("GPU")
 tf.config.experimental.set_memory_growth(physical_devices[0], True)
 
 import collections
@@ -37,19 +39,13 @@ class Agent:
         self.epsilon = 1.0
         self.epsilon_min = 0.01
         self.epsilon_steps = 100_000
-        self.epsilon_step = (self.epsilon - self.epsilon_min) / self.epsilon_steps
+        self.epsilon_step = (
+            self.epsilon - self.epsilon_min
+        ) / self.epsilon_steps
         # DQN Network Variables
         self.learning_rate = 1e-3
-        self.dqn = DQN(
-            self.img_shape,
-            self.actions,
-            self.learning_rate
-        )
-        self.target_dqn = DQN(
-            self.img_shape,
-            self.actions,
-            self.learning_rate
-        )
+        self.dqn = DQN(self.img_shape, self.actions, self.learning_rate)
+        self.target_dqn = DQN(self.img_shape, self.actions, self.learning_rate)
         self.target_dqn.update_model(self.dqn)
         self.batch_size = 32
         self.sync_models = 1_000
@@ -125,7 +121,9 @@ class Agent:
             if done:
                 q_values[i][a] = rewards[i]
             else:
-                q_values[i][a] = rewards[i] + self.gamma * np.max(q_values_next[i])
+                q_values[i][a] = rewards[i] + self.gamma * np.max(
+                    q_values_next[i]
+                )
 
         self.dqn.fit(states, q_values)
 

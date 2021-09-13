@@ -7,7 +7,9 @@ from tensorflow.keras.optimizers import Adam
 
 
 class Actor(Model):
-    def __init__(self, num_observations: int, num_actions: int, learning_rate: float):
+    def __init__(
+        self, num_observations: int, num_actions: int, learning_rate: float
+    ):
         super().__init__()
         self.num_observations = num_observations
         self.num_actions = num_actions
@@ -20,13 +22,10 @@ class Actor(Model):
         x = Activation("relu")(x)
         x = Dense(self.num_actions)(x)
         actor_out = Activation("softmax")(x)
-        model = Model(
-            inputs=actor_in,
-            outputs=actor_out
-        )
+        model = Model(inputs=actor_in, outputs=actor_out)
         model.compile(
             loss="categorical_crossentropy",
-            optimizer=Adam(learning_rate=self.learning_rate)
+            optimizer=Adam(learning_rate=self.learning_rate),
         )
         return model
 
@@ -47,7 +46,9 @@ class Actor(Model):
 
 
 class Critic(Model):
-    def __init__(self, num_observations: int, num_values: int, learning_rate: float):
+    def __init__(
+        self, num_observations: int, num_values: int, learning_rate: float
+    ):
         super().__init__()
         self.num_observations = num_observations
         self.num_values = num_values
@@ -59,13 +60,9 @@ class Critic(Model):
         x = Dense(units=24)(critic_in)
         x = Activation("relu")(x)
         critic_out = Dense(self.num_values)(x)
-        model = Model(
-            inputs=critic_in,
-            outputs=critic_out
-        )
+        model = Model(inputs=critic_in, outputs=critic_out)
         model.compile(
-            loss="mse",
-            optimizer=Adam(learning_rate=self.learning_rate)
+            loss="mse", optimizer=Adam(learning_rate=self.learning_rate)
         )
         return model
 
@@ -86,15 +83,7 @@ class Critic(Model):
 
 
 if __name__ == "__main__":
-    actor = Actor(
-        num_observations=4,
-        num_actions=2,
-        learning_rate=0.001
-    )
+    actor = Actor(num_observations=4, num_actions=2, learning_rate=0.001)
     actor.internal_model.summary()
-    critic = Critic(
-        num_observations=4,
-        num_values=1,
-        learning_rate=0.005
-    )
+    critic = Critic(num_observations=4, num_values=1, learning_rate=0.005)
     critic.internal_model.summary()

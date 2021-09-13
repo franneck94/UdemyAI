@@ -31,7 +31,7 @@ model.summary()
 model.compile(
     loss="categorical_crossentropy",
     optimizer=Adam(learning_rate=0.001),
-    metrics=["accuracy"]
+    metrics=["accuracy"],
 )
 
 # Train the DNN
@@ -41,13 +41,9 @@ model.fit(
     verbose=1,
     batch_size=128,
     epochs=10,
-    validation_data=(x_test, y_test)
+    validation_data=(x_test, y_test),
 )
 
 # Test the DNN
-score = model.evaluate(
-    x=x_test,
-    y=y_test,
-    verbose=0
-)
+score = model.evaluate(x=x_test, y=y_test, verbose=0)
 print(f"Test accuracy: {score}")

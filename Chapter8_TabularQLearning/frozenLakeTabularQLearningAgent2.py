@@ -55,8 +55,14 @@ class Agent:
             self.update_q_values(s, a, r, s_next)
             mean_reward = self.test(num_episodes=20)
             if mean_reward > best_mean_reward:
-                print("Iteration: ", iteration, " Old BestMeanReward: ",
-                      best_mean_reward, " New BestMeanReward: ", mean_reward)
+                print(
+                    "Iteration: ",
+                    iteration,
+                    " Old BestMeanReward: ",
+                    best_mean_reward,
+                    " New BestMeanReward: ",
+                    mean_reward,
+                )
                 best_mean_reward = mean_reward
             if mean_reward >= 0.9:
                 break

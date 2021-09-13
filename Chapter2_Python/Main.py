@@ -1,4 +1,6 @@
-from MyModule import list_max, list_min
+from MyModule import list_max
+from MyModule import list_min
+
 
 list1 = [-2, 1, 2, -10, 22, -10]
 list_max(list1)

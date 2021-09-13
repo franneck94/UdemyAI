@@ -15,5 +15,13 @@ for i in range(1, 11):
         reward = rewards[state][action]
         total_reward += reward
         state = action
-        print("Neuer State: ", state, " Reward: ", reward, " Gesamt-Reward: ", total_reward, "\n")
+        print(
+            "Neuer State: ",
+            state,
+            " Reward: ",
+            reward,
+            " Gesamt-Reward: ",
+            total_reward,
+            "\n",
+        )
         i += 1

@@ -23,13 +23,13 @@ Wir bewegen uns auf das Zeitalter der künstlichen Intelligenz zu.Es w
 
 ## Dieser Kurs besteht aus folgenden Themengebieten
 
-☑️ Grundlagen der Python Programmierung  
-☑️ Grundlagen des Machine und Deep Learnings  
-☑️ Einführung in TensorFlow und Keras  
-☑️ Einführung in das Reinforcement Learning  
-☑️ Anwendung neuster Reinforcement Learning Techniken  
-☑️ Erstellung einer KI für Simulationen  
-☑️ Erstellung einer KI für Atari Videospiele  
+☑️ Grundlagen der Python Programmierung
+☑️ Grundlagen des Machine und Deep Learnings
+☑️ Einführung in TensorFlow und Keras
+☑️ Einführung in das Reinforcement Learning
+☑️ Anwendung neuster Reinforcement Learning Techniken
+☑️ Erstellung einer KI für Simulationen
+☑️ Erstellung einer KI für Atari Videospiele
 
 Werde noch heute ein Profi, in der Technologie von Morgen!
 Wir sehen uns im Kurs!

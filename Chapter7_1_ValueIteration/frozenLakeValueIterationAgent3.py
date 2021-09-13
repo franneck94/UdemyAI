@@ -13,8 +13,14 @@ class Agent:
         self.S = range(self.observations)
         self.A = range(self.actions)
         self.gamma = 0.9
-        self.rewards = {s: {a: {s_next: 0 for s_next in self.S} for a in self.A} for s in self.S}
-        self.transitions = {s: {a: {s_next: 0 for s_next in self.S} for a in self.A} for s in self.S}
+        self.rewards = {
+            s: {a: {s_next: 0 for s_next in self.S} for a in self.A}
+            for s in self.S
+        }
+        self.transitions = {
+            s: {a: {s_next: 0 for s_next in self.S} for a in self.A}
+            for s in self.S
+        }
         self.values = {s: {a: 0.0 for a in self.A} for s in self.S}
         self.state = self.env.reset()
 
@@ -41,13 +47,16 @@ class Agent:
         for s in self.S:
             for a in self.A:
                 q_value = 0.0
-                transitions_s = self.transitions[s][a] # s=0,  {1: 3, 2: 4}
-                total_counts = sum(transitions_s.values()) # sum([3, 4]) = 7
+                transitions_s = self.transitions[s][a]  # s=0,  {1: 3, 2: 4}
+                total_counts = sum(transitions_s.values())  # sum([3, 4]) = 7
                 if total_counts > 0:
                     for s_next, count in transitions_s.items():
                         reward = self.rewards[s][a][s_next]
                         best_action = self.get_action(s_next)
-                        q_value += (count / total_counts) * (reward + self.gamma * self.values[s_next][best_action])
+                        q_value += (count / total_counts) * (
+                            reward
+                            + self.gamma * self.values[s_next][best_action]
+                        )
                     self.values[s][a] = q_value
 
     def train(self, num_iterations, num_episodes):

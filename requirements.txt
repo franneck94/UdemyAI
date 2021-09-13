@@ -10,10 +10,15 @@ pygame
 gym
 
 # Linting/Tooling
+# Linting/Tooling
 pylint
 flake8
+flake8-bugbear
+flake8-comprehensions
 mypy
+mypy-extensions
+pydantic
 isort
-autopep8
-pre-commit
 black==21.4b0
+pre-commit
+autopep8

@@ -44,22 +44,46 @@ def save_map(values, name="test.png"):
             posx = s // 4
             posy = s % 4
             max_index = np.argmax(list(values[s].values()))
-            if a == 0: # Left
+            if a == 0:  # Left
                 weight = "bold" if a == max_index else "normal"
-                ax.text(posy - 0.2, posx, "L: " +
-                        str(round(values[s][a], 3)), weight=weight, ha="right", va="center")
-            elif a == 1: # Down
+                ax.text(
+                    posy - 0.2,
+                    posx,
+                    "L: " + str(round(values[s][a], 3)),
+                    weight=weight,
+                    ha="right",
+                    va="center",
+                )
+            elif a == 1:  # Down
                 weight = "bold" if a == max_index else "normal"
-                ax.text(posy, posx + 0.2, "D: " +
-                        str(round(values[s][a], 3)), weight=weight, ha="center", va="top")
-            elif a == 2: # Right
+                ax.text(
+                    posy,
+                    posx + 0.2,
+                    "D: " + str(round(values[s][a], 3)),
+                    weight=weight,
+                    ha="center",
+                    va="top",
+                )
+            elif a == 2:  # Right
                 weight = "bold" if a == max_index else "normal"
-                ax.text(posy + 0.2, posx, "R: " +
-                        str(round(values[s][a], 3)), weight=weight, ha="left", va="center")
-            elif a == 3: # Up
+                ax.text(
+                    posy + 0.2,
+                    posx,
+                    "R: " + str(round(values[s][a], 3)),
+                    weight=weight,
+                    ha="left",
+                    va="center",
+                )
+            elif a == 3:  # Up
                 weight = "bold" if a == max_index else "normal"
-                ax.text(posy, posx - 0.2, "U: " +
-                        str(round(values[s][a], 3)), weight=weight, ha="center", va="bottom")
+                ax.text(
+                    posy,
+                    posx - 0.2,
+                    "U: " + str(round(values[s][a], 3)),
+                    weight=weight,
+                    ha="center",
+                    va="bottom",
+                )
     fig.savefig("./" + name)
 
 
@@ -87,29 +111,53 @@ def plotting_q_values(state, action, values, ax):
             posx = s // 4
             posy = s % 4
             max_index = np.argmax(list(values[s].values()))
-            if a == 0: # Left
+            if a == 0:  # Left
                 weight = "bold" if a == max_index else "normal"
                 color = "red" if action == a and state == s else "black"
-                ax.text(posy - 0.2, posx, "L: " +
-                        str(round(values[s][a], 3)), weight=weight, ha="right", va="center",
-                        color=color)
-            elif a == 1: # Down
+                ax.text(
+                    posy - 0.2,
+                    posx,
+                    "L: " + str(round(values[s][a], 3)),
+                    weight=weight,
+                    ha="right",
+                    va="center",
+                    color=color,
+                )
+            elif a == 1:  # Down
                 weight = "bold" if a == max_index else "normal"
                 color = "red" if action == a and state == s else "black"
-                ax.text(posy, posx + 0.2, "D: " +
-                        str(round(values[s][a], 3)), weight=weight, ha="center", va="top",
-                        color=color)
-            elif a == 2: # Right
+                ax.text(
+                    posy,
+                    posx + 0.2,
+                    "D: " + str(round(values[s][a], 3)),
+                    weight=weight,
+                    ha="center",
+                    va="top",
+                    color=color,
+                )
+            elif a == 2:  # Right
                 weight = "bold" if a == max_index else "normal"
                 color = "red" if action == a and state == s else "black"
-                ax.text(posy + 0.2, posx, "R: " +
-                        str(round(values[s][a], 3)), weight=weight, ha="left", va="center",
-                        color=color)
-            elif a == 3: # Up
+                ax.text(
+                    posy + 0.2,
+                    posx,
+                    "R: " + str(round(values[s][a], 3)),
+                    weight=weight,
+                    ha="left",
+                    va="center",
+                    color=color,
+                )
+            elif a == 3:  # Up
                 weight = "bold" if a == max_index else "normal"
                 color = "red" if action == a and state == s else "black"
-                ax.text(posy, posx - 0.2, "U: " +
-                        str(round(values[s][a], 3)), weight=weight, ha="center", va="bottom",
-                        color=color)
+                ax.text(
+                    posy,
+                    posx - 0.2,
+                    "U: " + str(round(values[s][a], 3)),
+                    weight=weight,
+                    ha="center",
+                    va="bottom",
+                    color=color,
+                )
 
     plt.pause(2.0)

@@ -23,17 +23,13 @@ class Agent:
         self.num_actions = self.env.action_space.n
         self.num_values = 1
         self.gamma = 0.95
-        self.learning_rate_actor = 1e-3 # 0.001
-        self.learning_rate_critic = 5e-3 # 0.005
+        self.learning_rate_actor = 1e-3  # 0.001
+        self.learning_rate_critic = 5e-3  # 0.005
         self.actor = Actor(
-            self.num_observations,
-            self.num_actions,
-            self.learning_rate_actor
+            self.num_observations, self.num_actions, self.learning_rate_actor
         )
         self.critic = Critic(
-            self.num_observations,
-            self.num_values,
-            self.learning_rate_critic
+            self.num_observations, self.num_values, self.learning_rate_critic
         )
 
     def get_action(self, state: np.ndarray):
@@ -42,8 +38,8 @@ class Agent:
         return action
 
     def update_policy(self, state, action, reward, next_state, done):
-        values = np.zeros(shape=(1, self.num_values)) # (1, 1)
-        advantages = np.zeros(shape=(1, self.num_actions)) # (1, 2)
+        values = np.zeros(shape=(1, self.num_values))  # (1, 1)
+        advantages = np.zeros(shape=(1, self.num_actions))  # (1, 2)
 
         value = self.critic(state)[0]
         next_value = self.critic(next_state)[0]
@@ -69,7 +65,9 @@ class Agent:
             while True:
                 action = self.get_action(state)
                 next_state, reward, done, _ = self.env.step(action)
-                next_state = np.reshape(next_state, newshape=(1, -1)).astype(np.float32)
+                next_state = np.reshape(next_state, newshape=(1, -1)).astype(
+                    np.float32
+                )
                 if done and total_reward < 499:
                     reward = -100.0
                 self.update_policy(state, action, reward, next_state, done)
@@ -81,7 +79,9 @@ class Agent:
                         total_reward += 100.0
                     last_rewards.append(total_reward)
                     current_reward_mean = np.mean(last_rewards)
-                    print(f"Episode: {episode} Reward: {total_reward} MeanReward: {current_reward_mean}")
+                    print(
+                        f"Episode: {episode} Reward: {total_reward} MeanReward: {current_reward_mean}"
+                    )
 
                     if current_reward_mean > 400:
                         self.actor.save_model(ACTOR_PATH)
@@ -105,7 +105,9 @@ class Agent:
                     self.env.render()
                 action = self.get_action(state)
                 next_state, reward, done, _ = self.env.step(action)
-                next_state = np.reshape(next_state, newshape=(1, -1)).astype(np.float32)
+                next_state = np.reshape(next_state, newshape=(1, -1)).astype(
+                    np.float32
+                )
                 total_reward += reward
                 state = next_state
 

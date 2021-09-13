@@ -9,8 +9,7 @@ from tensorflow.keras.utils import to_categorical
 
 
 class Agent:
-    """Agent class for the cross-entropy learning algorithm.
-    """
+    """Agent class for the cross-entropy learning algorithm."""
 
     def __init__(self, env):
         """Set up the environment, the neural network and member variables.
@@ -26,34 +25,28 @@ class Agent:
         self.model = self.get_model()
 
     def get_model(self):
-        """Keras NN Model.
-        """
+        """Keras NN Model."""
         pass
 
     def get_action(self, state: np.ndarray):
-        """Based on the state, get an action.
-        """
+        """Based on the state, get an action."""
         action = self.env.action_space.sample()
         return action
 
     def get_samples(self):
-        """Sample games.
-        """
+        """Sample games."""
         pass
 
     def filter_episodes(self):
-        """Helper function for the training.
-        """
+        """Helper function for the training."""
         pass
 
     def train(self):
-        """Play games and train the NN.
-        """
+        """Play games and train the NN."""
         pass
 
     def play(self, num_episodes: int, render: bool = True):
-        """Test the trained agent.
-        """
+        """Test the trained agent."""
         for episode in range(num_episodes):
             state = self.env.reset()
             total_reward = 0.0
@@ -64,7 +57,9 @@ class Agent:
                 state, reward, done, _ = self.env.step(action)
                 total_reward += reward
                 if done:
-                    print(f"Total reward: {total_reward} in epsiode {episode + 1}")
+                    print(
+                        f"Total reward: {total_reward} in epsiode {episode + 1}"
+                    )
                     break
 
 

@@ -35,15 +35,9 @@ class Agent:
         # DQN Network Variables
         self.state_shape = self.observations
         self.learning_rate = 1e-3
-        self.dqn = DQN(
-            self.state_shape,
-            self.actions,
-            self.learning_rate
-        )
+        self.dqn = DQN(self.state_shape, self.actions, self.learning_rate)
         self.target_dqn = DQN(
-            self.state_shape,
-            self.actions,
-            self.learning_rate
+            self.state_shape, self.actions, self.learning_rate
         )
         self.target_dqn.update_model(self.dqn)
         self.batch_size = 32
@@ -55,7 +49,9 @@ class Agent:
             return np.argmax(self.dqn(state))
 
     def train(self, num_episodes: int):
-        last_rewards: Deque = collections.deque([0.0 for _ in range(5)], maxlen=5)
+        last_rewards: Deque = collections.deque(
+            [0.0 for _ in range(5)], maxlen=5
+        )
         best_reward_mean = 0.0
 
         for episode in range(1, num_episodes + 1):
@@ -67,15 +63,21 @@ class Agent:
             while True:
                 action = self.get_action(state)
                 next_state, reward, done, _ = self.env.step(action)
-                next_state = to_categorical(next_state, num_classes=self.observations)
-                next_state = np.reshape(next_state, newshape=(1, -1)).astype(np.float32)
+                next_state = to_categorical(
+                    next_state, num_classes=self.observations
+                )
+                next_state = np.reshape(next_state, newshape=(1, -1)).astype(
+                    np.float32
+                )
                 self.remember(state, action, reward, next_state, done)
                 self.replay()
                 total_reward += reward
                 state = next_state
 
                 if done:
-                    print(f"Episode: {episode} Reward: {total_reward} Epsilon: {self.epsilon}")
+                    print(
+                        f"Episode: {episode} Reward: {total_reward} Epsilon: {self.epsilon}"
+                    )
                     last_rewards.append(total_reward)
                     current_reward_mean = np.mean(last_rewards)
 
@@ -114,7 +116,9 @@ class Agent:
             if done:
                 q_values[i][a] = rewards[i]
             else:
-                q_values[i][a] = rewards[i] + self.gamma * np.max(q_values_next[i])
+                q_values[i][a] = rewards[i] + self.gamma * np.max(
+                    q_values_next[i]
+                )
 
         self.dqn.fit(states, q_values)
 
@@ -124,8 +128,11 @@ class Agent:
 
         fig, ax = plt.subplots(figsize=(10, 10))
         states = np.array(
-            [to_categorical(i, num_classes=self.observations)
-             for i in range(self.observations)])
+            [
+                to_categorical(i, num_classes=self.observations)
+                for i in range(self.observations)
+            ]
+        )
         values = np.array([self.dqn(state.reshape(1, -1)) for state in states])
         values = np.squeeze(values)
 
@@ -135,7 +142,9 @@ class Agent:
 
             while True:
                 state = to_categorical(state, num_classes=self.observations)
-                state = np.reshape(state, (1, state.shape[0])).astype(np.float32)
+                state = np.reshape(state, (1, state.shape[0])).astype(
+                    np.float32
+                )
                 action = self.get_action(state)
                 state, reward, done, _ = self.env.step(action)
                 state_ = state

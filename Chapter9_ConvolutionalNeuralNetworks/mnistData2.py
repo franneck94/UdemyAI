@@ -4,7 +4,10 @@ from tensorflow.keras.utils import to_categorical
 
 class MNIST:
     def __init__(self):
-        (self.x_train, self.y_train), (self.x_test, self.y_test) = mnist.load_data()
+        (self.x_train, self.y_train), (
+            self.x_test,
+            self.y_test,
+        ) = mnist.load_data()
         # reshape
         self.x_train = self.x_train.reshape(self.x_train.shape[0], 28, 28, 1)
         self.x_test = self.x_test.reshape(self.x_test.shape[0], 28, 28, 1)

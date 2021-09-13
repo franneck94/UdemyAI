@@ -35,7 +35,7 @@ if __name__ == "__main__":
         "CartPole-v1",
         "MountainCar-v0",
         "PongNoFrameskip-v4",
-        "Breakout-v0"
+        "Breakout-v0",
     ]
 
     for game in games:

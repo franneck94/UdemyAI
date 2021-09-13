@@ -14,7 +14,7 @@ class StartGameWrapper(gym.Wrapper):
 
     def reset(self, **kwargs: Any):
         self.env.reset()
-        observation, _, _, _ = self.env.step(1) # FIRE
+        observation, _, _, _ = self.env.step(1)  # FIRE
         return observation
 
 
@@ -26,25 +26,25 @@ class FrameStackWrapper(gym.Wrapper):
         low = np.repeat(
             self.observation_space.low[np.newaxis, ...],
             repeats=self.num_buffer_frames,
-            axis=0
+            axis=0,
         )
         high = np.repeat(
             self.observation_space.high[np.newaxis, ...],
             repeats=self.num_buffer_frames,
-            axis=0
+            axis=0,
         )
         self.observation_space = gym.spaces.Box(
-            low=low,
-            high=high,
-            dtype=self.observation_space.dtype
+            low=low, high=high, dtype=self.observation_space.dtype
         )
 
     def step(self, action: int) -> Tuple[np.ndarray, float, bool, dict]:
         observation, reward, done, info = self.env.step(action)
         self.frames.append(observation)
-        frame_stack = np.asarray(self.frames, dtype=np.float32) # (4, 84, 84)
-        frame_stack = np.moveaxis(frame_stack, source=0, destination=-1) # (84, 84, 4)
-        frame_stack = np.expand_dims(frame_stack, axis=0) # (1, 84, 84, 4)
+        frame_stack = np.asarray(self.frames, dtype=np.float32)  # (4, 84, 84)
+        frame_stack = np.moveaxis(
+            frame_stack, source=0, destination=-1
+        )  # (84, 84, 4)
+        frame_stack = np.expand_dims(frame_stack, axis=0)  # (1, 84, 84, 4)
         return frame_stack, reward, done, info
 
     def reset(self, **kwargs: Any) -> np.ndarray:
@@ -65,7 +65,7 @@ def make_env(env_name: str, num_buffer_frames: int):
         screen_size=84,
         terminal_on_life_loss=False,
         grayscale_obs=True,
-        scale_obs=True
+        scale_obs=True,
     )
     env = FrameStackWrapper(env, num_buffer_frames)
     env = StartGameWrapper(env)
