@@ -11,7 +11,6 @@ gym
 pyglet
 
 # Linting/Tooling
-# Linting/Tooling
 pylint
 flake8
 flake8-bugbear
