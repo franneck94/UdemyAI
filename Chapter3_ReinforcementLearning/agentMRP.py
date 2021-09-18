@@ -21,9 +21,7 @@ while True and i < 10:
     total_reward += reward
     state = transition
     all_states += " -> " + state
-    print(
-        all_states, "\nReward: ", reward, " Gesamt-Reward: ", total_reward, "\n"
-    )
+    print(all_states, "\nReward: ", reward, " Gesamt-Reward: ", total_reward, "\n")
     i += 1
     if input() != " ":
         break

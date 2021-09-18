@@ -25,9 +25,7 @@ class Agent:
         self.state_shape = self.observations
         self.learning_rate = 1e-3
         self.dqn = DQN(self.state_shape, self.actions, self.learning_rate)
-        self.target_dqn = DQN(
-            self.state_shape, self.actions, self.learning_rate
-        )
+        self.target_dqn = DQN(self.state_shape, self.actions, self.learning_rate)
         self.target_dqn.update_model(self.dqn)
         self.batch_size = 32
 

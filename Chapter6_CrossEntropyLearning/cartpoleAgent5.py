@@ -43,9 +43,7 @@ class Agent:
         """Based on the state, get an action."""
         state = state.reshape(1, -1)  # [4,] => [1, 4]
         action = self.model(state).numpy()[0]
-        action = np.random.choice(
-            self.actions, p=action
-        )  # choice([0, 1], [0.5044534  0.49554658])
+        action = np.random.choice(self.actions, p=action)  # choice([0, 1], [0.5044534  0.49554658])
         return action
 
     def get_samples(self, num_episodes: int):
@@ -80,18 +78,14 @@ class Agent:
                 x_train.extend(observation)
                 y_train.extend(action)
         x_train = np.asarray(x_train)
-        y_train = to_categorical(
-            y_train, num_classes=self.actions
-        )  # L = 0 => [1, 0]
+        y_train = to_categorical(y_train, num_classes=self.actions)  # L = 0 => [1, 0]
         return x_train, y_train, reward_bound
 
     def train(self, percentile, num_iterations, num_episodes):
         """Play games and train the NN."""
         for iteration in range(num_iterations):
             rewards, episodes = self.get_samples(num_episodes)
-            x_train, y_train, reward_bound = self.filter_episodes(
-                rewards, episodes, percentile
-            )
+            x_train, y_train, reward_bound = self.filter_episodes(rewards, episodes, percentile)
             self.model.fit(x=x_train, y=y_train, verbose=0)
             reward_mean = np.mean(rewards)
             print(f"Reward mean: {reward_mean}, reward bound: {reward_bound}")
@@ -110,9 +104,7 @@ class Agent:
                 state, reward, done, _ = self.env.step(action)
                 total_reward += reward
                 if done:
-                    print(
-                        f"Total reward: {total_reward} in epsiode {episode + 1}"
-                    )
+                    print(f"Total reward: {total_reward} in epsiode {episode + 1}")
                     break
 
 

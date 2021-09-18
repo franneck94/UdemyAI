@@ -13,13 +13,9 @@ class Agent:
         self.S = range(self.observations)
         self.A = range(self.actions)
         self.gamma = 0.9
-        self.rewards = {
-            s: {a: {s_next: 0 for s_next in self.S} for a in self.A}
-            for s in self.S
-        }
+        self.rewards = {s: {a: {s_next: 0 for s_next in self.S} for a in self.A} for s in self.S}
         self.transitions = {
-            s: {a: {s_next: 0 for s_next in self.S} for a in self.A}
-            for s in self.S
+            s: {a: {s_next: 0 for s_next in self.S} for a in self.A} for s in self.S
         }
         self.values = {s: {a: 0.0 for a in self.A} for s in self.S}
 

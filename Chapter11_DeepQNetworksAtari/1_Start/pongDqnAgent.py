@@ -34,9 +34,7 @@ class Agent:
         self.state_shape = self.observations
         self.learning_rate = 1e-3
         self.dqn = DQN(self.state_shape, self.actions, self.learning_rate)
-        self.target_dqn = DQN(
-            self.state_shape, self.actions, self.learning_rate
-        )
+        self.target_dqn = DQN(self.state_shape, self.actions, self.learning_rate)
         self.target_dqn.update_model(self.dqn)
         self.batch_size = 32
 
@@ -56,9 +54,7 @@ class Agent:
             while True:
                 action = self.get_action(state)
                 next_state, reward, done, _ = self.env.step(action)
-                next_state = np.reshape(next_state, newshape=(1, -1)).astype(
-                    np.float32
-                )
+                next_state = np.reshape(next_state, newshape=(1, -1)).astype(np.float32)
                 if done and total_reward < 499:
                     reward = -100.0
                 self.remember(state, action, reward, next_state, done)
@@ -69,9 +65,7 @@ class Agent:
                     if total_reward < 500:
                         total_reward += 100.0
                     self.target_dqn.update_model(self.dqn)
-                    print(
-                        f"Episode: {episode} Reward: {total_reward} Epsilon: {self.epsilon}"
-                    )
+                    print(f"Episode: {episode} Reward: {total_reward} Epsilon: {self.epsilon}")
                     last_rewards.append(total_reward)
                     current_reward_mean = np.mean(last_rewards)
                     if current_reward_mean > best_reward_mean:
@@ -104,9 +98,7 @@ class Agent:
             if done:
                 q_values[i][a] = rewards[i]
             else:
-                q_values[i][a] = rewards[i] + self.gamma * np.max(
-                    q_values_next[i]
-                )
+                q_values[i][a] = rewards[i] + self.gamma * np.max(q_values_next[i])
 
         self.dqn.fit(states, q_values)
 
@@ -121,9 +113,7 @@ class Agent:
                     self.env.render()
                 action = self.get_action(state)
                 next_state, reward, done, _ = self.env.step(action)
-                next_state = np.reshape(next_state, newshape=(1, -1)).astype(
-                    np.float32
-                )
+                next_state = np.reshape(next_state, newshape=(1, -1)).astype(np.float32)
                 total_reward += reward
                 state = next_state
                 if done:

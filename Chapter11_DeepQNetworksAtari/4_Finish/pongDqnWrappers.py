@@ -41,9 +41,7 @@ class FrameStackWrapper(gym.Wrapper):
         observation, reward, done, info = self.env.step(action)
         self.frames.append(observation)
         frame_stack = np.asarray(self.frames, dtype=np.float32)  # (4, 84, 84)
-        frame_stack = np.moveaxis(
-            frame_stack, source=0, destination=-1
-        )  # (84, 84, 4)
+        frame_stack = np.moveaxis(frame_stack, source=0, destination=-1)  # (84, 84, 4)
         frame_stack = np.expand_dims(frame_stack, axis=0)  # (1, 84, 84, 4)
         return frame_stack, reward, done, info
 

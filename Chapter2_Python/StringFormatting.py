@@ -3,13 +3,7 @@ age = 26
 gender = "male"
 
 message = (
-    "Hello my name is "
-    + name
-    + " i am "
-    + str(age)
-    + " years old and i am a "
-    + gender
-    + " person"
+    "Hello my name is " + name + " i am " + str(age) + " years old and i am a " + gender + " person"
 )
 print(message)
 
@@ -22,13 +16,9 @@ message = "Hello my name is %s i am %i years old and i am a %s person" % (
 print(message)
 
 # .format
-message = "Hello my name is {} i am {} years old and i am a {} person".format(
-    name, age, gender
-)
+message = "Hello my name is {} i am {} years old and i am a {} person".format(name, age, gender)
 print(message)
 
 # f-String
-message = (
-    f"Hello my name is {name} i am {age} years old and i am a {gender} person"
-)
+message = f"Hello my name is {name} i am {age} years old and i am a {gender} person"
 print(message)

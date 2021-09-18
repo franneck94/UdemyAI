@@ -21,9 +21,7 @@ class DQN(Model):
         x = Activation("relu")(x)
         q_value_pred = Dense(self.num_actions)(x)
         model = Model(inputs=input_state, outputs=q_value_pred)
-        model.compile(
-            loss="mse", optimizer=Adam(learning_rate=self.learning_rate)
-        )
+        model.compile(loss="mse", optimizer=Adam(learning_rate=self.learning_rate))
         return model
 
     def call(self, inputs):
