@@ -9,6 +9,7 @@ matplotlib
 pygame
 gym
 pyglet
+opencv-python
 
 # Linting/Tooling
 pylint
