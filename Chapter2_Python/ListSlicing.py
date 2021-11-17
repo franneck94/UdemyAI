@@ -1,32 +1,19 @@
-import matplotlib.pyplot as plt
+list_a = [i for i in range(10)]
 
+print(list_a)
 
-x = [[1, 4, 3, 9], [3, 1, 5, 2]]
+list_b = [list_a[i] for i in range(3)]
 
-y = ["red", "blue", "blue", "red"]
+print(list_b)
 
-# P1 (x1=1, x2=3), Klasse="red"
-# P2 (x1=4, x2=1), Klasse="blue"
-# P3 (x1=3, x2=5), Klasse="blue"
-# P3 (x1=9, x2=2), Klasse="red"
+# List Slicing
 
-x1 = x[0]
-x2 = x[1]
+#              Start, Stop, Step
+list_c = list_a[0:3:1]
 
-plt.scatter(x1, x2, color=y)
-# plt.show()
+print(list_c)
 
-w = [1, 3, 6, 9, 7, 4]
-print(w)
-#                                START:END:STEP
-w_squared = [val ** 2 for val in w[1:5]]
-print(w_squared)
+list_c[0] = -100
 
-import numpy as np
-
-
-w = np.array([1, 3, 6, 9, 7, 4])
-print(w)
-#                                START:END:STEP
-w_squared = np.array([val ** 2 for val in w[1:5]])
-print(w_squared)
+print(list_a)
+print(list_c)

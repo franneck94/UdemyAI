@@ -1,27 +1,15 @@
 import numpy as np
 
 
-noten_py_list = [100, 89, 44, 78, 45, 24, 18]
-noten_np_array = np.array(noten_py_list, dtype=np.int8)
+list1 = np.array([-2, 1, 2, -10, 22, -10])
+print(np.max(list1))
+print(np.min(list1))
+list2 = np.array([-20, 123, 112, -10, 22, -120])
+print(np.max(list2))
+print(np.min(list2))
 
-print(noten_py_list)
-print(noten_np_array)
+print(np.mean(list1))
+print(np.mean(list2))
 
-noten_max = np.max(noten_np_array)
-noten_min = np.min(noten_np_array)
-
-print(noten_max)
-print(noten_min)
-
-# [100, 89, 44, 78, 45, 24, 18]
-noten_arg_max = np.argmax(noten_np_array)
-noten_arg_min = np.argmin(noten_np_array)
-
-print(noten_arg_max)
-print(noten_arg_min)
-
-noten_mean = np.mean(noten_np_array)
-noten_median = np.median(noten_np_array)
-
-print(noten_mean)
-print(noten_median)
+print(np.median(list1))
+print(np.median(list2))

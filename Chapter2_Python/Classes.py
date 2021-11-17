@@ -1,20 +1,26 @@
-class Car:
-    def __init__(self, name, year, hp):  # self (this in C++/Java)
-        self.name = name
-        self.year = year
-        self.hp = hp
-
-    def print_car(self):
-        print("The name of my car is: ", self.name)
-
-    def print_hp(self):
-        print("The car has", self.hp, " hps.")
+# C++, Java: this
 
 
-my_car = Car("Audi A1 Sportback 40 TFSI", "2020", "200")
-my_car.print_car()
-my_car.print_hp()
+class Animal:
+    def __init__(self, weight, height):
+        self.weight = weight
+        self.height = height
 
-my_car2 = Car("Opel Insignia", "2020", "120")
-my_car2.print_car()
-my_car2.print_hp()
+    def jump(self):
+        print("Jump!")
+
+
+def main():
+    dog = Animal(10, 0.8)
+    print(dog.height)
+    print(dog.weight)
+    dog.jump()
+
+    cat = Animal(3, 0.3)
+    print(cat.height)
+    print(cat.weight)
+    cat.jump()
+
+
+if __name__ == "__main__":
+    main()
