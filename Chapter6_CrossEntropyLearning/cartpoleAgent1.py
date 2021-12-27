@@ -1,3 +1,5 @@
+from typing import Any
+
 import gym
 import matplotlib.pyplot as plt
 import numpy as np
@@ -21,7 +23,7 @@ class Agent:
         """
         pass
 
-    def get_model(self):
+    def get_model(self) -> Sequential:
         """Keras NN Model."""
         pass
 

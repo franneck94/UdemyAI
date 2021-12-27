@@ -8,7 +8,7 @@ import numpy as np
 
 
 class StartGameWrapper(gym.Wrapper):
-    def __init__(self, env: gym.Env):
+    def __init__(self, env: gym.Env) -> None:
         super().__init__(env)
         self.env.reset()
 

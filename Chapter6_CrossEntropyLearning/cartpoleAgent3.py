@@ -1,3 +1,5 @@
+from typing import Any
+
 import gym
 import matplotlib.pyplot as plt
 import numpy as np
@@ -24,7 +26,7 @@ class Agent:
         self.actions = self.env.action_space.n
         self.model = self.get_model()
 
-    def get_model(self):
+    def get_model(self) -> Sequential:
         """Returns a keras NN model."""
         model = Sequential()
         model.add(Dense(units=100, input_dim=self.observations))
@@ -39,7 +41,7 @@ class Agent:
         )
         return model
 
-    def get_action(self, state: np.ndarray):
+    def get_action(self, state: np.ndarray) -> Any:
         """Based on the state, get an action."""
         state = state.reshape(1, -1)  # [4,] => [1, 4]
         action = self.model(state).numpy()[0]
@@ -58,7 +60,7 @@ class Agent:
         """Play games and train the NN."""
         pass
 
-    def play(self, num_episodes: int, render: bool = True):
+    def play(self, num_episodes: int, render: bool = True) -> None:
         """Test the trained agent."""
         for episode in range(num_episodes):
             state = self.env.reset()

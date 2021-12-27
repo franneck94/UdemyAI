@@ -1,4 +1,5 @@
 import math
+from typing import Any, List
 
 import gym
 import matplotlib.pyplot as plt
@@ -11,7 +12,7 @@ from tensorflow.keras.optimizers import RMSprop
 from tensorflow.keras.utils import to_categorical
 
 
-def reward_func(state, action):
+def reward_func(state: np.ndarray, action: int) -> float:
     """Custom reward function for the mountain car game.
 
     Parameters
@@ -62,7 +63,7 @@ class Agent:
         self.actions = self.env.action_space.n
         self.model = self.get_model()
 
-    def get_model(self):
+    def get_model(self) -> Sequential:
         """Returns a keras NN model."""
         model = Sequential()
         model.add(Dense(units=100, input_dim=self.observations))
@@ -77,17 +78,17 @@ class Agent:
         )
         return model
 
-    def get_action(self, state: np.ndarray):
+    def get_action(self, state: np.ndarray) -> Any:
         """Based on the state, get an action."""
         state = state.reshape(1, -1)  # [4,] => [1, 4]
         action = self.model(state).numpy()[0]
         action = np.random.choice(self.actions, p=action)  # choice([0, 1], [0.5044534  0.49554658])
         return action
 
-    def get_samples(self, num_episodes: int):
+    def get_samples(self, num_episodes: int) -> tuple:
         """Sample games."""
-        rewards = [0.0 for i in range(num_episodes)]
-        episodes = [[] for i in range(num_episodes)]
+        rewards = [0.0 for _ in range(num_episodes)]
+        episodes: List[Any] = [[] for i in range(num_episodes)]
 
         for episode in range(num_episodes):
             state = self.env.reset()
@@ -106,7 +107,7 @@ class Agent:
 
         return rewards, episodes
 
-    def filter_episodes(self, rewards, episodes, percentile):
+    def filter_episodes(self, rewards: list, episodes: list, percentile: float) -> tuple:
         """Helper function for the training."""
         reward_bound = np.percentile(rewards, percentile)
         x_train, y_train = [], []
@@ -120,13 +121,13 @@ class Agent:
         y_train = to_categorical(y_train, num_classes=self.actions)  # L = 0 => [1, 0]
         return x_train, y_train, reward_bound
 
-    def train(self, percentile, num_iterations, num_episodes):
+    def train(self, percentile: float, num_iterations: int, num_episodes: int) -> None:
         """Play games and train the NN."""
         reward_means, reward_bounds = [], []
         for _ in range(num_iterations):
             rewards, episodes = self.get_samples(num_episodes)
             x_train, y_train, reward_bound = self.filter_episodes(rewards, episodes, percentile)
-            self.model((x_train, y_train), training=True)
+            self.model.train_on_batch(x=x_train, y=y_train)
             reward_mean = np.mean(rewards)
             print(f"Reward mean: {reward_mean}, reward bound: {reward_bound}")
             reward_bounds.append(reward_bound)
@@ -135,7 +136,7 @@ class Agent:
                 break
         return reward_means, reward_bounds
 
-    def play(self, num_episodes: int, render: bool = True):
+    def play(self, num_episodes: int, render: bool = True) -> None:
         """Test the trained agent."""
         for episode in range(num_episodes):
             state = self.env.reset()

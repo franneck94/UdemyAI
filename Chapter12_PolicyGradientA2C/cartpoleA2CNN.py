@@ -33,13 +33,13 @@ class Actor(Model):
     def fit(self, states: np.ndarray, actions: np.ndarray):
         self.internal_model.fit(x=states, y=actions, verbose=0)
 
-    def update_model(self, other_model: Model):
+    def update_model(self, other_model: Model) -> None:
         self.internal_model.set_weights(other_model.get_weights())
 
-    def load_model(self, path: str):
+    def load_model(self, path: str) -> None:
         self.internal_model.load_weights(path)
 
-    def save_model(self, path: str):
+    def save_model(self, path: str) -> None:
         self.internal_model.save_weights(path)
 
 
@@ -66,13 +66,13 @@ class Critic(Model):
     def fit(self, states: np.ndarray, values: np.ndarray):
         self.internal_model.fit(x=states, y=values, verbose=0)
 
-    def update_model(self, other_model: Model):
+    def update_model(self, other_model: Model) -> None:
         self.internal_model.set_weights(other_model.get_weights())
 
-    def load_model(self, path: str):
+    def load_model(self, path: str) -> None:
         self.internal_model.load_weights(path)
 
-    def save_model(self, path: str):
+    def save_model(self, path: str) -> None:
         self.internal_model.save_weights(path)
 
 

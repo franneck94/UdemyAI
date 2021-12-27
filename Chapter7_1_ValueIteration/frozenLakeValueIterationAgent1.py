@@ -1,3 +1,5 @@
+from typing import Any
+
 import gym
 import matplotlib.pyplot as plt
 import numpy as np
@@ -19,27 +21,27 @@ class Agent:
         }
         self.values = {s: {a: 0.0 for a in self.A} for s in self.S}
 
-    def get_action(self, s_next):
+    def get_action(self, s_next: int) -> Any:
         action = self.env.action_space.sample()
         return action
 
-    def get_random_action(self):
+    def get_random_action(self) -> Any:
         action = self.env.action_space.sample()
         return action
 
-    def get_samples(self, num_episodes: int):
+    def get_samples(self, num_episodes: int) -> None:
         pass
 
-    def compute_q_values(self):
+    def compute_q_values(self) -> None:
         pass
 
-    def train(self, num_iterations, num_episodes):
+    def train(self, num_iterations: int, num_episodes: int) -> None:
         pass
 
-    def test(self, num_episodes: int):
+    def test(self, num_episodes: int) -> float:
         pass
 
-    def play(self, num_episodes: int, render: bool = True):
+    def play(self, num_episodes: int, render: bool = True) -> None:
         fig, ax = plt.subplots()
         for episode in range(num_episodes):
             state = self.env.reset()

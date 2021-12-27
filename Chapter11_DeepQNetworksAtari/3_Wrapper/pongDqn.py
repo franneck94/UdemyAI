@@ -38,16 +38,16 @@ class DQN(Model):
     def call(self, inputs: np.ndarray) -> np.ndarray:
         return self.internal_model(inputs).numpy()
 
-    def fit(self, states: np.ndarray, q_values: np.ndarray):
+    def fit(self, states: np.ndarray, q_values: np.ndarray) -> None:
         self.internal_model.fit(x=states, y=q_values, verbose=0)
 
-    def update_model(self, other_model: Model):
+    def update_model(self, other_model: Model) -> None:
         self.internal_model.set_weights(other_model.get_weights())
 
-    def load_model(self, path: str):
+    def load_model(self, path: str) -> None:
         self.internal_model.load_weights(path)
 
-    def save_model(self, path: str):
+    def save_model(self, path: str) -> None:
         self.internal_model.save_weights(path)
 
 

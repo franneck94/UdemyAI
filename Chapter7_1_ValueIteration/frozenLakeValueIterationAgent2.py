@@ -1,3 +1,5 @@
+from typing import Any
+
 import gym
 import matplotlib.pyplot as plt
 import numpy as np
@@ -19,16 +21,16 @@ class Agent:
         }
         self.values = {s: {a: 0.0 for a in self.A} for s in self.S}
 
-    def get_action(self, s_next):
+    def get_action(self, s_next: int) -> Any:
         pass
 
-    def get_random_action(self):
+    def get_random_action(self) -> Any:
         action = self.env.action_space.sample()
         return action
 
-    def get_samples(self, num_episodes: int):
+    def get_samples(self, num_episodes: int) -> None:
         state = self.env.reset()
-        for episode in range(num_episodes):
+        for _ in range(num_episodes):
             action = self.get_random_action()
             new_state, reward, done, _ = self.env.step(action)
             self.rewards[state][action][new_state] = reward
@@ -38,12 +40,12 @@ class Agent:
             else:
                 state = new_state
 
-    def compute_q_values(self):
+    def compute_q_values(self) -> None:
         pass
 
-    def train(self, num_iterations, num_episodes):
+    def train(self, num_iterations: int, num_episodes: int) -> None:
         self.get_samples(num_episodes=1000)
-        for iteration in range(num_iterations):
+        for _ in range(num_iterations):
             self.get_samples(num_episodes=num_episodes)
             self.compute_q_values()
             reward_mean = self.test(num_episodes=20) / 20
@@ -51,9 +53,9 @@ class Agent:
             if reward_mean >= 0.9:
                 break
 
-    def test(self, num_episodes: int):
+    def test(self, num_episodes: int) -> float:
         sum_rewards = 0.0
-        for episode in range(num_episodes):
+        for _ in range(num_episodes):
             state = self.env.reset()
             total_reward = 0.0
             while True:
@@ -65,7 +67,7 @@ class Agent:
                     break
         return sum_rewards
 
-    def play(self, num_episodes: int, render: bool = True):
+    def play(self, num_episodes: int, render: bool = True) -> None:
         fig, ax = plt.subplots()
         for episode in range(num_episodes):
             state = self.env.reset()

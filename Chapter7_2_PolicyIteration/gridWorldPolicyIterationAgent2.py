@@ -1,3 +1,4 @@
+import gym
 import numpy as np
 
 from environment import Env

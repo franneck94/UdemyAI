@@ -1,13 +1,16 @@
-import random
 import collections
+import random
 
 import gym
-import numpy as np
 import matplotlib.pyplot as plt
-  
-from nn import *
-from wrappers import *
- 
+import numpy as np
+
+from nn import NN
+from nn import to_categorical
+from wrappers import make_atari
+from wrappers import make_env
+
+
 class Agent:
     def __init__(self, game):
         self.game = game
@@ -23,7 +26,7 @@ class Agent:
         self.lr_critic = 2e-4
         self.model = NN(self.img_shape, self.num_actions, self.num_values, self.lr_actor, self.lr_critic)
         self.states, self.actions, self.rewards = [], [], []
-    
+
     def get_action(self, state):
         policy = self.model.predict_actor(state)[0]
         action = np.random.choice(self.num_actions, p=policy)
@@ -58,7 +61,7 @@ class Agent:
         advantages = np.zeros((episode_length,))
 
         for i in range(episode_length):
-            advantages[i] = discounted_rewards[i] - values[i] # A = V - Q
+            advantages[i] = discounted_rewards[i] - values[i]  # A = V - Q
         actions = to_categorical(self.actions, num_classes=self.num_actions)
 
         self.model.train_actor(states, actions, advantages)
@@ -85,12 +88,12 @@ class Agent:
                         mean_total_rewards = np.mean(total_rewards[-10:])
                     else:
                         mean_total_rewards = np.mean(total_rewards)
-                    print("Episode: ", episode+1,
-                        " Total Reward: ", total_reward,
-                        " Mean: ", mean_total_rewards)
+                    print("Episode: ", episode + 1,
+                          " Total Reward: ", total_reward,
+                          " Mean: ", mean_total_rewards)
                     if mean_total_rewards > 490:
                         return total_rewards
-                    break 
+                    break
         return total_rewards
 
     def play(self, num_episodes, render=True):
@@ -103,6 +106,7 @@ class Agent:
                 next_state, reward, done, _ = self.env.step(action)
                 if done:
                     break
+
 
 if __name__ == "__main__":
     game = "PongNoFrameskip-v4"

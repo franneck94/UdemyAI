@@ -18,7 +18,7 @@ class Agent:
         self.values = {s: {a: 0.0 for a in self.A} for s in self.S}
         self.state = self.env.reset()
 
-    def get_action(self, s_next):
+    def get_action(self, s_next: int) -> float:
         act = np.argmax(list(self.values[s_next].values()))
         return act
 
@@ -26,7 +26,7 @@ class Agent:
         act = np.max(list(self.values[s_next].values()))
         return act
 
-    def get_random_action(self):
+    def get_random_action(self) -> Any:
         action = self.env.action_space.sample()
         return action
 
@@ -68,7 +68,7 @@ class Agent:
             if mean_reward >= 0.9:
                 break
 
-    def test(self, num_episodes: int):
+    def test(self, num_episodes: int) -> float:
         env = gym.make("FrozenLake-v0")
         sum_rewards = 0.0
         for episode in range(num_episodes):
@@ -83,7 +83,7 @@ class Agent:
                     break
         return sum_rewards / num_episodes
 
-    def play(self, num_episodes: int, render: bool = True):
+    def play(self, num_episodes: int, render: bool = True) -> None:
         fig, ax = plt.subplots(figsize=(10, 10))
         for episode in range(num_episodes):
             state = self.env.reset()

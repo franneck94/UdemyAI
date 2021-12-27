@@ -1,5 +1,6 @@
 import collections
 import random
+from typing import Any
 
 import gym
 import numpy as np
@@ -20,7 +21,7 @@ class Agent:
     def remember(self):
         pass
 
-    def replay(self):
+    def replay(self) -> None:
         pass
 
     def play(self):

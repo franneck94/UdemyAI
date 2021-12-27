@@ -1,3 +1,5 @@
+from typing import Any
+
 import gym
 import matplotlib.pyplot as plt
 import numpy as np
@@ -21,15 +23,15 @@ class Agent:
         self.values = {s: {a: 0.0 for a in self.A} for s in self.S}
         self.state = self.env.reset()
 
-    def get_action(self, s_next):
+    def get_action(self, s_next: int) -> Any:
         act = np.argmax(list(self.values[s_next].values()))
         return act
 
-    def get_random_action(self):
+    def get_random_action(self) -> Any:
         action = self.env.action_space.sample()
         return action
 
-    def get_samples(self, num_episodes: int):
+    def get_samples(self, num_episodes: int) -> None:
         for _ in range(num_episodes):
             action = self.get_random_action()
             new_state, reward, done, _ = self.env.step(action)
@@ -40,7 +42,7 @@ class Agent:
             else:
                 self.state = new_state
 
-    def compute_q_values(self):
+    def compute_q_values(self) -> None:
         for s in self.S:
             for a in self.A:
                 q_value = 0.0
@@ -55,7 +57,7 @@ class Agent:
                         )
                     self.values[s][a] = q_value
 
-    def train(self, num_iterations, num_episodes):
+    def train(self, num_iterations: int, num_episodes: int) -> None:
         self.get_samples(num_episodes=1000)
         for _ in range(num_iterations):
             self.get_samples(num_episodes=num_episodes)
@@ -65,7 +67,7 @@ class Agent:
             if reward_mean >= 0.9:
                 break
 
-    def test(self, num_episodes: int):
+    def test(self, num_episodes: int) -> float:
         sum_rewards = 0.0
         for _ in range(num_episodes):
             state = self.env.reset()
@@ -79,7 +81,7 @@ class Agent:
                     break
         return sum_rewards
 
-    def play(self, num_episodes: int, render: bool = True):
+    def play(self, num_episodes: int, render: bool = True) -> None:
         fig, ax = plt.subplots(figsize=(10, 10))
         for episode in range(num_episodes):
             state = self.env.reset()

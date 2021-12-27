@@ -7,6 +7,7 @@ tf.config.experimental.set_memory_growth(physical_devices[0], True)
 import collections
 import os
 import random
+from typing import Any
 from typing import Deque
 
 import numpy as np
@@ -48,13 +49,13 @@ class Agent:
         self.batch_size = 32
         self.sync_models = 1_000
 
-    def get_action(self, state: np.ndarray):
+    def get_action(self, state: np.ndarray) -> Any:
         if np.random.rand() <= self.epsilon:
             return np.random.randint(self.actions)
         else:
             return np.argmax(self.dqn(state))
 
-    def train(self, num_episodes: int):
+    def train(self, num_episodes: int) -> None:
         last_rewards: Deque = collections.deque(maxlen=10)
         best_reward_mean = 0.0
         frame_it = 0
@@ -100,7 +101,7 @@ class Agent:
     def remember(self, state, action, reward, next_state, done):
         self.memory.append((state, action, reward, next_state, done))
 
-    def replay(self):
+    def replay(self) -> None:
         if len(self.memory) < self.train_start:
             return
 
@@ -123,7 +124,7 @@ class Agent:
 
         self.dqn.fit(states, q_values)
 
-    def play(self, num_episodes: int, render: bool = True):
+    def play(self, num_episodes: int, render: bool = True) -> None:
         self.dqn.load_model(MODEL_PATH)
         self.target_dqn.load_model(TARGET_MODEL_PATH)
         self.epsilon = 0.0

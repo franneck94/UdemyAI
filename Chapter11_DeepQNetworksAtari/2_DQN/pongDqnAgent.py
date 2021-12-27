@@ -1,6 +1,7 @@
 import collections
 import os
 import random
+from typing import Any
 from typing import Deque
 
 import gym
@@ -17,7 +18,7 @@ TARGET_MODEL_PATH = os.path.join(MODELS_PATH, "target_dqn_pong.h5")
 
 
 class Agent:
-    def __init__(self, env: gym.Env):
+    def __init__(self, env: gym.Env) -> None:
         # DQN Env Variables
         self.env = env
         self.observations = self.env.observation_space.shape
@@ -38,13 +39,13 @@ class Agent:
         self.target_dqn.update_model(self.dqn)
         self.batch_size = 32
 
-    def get_action(self, state: np.ndarray):
+    def get_action(self, state: np.ndarray) -> Any:
         if np.random.rand() <= self.epsilon:
             return np.random.randint(self.actions)
         else:
             return np.argmax(self.dqn(state))
 
-    def train(self, num_episodes: int):
+    def train(self, num_episodes: int) -> None:
         last_rewards: Deque = collections.deque(maxlen=10)
         best_reward_mean = 0.0
         for episode in range(1, num_episodes + 1):
@@ -79,7 +80,7 @@ class Agent:
         if self.epsilon > self.epsilon_min:
             self.epsilon *= self.epsilon_decay
 
-    def replay(self):
+    def replay(self) -> None:
         if len(self.memory) < self.train_start:
             return
 
@@ -102,7 +103,7 @@ class Agent:
 
         self.dqn.fit(states, q_values)
 
-    def play(self, num_episodes: int, render: bool = True):
+    def play(self, num_episodes: int, render: bool = True) -> None:
         self.dqn.load_model(MODEL_PATH)
         for episode in range(1, num_episodes + 1):
             total_reward = 0.0

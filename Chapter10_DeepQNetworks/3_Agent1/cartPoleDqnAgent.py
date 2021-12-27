@@ -1,5 +1,6 @@
 import collections
 import random
+from typing import Any
 
 import gym
 import numpy as np
@@ -8,7 +9,7 @@ from cartPoleDqn import DQN
 
 
 class Agent:
-    def __init__(self, env: gym.Env):
+    def __init__(self, env: gym.Env) -> None:
         # DQN Env Variables
         self.env = env
         self.observations = self.env.obersvation_space.shape
@@ -29,22 +30,22 @@ class Agent:
         self.target_dqn.update_model(self.dqn)
         self.batch_size = 32
 
-    def get_action(self, state: np.ndarray):
+    def get_action(self, state: np.ndarray) -> Any:
         if np.random.rand() <= self.epsilon:
             return np.random.randint(self.actions)
         else:
             return np.argmax(self.dqn(state))
 
-    def train(self, num_episodes: int):
+    def train(self, num_episodes: int) -> None:
         pass
 
     def remember(self, state, action, reward, next_state, done):
         pass
 
-    def replay(self):
+    def replay(self) -> None:
         pass
 
-    def play(self, num_episodes: int, render: bool = True):
+    def play(self, num_episodes: int, render: bool = True) -> None:
         pass
 
 

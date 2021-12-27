@@ -1,3 +1,6 @@
+from typing import Any
+
+import gym
 import numpy as np
 
 from environment import Env
@@ -69,7 +72,7 @@ class Agent:
     def get_value(self, state):
         return self.v_values[state[0]][state[1]]
 
-    def get_action(self, state: np.ndarray):
+    def get_action(self, state: np.ndarray) -> Any:
         if state != [2, 2]:
             action = np.random.choice(self.A, p=self.policy[state[0]][state[1]])
             return action

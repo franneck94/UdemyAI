@@ -1,6 +1,7 @@
 import collections
 import os
 import random
+from typing import Any
 from typing import Deque
 
 import gym
@@ -17,7 +18,7 @@ CRITIC_PATH = os.path.join(MODELS_PATH, "critic_cartpole.h5")
 
 
 class Agent:
-    def __init__(self, env: gym.Env):
+    def __init__(self, env: gym.Env) -> None:
         self.env = env
         self.num_observations = self.env.observation_space.shape
         self.num_actions = self.env.action_space.n
@@ -28,7 +29,7 @@ class Agent:
         self.actor = Actor(self.num_observations, self.num_actions, self.learning_rate_actor)
         self.critic = Critic(self.num_observations, self.num_values, self.learning_rate_critic)
 
-    def get_action(self, state: np.ndarray):
+    def get_action(self, state: np.ndarray) -> Any:
         policy = self.actor(state)[0]
         action = np.random.choice(self.num_actions, p=policy)
         return action
@@ -50,7 +51,7 @@ class Agent:
         self.actor.fit(state, advantages)
         self.critic.fit(state, values)
 
-    def train(self, num_episodes: int):
+    def train(self, num_episodes: int) -> None:
         last_rewards: Deque = collections.deque(maxlen=5)
 
         for episode in range(1, num_episodes + 1):
@@ -85,7 +86,7 @@ class Agent:
         self.actor.save_model(ACTOR_PATH)
         self.critic.save_model(CRITIC_PATH)
 
-    def play(self, num_episodes: int, render: bool = True):
+    def play(self, num_episodes: int, render: bool = True) -> None:
         self.actor.load_model(ACTOR_PATH)
         self.critic.load_model(CRITIC_PATH)
 
