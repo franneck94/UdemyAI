@@ -7,7 +7,7 @@ from plotting import save_map
 
 
 class Agent:
-    def __init__(self, env):
+    def __init__(self, env: gym.Env) -> None:
         self.env = env
         self.observations = self.env.observation_space.n
         self.actions = self.env.action_space.n

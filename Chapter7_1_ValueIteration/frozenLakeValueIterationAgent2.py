@@ -6,7 +6,7 @@ from plotting import plotting_fn
 
 
 class Agent:
-    def __init__(self, env):
+    def __init__(self, env: gym.Env) -> None:
         self.env = env
         self.observations = self.env.observation_space.n
         self.actions = self.env.action_space.n

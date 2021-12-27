@@ -5,7 +5,7 @@ from environment import GraphicDisplay
 
 
 class Agent:
-    def __init__(self, env):
+    def __init__(self, env: gym.Env) -> None:
         self.env = env
         self.S = self.env.all_state
         self.A = self.env.possible_actions

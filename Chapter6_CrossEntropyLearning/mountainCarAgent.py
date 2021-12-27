@@ -49,7 +49,7 @@ def reward_func(state, action):
 class Agent:
     """Agent class for the cross-entropy learning algorithm."""
 
-    def __init__(self, env):
+    def __init__(self, env: gym.Env) -> None:
         """Set up the environment, the neural network and member variables.
 
         Parameters

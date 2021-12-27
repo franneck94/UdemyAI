@@ -11,7 +11,7 @@ class Agent:
     def __init__(self):
         pass
 
-    def get_action(self):
+    def get_action(self) -> Any:
         pass
 
     def train(self):

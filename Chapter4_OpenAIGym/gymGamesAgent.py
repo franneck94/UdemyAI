@@ -3,14 +3,14 @@ import numpy as np
 
 
 class Agent:
-    def __init__(self, env):
+    def __init__(self, env: gym.Env) -> None:
         self.env = env
 
-    def get_action(self):
+    def get_action(self) -> Any:
         action = self.env.action_space.sample()
         return action
 
-    def play(self, episodes, render=True):
+    def play(self, episodes: int, render: bool = True) -> list:
         rewards = [0.0 for i in range(episodes)]
 
         for episode in range(episodes):
