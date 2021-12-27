@@ -10,7 +10,7 @@ from tensorflow.keras.optimizers import RMSprop
 
 
 class DQN(Model):
-    def __init__(self, img_shape: tuple, num_actions: int, learning_rate: float):
+    def __init__(self, img_shape: tuple, num_actions: int, learning_rate: float) -> None:
         super().__init__()
         self.img_shape = img_shape
         self.num_actions = num_actions

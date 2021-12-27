@@ -22,7 +22,7 @@ class Agent:
         self.v_values = [[0.0 for _ in range(self.cols)] for _ in range(self.rows)]
         self.policy[2][2] = [0.0 for _ in range(self.num_actions)]
 
-    def policy_evaluation(self):
+    def policy_evaluation(self) -> None:
         next_v_values = [[0.0 for _ in range(self.cols)] for _ in range(self.rows)]
 
         for state in self.S:

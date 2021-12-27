@@ -17,7 +17,7 @@ TARGET_MODEL_PATH = os.path.join(MODELS_PATH, "target_dqn_pong.h5")
 
 
 class Agent:
-    def __init__(self, env_name: str):
+    def __init__(self, env_name: str) -> None:
         # DQN Env Variables
         self.env_name = env_name
         self.num_buffer_frames = 4
@@ -86,7 +86,7 @@ class Agent:
                         print(f"New best mean: {best_reward_mean}")
                     break
 
-    def epsilon_anneal(self):
+    def epsilon_anneal(self) -> None:
         if len(self.memory) < self.train_start:
             return
         if self.epsilon > self.epsilon_min:

@@ -12,14 +12,14 @@ class StartGameWrapper(gym.Wrapper):
         super().__init__(env)
         self.env.reset()
 
-    def reset(self, **kwargs: Any):
+    def reset(self, **kwargs: Any) -> Any:
         self.env.reset()
         observation, _, _, _ = self.env.step(1)  # FIRE
         return observation
 
 
 class FrameStackWrapper(gym.Wrapper):
-    def __init__(self, env: gym.Env, num_buffer_frames: int):
+    def __init__(self, env: gym.Env, num_buffer_frames: int) -> None:
         super().__init__(env)
         self.num_buffer_frames = num_buffer_frames
         self.frames: Deque = collections.deque(maxlen=self.num_buffer_frames)
@@ -54,7 +54,7 @@ class FrameStackWrapper(gym.Wrapper):
         return frame_stack
 
 
-def make_env(env_name: str, num_buffer_frames: int):
+def make_env(env_name: str, num_buffer_frames: int) -> gym.Env:
     env = gym.make(env_name)
     env = gym.wrappers.AtariPreprocessing(
         env=env,

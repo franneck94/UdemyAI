@@ -24,7 +24,7 @@ class Agent:
         self.v_values = [[0.0 for _ in range(self.cols)] for _ in range(self.rows)]
         self.policy[2][2] = [0.0 for _ in range(self.num_actions)]
 
-    def policy_evaluation(self):
+    def policy_evaluation(self) -> None:
         next_v_values = [[0.0 for _ in range(self.cols)] for _ in range(self.rows)]
 
         for state in self.S:
@@ -45,7 +45,7 @@ class Agent:
 
         self.v_values = next_v_values
 
-    def policy_improvement(self):
+    def policy_improvement(self) -> None:
         next_policy = self.policy
 
         for state in self.S:
@@ -69,7 +69,7 @@ class Agent:
 
         self.policy = next_policy
 
-    def get_value(self, state):
+    def get_value(self, state: Any) -> Any:
         return self.v_values[state[0]][state[1]]
 
     def get_action(self, state: np.ndarray) -> Any:

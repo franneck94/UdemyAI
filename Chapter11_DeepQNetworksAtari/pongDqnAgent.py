@@ -1,9 +1,3 @@
-import tensorflow as tf
-
-
-physical_devices = tf.config.list_physical_devices("GPU")
-tf.config.experimental.set_memory_growth(physical_devices[0], True)
-
 import collections
 import os
 import random
@@ -11,6 +5,7 @@ from typing import Any
 from typing import Deque
 
 import numpy as np
+import tensorflow as tf
 
 from pongDqn import DQN
 from pongDqnWrappers import make_env
@@ -23,7 +18,7 @@ TARGET_MODEL_PATH = os.path.join(MODELS_PATH, "target_dqn_pong.h5")
 
 
 class Agent:
-    def __init__(self, env_name: str):
+    def __init__(self, env_name: str) -> None:
         # DQN Env Variables
         self.env_name = env_name
         self.num_buffer_frames = 4
@@ -92,7 +87,7 @@ class Agent:
                         print(f"New best mean: {best_reward_mean}")
                     break
 
-    def epsilon_anneal(self):
+    def epsilon_anneal(self) -> None:
         if len(self.memory) < self.train_start:
             return
         if self.epsilon > self.epsilon_min:
