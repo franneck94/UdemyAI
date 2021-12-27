@@ -7,7 +7,7 @@ scikit-learn
 numpy==1.19.*
 matplotlib
 pygame
-gym
+gym==0.19.0
 pyglet
 opencv-python
 

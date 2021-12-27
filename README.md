@@ -19,17 +19,19 @@ Link zu der Liste der Rabatt Codes: [Link](https://github.com/franneck94/Youtube
 
 ## Kursbeschreibung
 
-Wir bewegen uns auf das Zeitalter der künstlichen Intelligenz zu.Es wird in Zukunft unser aller Leben bereichern und beeinflussen.Wenn du dich heute schon mit diesem spannenden Themengebiet auseinandersetzen willst, bist du hier genau richtig.
+Wir bewegen uns auf das Zeitalter der künstlichen Intelligenz zu.  
+Es wird in Zukunft unser aller Leben bereichern und beeinflussen.  
+Wenn du dich heute schon mit diesem spannenden Themengebiet auseinandersetzen willst, bist du hier genau richtig.
 
 ## Dieser Kurs besteht aus folgenden Themengebieten
 
-☑️ Grundlagen der Python Programmierung
-☑️ Grundlagen des Machine und Deep Learnings
-☑️ Einführung in TensorFlow und Keras
-☑️ Einführung in das Reinforcement Learning
-☑️ Anwendung neuster Reinforcement Learning Techniken
-☑️ Erstellung einer KI für Simulationen
-☑️ Erstellung einer KI für Atari Videospiele
+☑️ Grundlagen der Python Programmierung  
+☑️ Grundlagen des Machine und Deep Learnings  
+☑️ Einführung in TensorFlow und Keras  
+☑️ Einführung in das Reinforcement Learning  
+☑️ Anwendung neuster Reinforcement Learning Techniken  
+☑️ Erstellung einer KI für Simulationen  
+☑️ Erstellung einer KI für Atari Videospiele  
 
 Werde noch heute ein Profi, in der Technologie von Morgen!
 Wir sehen uns im Kurs!
