@@ -73,7 +73,7 @@ class Agent:
                         print(f"New best mean: {best_reward_mean}")
                     break
 
-    def remember(self, state, action, reward, next_state, done):
+    def remember(self, state: Any, action: Any, reward: float, next_state: Any, done: bool) -> None:
         self.memory.append((state, action, reward, next_state, done))
         if self.epsilon > self.epsilon_min:
             self.epsilon *= self.epsilon_decay

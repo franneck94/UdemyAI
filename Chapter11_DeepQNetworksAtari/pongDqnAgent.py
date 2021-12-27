@@ -98,7 +98,7 @@ class Agent:
         if self.epsilon > self.epsilon_min:
             self.epsilon -= self.epsilon_step
 
-    def remember(self, state, action, reward, next_state, done):
+    def remember(self, state: Any, action: Any, reward: float, next_state: Any, done: bool) -> None:
         self.memory.append((state, action, reward, next_state, done))
 
     def replay(self) -> None:

@@ -1,5 +1,6 @@
 import math
-from typing import Any, List
+from typing import Any
+from typing import List
 
 import gym
 import matplotlib.pyplot as plt

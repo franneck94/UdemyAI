@@ -1,3 +1,5 @@
+from typing import Any
+
 import gym
 import matplotlib.pyplot as plt
 import numpy as np
@@ -17,11 +19,11 @@ class Agent:
         self.state = self.env.reset()
 
     def get_action(self, s_next: int) -> float:
-        act = np.argmax(list(self.values[s_next].values()))
+        act: float = np.argmax(list(self.values[s_next].values()))
         return act
 
-    def get_value(self, s_next):
-        act = np.max(list(self.values[s_next].values()))
+    def get_value(self, s_next: Any) -> float:
+        act: float = np.max(list(self.values[s_next].values()))
         return act
 
     def get_random_action(self) -> Any:
@@ -34,11 +36,11 @@ class Agent:
     def compute_q_values(self) -> None:
         pass
 
-    def train(self, num_iterations):
+    def train(self, num_iterations: int) -> None:
         pass
 
     def test(self, num_episodes: int) -> float:
-        self.env = gym.make("FrozenLake-v0")
+        self.env = gym.make("FrozenLake-v1")
         sum_rewards = 0.0
         for episode in range(num_episodes):
             state = self.env.reset()
@@ -69,7 +71,7 @@ class Agent:
 
 
 if __name__ == "__main__":
-    env = gym.make("FrozenLake-v0")
+    env = gym.make("FrozenLake-v1")
     agent = Agent(env)
     agent.train(num_iterations=10000)
     agent.play(num_episodes=10)

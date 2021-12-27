@@ -84,7 +84,7 @@ class Agent:
 
 
 if __name__ == "__main__":
-    env = gym.make("FrozenLake-v0")
+    env = gym.make("FrozenLake-v1")
     agent = Agent(env)
     agent.train(num_iterations=50, num_episodes=100)
     agent.play(num_episodes=10)

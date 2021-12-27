@@ -83,7 +83,7 @@ class Agent:
                             return
                     break
 
-    def remember(self, state, action, reward, next_state, done):
+    def remember(self, state: Any, action: Any, reward: float, next_state: Any, done: bool) -> None:
         self.memory.append((state, action, reward, next_state, done))
         if self.epsilon > self.epsilon_min:
             self.epsilon *= self.epsilon_decay
@@ -142,7 +142,7 @@ class Agent:
 
 
 if __name__ == "__main__":
-    env = gym.make("FrozenLake-v0")
+    env = gym.make("FrozenLake-v1")
     agent = Agent(env)
     agent.train(num_episodes=600)
     input("Play?")

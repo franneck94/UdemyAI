@@ -39,7 +39,7 @@ class Agent:
     def train(self, num_episodes: int) -> None:
         pass
 
-    def remember(self, state, action, reward, next_state, done):
+    def remember(self, state: Any, action: Any, reward: float, next_state: Any, done: bool) -> None:
         pass
 
     def replay(self) -> None:

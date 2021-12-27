@@ -24,7 +24,7 @@ class Agent:
         self.state = self.env.reset()
 
     def get_action(self, s_next: int) -> Any:
-        act = np.argmax(list(self.values[s_next].values()))
+        act: float = np.argmax(list(self.values[s_next].values()))
         return act
 
     def get_random_action(self) -> Any:
@@ -98,7 +98,7 @@ class Agent:
 
 
 if __name__ == "__main__":
-    env = gym.make("FrozenLake-v0")
+    env = gym.make("FrozenLake-v1")
     agent = Agent(env)
     agent.train(num_iterations=10000, num_episodes=1000)
     agent.play(num_episodes=20)
