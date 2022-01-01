@@ -32,7 +32,7 @@ class Agent:
         return rewards
 
 
-if __name__ == "__main__":
+def main() -> None:
     env = gym.make("CartPole-v1")
     agent = Agent(env)
     rewards = agent.play(episodes=20000, render=False)
@@ -44,3 +44,7 @@ if __name__ == "__main__":
     print("Rewards Mean: ", rewards_mean)
     print("Rewards Min: ", rewards_min)
     print("Rewards Max: ", rewards_max)
+
+
+if __name__ == "__main__":
+    main()

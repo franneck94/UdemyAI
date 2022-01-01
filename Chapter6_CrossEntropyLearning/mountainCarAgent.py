@@ -83,7 +83,9 @@ class Agent:
         """Based on the state, get an action."""
         state = state.reshape(1, -1)  # [4,] => [1, 4]
         action = self.model(state).numpy()[0]
-        action = np.random.choice(self.actions, p=action)  # choice([0, 1], [0.5044534  0.49554658])
+        action = np.random.choice(
+            self.actions, p=action
+        )  # choice([0, 1], [0.5044534  0.49554658])
         return action
 
     def get_samples(self, num_episodes: int) -> tuple:
@@ -108,7 +110,9 @@ class Agent:
 
         return rewards, episodes
 
-    def filter_episodes(self, rewards: list, episodes: list, percentile: float) -> tuple:
+    def filter_episodes(
+        self, rewards: list, episodes: list, percentile: float
+    ) -> tuple:
         """Helper function for the training."""
         reward_bound = np.percentile(rewards, percentile)
         x_train, y_train = [], []
@@ -119,15 +123,21 @@ class Agent:
                 x_train.extend(observation)
                 y_train.extend(action)
         x_train = np.asarray(x_train)
-        y_train = to_categorical(y_train, num_classes=self.actions)  # L = 0 => [1, 0]
+        y_train = to_categorical(
+            y_train, num_classes=self.actions
+        )  # L = 0 => [1, 0]
         return x_train, y_train, reward_bound
 
-    def train(self, percentile: float, num_iterations: int, num_episodes: int) -> None:
+    def train(
+        self, percentile: float, num_iterations: int, num_episodes: int
+    ) -> None:
         """Play games and train the NN."""
         reward_means, reward_bounds = [], []
         for _ in range(num_iterations):
             rewards, episodes = self.get_samples(num_episodes)
-            x_train, y_train, reward_bound = self.filter_episodes(rewards, episodes, percentile)
+            x_train, y_train, reward_bound = self.filter_episodes(
+                rewards, episodes, percentile
+            )
             self.model.train_on_batch(x=x_train, y=y_train)
             reward_mean = np.mean(rewards)
             print(f"Reward mean: {reward_mean}, reward bound: {reward_bound}")
@@ -150,7 +160,9 @@ class Agent:
                 reward = reward_func(state, action)
                 total_reward += reward
                 if done:
-                    print(f"Total reward: {total_reward} in epsiode {episode + 1}")
+                    print(
+                        f"Total reward: {total_reward} in epsiode {episode + 1}"
+                    )
                     break
 
 
@@ -158,7 +170,9 @@ if __name__ == "__main__":
     env = gym.make("MountainCar-v0")
     agent = Agent(env)
 
-    reward_means, reward_bounds = agent.train(percentile=70.0, num_iterations=20, num_episodes=50)
+    reward_means, reward_bounds = agent.train(
+        percentile=70.0, num_iterations=20, num_episodes=50
+    )
     input("Weiter?")
     agent.play(num_episodes=10, render=True)
 

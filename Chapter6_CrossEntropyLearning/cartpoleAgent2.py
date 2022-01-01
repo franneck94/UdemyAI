@@ -59,7 +59,9 @@ class Agent:
                 state, reward, done, _ = self.env.step(action)
                 total_reward += reward
                 if done:
-                    print(f"Total reward: {total_reward} in epsiode {episode + 1}")
+                    print(
+                        f"Total reward: {total_reward} in epsiode {episode + 1}"
+                    )
                     break
 
 

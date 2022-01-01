@@ -35,7 +35,9 @@ class Agent:
         self.epsilon = 1.0
         self.epsilon_min = 0.01
         self.epsilon_steps = 100_000
-        self.epsilon_step = (self.epsilon - self.epsilon_min) / self.epsilon_steps
+        self.epsilon_step = (
+            self.epsilon - self.epsilon_min
+        ) / self.epsilon_steps
         # DQN Network Variables
         self.learning_rate = 1e-3
         self.dqn = DQN(self.img_shape, self.actions, self.learning_rate)
@@ -93,7 +95,14 @@ class Agent:
         if self.epsilon > self.epsilon_min:
             self.epsilon -= self.epsilon_step
 
-    def remember(self, state: Any, action: Any, reward: float, next_state: Any, done: bool) -> None:
+    def remember(
+        self,
+        state: Any,
+        action: Any,
+        reward: float,
+        next_state: Any,
+        done: bool,
+    ) -> None:
         self.memory.append((state, action, reward, next_state, done))
 
     def replay(self) -> None:
@@ -115,7 +124,9 @@ class Agent:
             if done:
                 q_values[i][a] = rewards[i]
             else:
-                q_values[i][a] = rewards[i] + self.gamma * np.max(q_values_next[i])
+                q_values[i][a] = rewards[i] + self.gamma * np.max(
+                    q_values_next[i]
+                )
 
         self.dqn.fit(states, q_values)
 

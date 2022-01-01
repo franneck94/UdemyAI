@@ -3,7 +3,7 @@ from tensorflow.keras.utils import to_categorical
 
 
 class MNIST:
-    def __init__(self):
+    def __init__(self) -> None:
         (self.x_train, self.y_train), (
             self.x_test,
             self.y_test,
@@ -24,8 +24,8 @@ class MNIST:
         self.y_train = to_categorical(self.y_train, 10)
         self.y_test = to_categorical(self.y_test, 10)
 
-    def get_train_set(self):
+    def get_train_set(self) -> tuple:
         return (self.x_train, self.y_train)
 
-    def get_test_set(self):
+    def get_test_set(self) -> tuple:
         return (self.x_test, self.y_test)

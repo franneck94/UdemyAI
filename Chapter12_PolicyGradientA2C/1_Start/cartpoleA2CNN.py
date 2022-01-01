@@ -7,7 +7,9 @@ from tensorflow.keras.optimizers import Adam
 
 
 class DQN(Model):
-    def __init__(self, state_shape: int, num_actions: int, learning_rate: float) -> None:
+    def __init__(
+        self, state_shape: int, num_actions: int, learning_rate: float
+    ) -> None:
         super().__init__()
         self.state_shape = state_shape
         self.num_actions = num_actions
@@ -22,7 +24,9 @@ class DQN(Model):
         x = Activation("relu")(x)
         q_value_pred = Dense(self.num_actions)(x)
         model = Model(inputs=input_state, outputs=q_value_pred)
-        model.compile(loss="mse", optimizer=Adam(learning_rate=self.learning_rate))
+        model.compile(
+            loss="mse", optimizer=Adam(learning_rate=self.learning_rate)
+        )
         return model
 
     def call(self, inputs: np.ndarray) -> np.ndarray:

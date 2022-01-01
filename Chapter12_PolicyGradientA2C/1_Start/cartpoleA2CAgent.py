@@ -25,8 +25,12 @@ class Agent:
         self.gamma = 0.95
         self.learning_rate_actor = 1e-3  # 0.001
         self.learning_rate_critic = 5e-3  # 0.005
-        self.actor = Actor(self.observations, self.actions, self.learning_rate_actor)
-        self.critic = Critic(self.observations, self.actions, self.learning_rate_critic)
+        self.actor = Actor(
+            self.observations, self.actions, self.learning_rate_actor
+        )
+        self.critic = Critic(
+            self.observations, self.actions, self.learning_rate_critic
+        )
 
     def get_action(self, state: np.ndarray) -> Any:
         if np.random.rand() <= self.epsilon:
@@ -46,7 +50,9 @@ class Agent:
             while True:
                 action = self.get_action(state)
                 next_state, reward, done, _ = self.env.step(action)
-                next_state = np.reshape(next_state, newshape=(1, -1)).astype(np.float32)
+                next_state = np.reshape(next_state, newshape=(1, -1)).astype(
+                    np.float32
+                )
                 if done and total_reward < 499:
                     reward = -100.0
                 self.remember(state, action, reward, next_state, done)
@@ -57,7 +63,9 @@ class Agent:
                 if done:
                     if total_reward < 500:
                         total_reward += 100.0
-                    print(f"Episode: {episode} Reward: {total_reward} Epsilon: {self.epsilon}")
+                    print(
+                        f"Episode: {episode} Reward: {total_reward} Epsilon: {self.epsilon}"
+                    )
                     last_rewards.append(total_reward)
                     current_reward_mean = np.mean(last_rewards)
 
@@ -71,7 +79,14 @@ class Agent:
                             return
                     break
 
-    def remember(self, state: Any, action: Any, reward: float, next_state: Any, done: bool) -> None:
+    def remember(
+        self,
+        state: Any,
+        action: Any,
+        reward: float,
+        next_state: Any,
+        done: bool,
+    ) -> None:
         self.memory.append((state, action, reward, next_state, done))
         if self.epsilon > self.epsilon_min:
             self.epsilon *= self.epsilon_decay
@@ -95,7 +110,9 @@ class Agent:
             if done:
                 q_values[i][a] = rewards[i]
             else:
-                q_values[i][a] = rewards[i] + self.gamma * np.max(q_values_next[i])
+                q_values[i][a] = rewards[i] + self.gamma * np.max(
+                    q_values_next[i]
+                )
 
         self.dqn.fit(states, q_values)
 
@@ -113,7 +130,9 @@ class Agent:
                     self.env.render()
                 action = self.get_action(state)
                 next_state, reward, done, _ = self.env.step(action)
-                next_state = np.reshape(next_state, newshape=(1, -1)).astype(np.float32)
+                next_state = np.reshape(next_state, newshape=(1, -1)).astype(
+                    np.float32
+                )
                 total_reward += reward
                 state = next_state
 

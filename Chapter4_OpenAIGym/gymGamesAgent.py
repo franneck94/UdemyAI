@@ -32,7 +32,7 @@ class Agent:
         return rewards
 
 
-if __name__ == "__main__":
+def main() -> None:
     games = [
         "CartPole-v1",
         "MountainCar-v0",
@@ -52,3 +52,7 @@ if __name__ == "__main__":
         print("Rewards Mean: ", rewards_mean)
         print("Rewards Min: ", rewards_min)
         print("Rewards Max: ", rewards_max)
+
+
+if __name__ == "__main__":
+    main()

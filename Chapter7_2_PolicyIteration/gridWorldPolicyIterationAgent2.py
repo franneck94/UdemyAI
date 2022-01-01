@@ -16,14 +16,21 @@ class Agent:
         self.gamma = 0.9
         self.init_prob = 1.0 / self.num_actions
         self.policy = [
-            [[self.init_prob for _ in range(self.num_actions)] for _ in range(self.cols)]
+            [
+                [self.init_prob for _ in range(self.num_actions)]
+                for _ in range(self.cols)
+            ]
             for _ in range(self.rows)
         ]
-        self.v_values = [[0.0 for _ in range(self.cols)] for _ in range(self.rows)]
+        self.v_values = [
+            [0.0 for _ in range(self.cols)] for _ in range(self.rows)
+        ]
         self.policy[2][2] = [0.0 for _ in range(self.num_actions)]
 
     def policy_evaluation(self) -> None:
-        next_v_values = [[0.0 for _ in range(self.cols)] for _ in range(self.rows)]
+        next_v_values = [
+            [0.0 for _ in range(self.cols)] for _ in range(self.rows)
+        ]
 
         for state in self.S:
             value = 0.0

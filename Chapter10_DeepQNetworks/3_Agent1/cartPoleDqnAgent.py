@@ -26,7 +26,9 @@ class Agent:
         self.state_shape = self.observations
         self.learning_rate = 1e-3
         self.dqn = DQN(self.state_shape, self.actions, self.learning_rate)
-        self.target_dqn = DQN(self.state_shape, self.actions, self.learning_rate)
+        self.target_dqn = DQN(
+            self.state_shape, self.actions, self.learning_rate
+        )
         self.target_dqn.update_model(self.dqn)
         self.batch_size = 32
 
@@ -39,7 +41,14 @@ class Agent:
     def train(self, num_episodes: int) -> None:
         pass
 
-    def remember(self, state: Any, action: Any, reward: float, next_state: Any, done: bool) -> None:
+    def remember(
+        self,
+        state: Any,
+        action: Any,
+        reward: float,
+        next_state: Any,
+        done: bool,
+    ) -> None:
         pass
 
     def replay(self) -> None:

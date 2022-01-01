@@ -45,7 +45,9 @@ class Agent:
         """Based on the state, get an action."""
         state = state.reshape(1, -1)  # [4,] => [1, 4]
         action = self.model(state).numpy()[0]
-        action = np.random.choice(self.actions, p=action)  # choice([0, 1], [0.5044534  0.49554658])
+        action = np.random.choice(
+            self.actions, p=action
+        )  # choice([0, 1], [0.5044534  0.49554658])
         return action
 
     def get_samples(self):
@@ -72,7 +74,9 @@ class Agent:
                 state, reward, done, _ = self.env.step(action)
                 total_reward += reward
                 if done:
-                    print(f"Total reward: {total_reward} in epsiode {episode + 1}")
+                    print(
+                        f"Total reward: {total_reward} in epsiode {episode + 1}"
+                    )
                     break
 
 
