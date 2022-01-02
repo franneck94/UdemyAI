@@ -3,14 +3,8 @@ import numpy as np
 
 STATES = ["a", "b"]
 ACTIONS = ["a", "b"]
-REWARDS = {
-    "a": {"a": 0, "b": 7},
-    "b": {"a": -5, "b": 0}
-}
-TRANSITIONS = {
-    "a": {"a": 0.1, "b": 0.9},
-    "b": {"a": 0.9, "b": 0.1}
-}
+REWARDS = {"a": {"a": 0, "b": 7}, "b": {"a": -5, "b": 0}}
+TRANSITIONS = {"a": {"a": 0.1, "b": 0.9}, "b": {"a": 0.9, "b": 0.1}}
 
 
 def main() -> None:
@@ -19,10 +13,10 @@ def main() -> None:
     reward = 0
     total_reward = 0
 
-    print("\n\nStart-State: ", state, " Start-Reward: ", reward, "\n\n")
+    print(f"Start-State: {state} Start-Reward: {reward}\n\n")
 
     for i in range(1, 11):
-        print("State:", state, " - Iteration: ", i)
+        print(f"State: {state} - Iteration: {i}")
         action = input("Action: ")
         if action in ACTIONS:
             t = np.random.choice(len(STATES), p=list(TRANSITIONS[state].values()))
@@ -31,9 +25,7 @@ def main() -> None:
             total_reward += reward
             state = transition
             all_states += " -> " + state
-            print(
-                all_states, "\nReward: ", reward, " Gesamt-Reward: ", total_reward, "\n"
-            )
+            print(f"New State: {state} Reward: {reward} Total-Reward: {total_reward}")
 
 
 if __name__ == "__main__":

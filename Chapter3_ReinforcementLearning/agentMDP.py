@@ -8,7 +8,7 @@ def main() -> None:
     reward = 0
     total_reward = 0
 
-    print("\n\nStart-State: ", state, " Start-Reward: ", reward, "\n\n")
+    print(f"Start-State: {state} Start-Reward: {reward}\n\n")
 
     for i in range(1, 11):
         print(f"State: {state} - Iteration: {i}")

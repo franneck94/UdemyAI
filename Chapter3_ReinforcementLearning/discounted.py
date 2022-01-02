@@ -1,11 +1,11 @@
 def discounted_reward(rewards: list, gamma: float) -> float:
     val = 0.0
     episode_length = len(rewards)
-    print("Length: ", episode_length)
+    print(f"Length: {episode_length}")
 
     for t in range(episode_length):
         val += gamma ** (t) * rewards[t]
-        print("Val: ", gamma ** (t) * rewards[t])
+        print(f"Val: {gamma ** (t) * rewards[t]}")
 
     return val
 
@@ -19,8 +19,8 @@ def main() -> None:
     # 1 + 0 + 0.25 = 1.25
 
     discounted_reward_value = discounted_reward(rewards, gamma)
-    print("Rewards: ", rewards)
-    print("Discounted Reward: ", discounted_reward_value)
+    print(f"Rewards: {rewards}")
+    print(f"Discounted Reward: {discounted_reward_value}")
 
 
 if __name__ == "__main__":
