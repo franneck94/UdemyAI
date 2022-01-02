@@ -43,7 +43,7 @@ def main() -> None:
     for game in games:
         env = gym.make(game)
         agent = Agent(env)
-        rewards = agent.play(episodes=10, render=True)
+        rewards = agent.play(episodes=100, render=True)
 
         rewards_mean = np.mean(rewards)
         rewards_min = np.min(rewards)
