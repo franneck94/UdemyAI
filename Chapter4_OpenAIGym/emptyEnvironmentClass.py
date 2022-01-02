@@ -7,11 +7,7 @@ from gym import spaces
 
 class CustomEnv(gym.Env):
     STATES = [0, 1, 2]
-    REWARDS = {
-        0: {0: 0, 1: 1},
-        1: {0: 0, 1: 1},
-        2: {0: 0, 1: 0}
-    }
+    REWARDS = {0: {0: 0, 1: 1, 2: 1}, 1: {0: 0, 1: 1, 2: 0}, 2: {0: 0, 1: 1, 2: 0}}
 
     N_DISCRETE_ACTIONS = len(STATES)
     SHAPE = (1,)
@@ -20,9 +16,7 @@ class CustomEnv(gym.Env):
     def __init__(self) -> None:
         super().__init__()
         self.action_space = spaces.Discrete(self.N_DISCRETE_ACTIONS)
-        self.observation_space = spaces.Box(
-            low=0, high=2, shape=self.SHAPE, dtype=np.uint8
-        )
+        self.observation_space = spaces.Box(low=0, high=2, shape=self.SHAPE, dtype=np.uint8)
         self.state = self.STATES[0]
 
     def step(self, action: int) -> Any:

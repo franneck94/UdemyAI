@@ -8,23 +8,22 @@ def main() -> None:
     act_space = env.action_space
     obs_space = env.observation_space
 
-    print("Action Space: ", act_space)
-    print("Observation Space: ", obs_space)
+    print(f"act_space: {act_space}")
+    print(f"obs_space: {obs_space}")
 
     act_space_n = env.action_space.n
-
     obs_space_low = env.observation_space.low
     obs_space_high = env.observation_space.high
     obs_space_shape = env.observation_space.shape
 
-    print("Action Space N: ", act_space_n)
-    print("Observation Space Low: ", obs_space_low)
-    print("Observation Space High: ", obs_space_high)
-    print("Observation Space Shape: ", obs_space_shape)
+    print(f"act_space_n: {act_space_n}")
+    print(f"obs_space_low: {obs_space_low}")
+    print(f"obs_space_high: {obs_space_high}")
+    print(f"obs_space_shape: {obs_space_shape}")
 
     for _ in range(10):
-        act_sample = env.action_space.sample()
-        print("Sample: ", act_sample)
+        act_sampled = env.action_space.sample()
+        print(f"act_sampled: {act_sampled}")
 
 
 if __name__ == "__main__":
