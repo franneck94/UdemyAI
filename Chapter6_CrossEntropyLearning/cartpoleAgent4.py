@@ -117,17 +117,7 @@ class Agent:
 def main() -> None:
     env = gym.make("CartPole-v1")
     agent = Agent(env)
-    reward_means, reward_bounds = agent.train(
-        percentile=70.0, num_iterations=30, num_episodes=100
-    )
-    input()
-    agent.play(episodes=10)
-
-    plt.title("Training Performance")
-    plt.plot(range(len(reward_means)), reward_means, color="red")
-    plt.plot(range(len(reward_bounds)), reward_bounds, color="blue")
-    plt.legend(["reward_means", "reward_bounds"])
-    plt.show()
+    agent.train(percentile=70.0, num_iterations=30, num_episodes=100)
 
 
 if __name__ == "__main__":
