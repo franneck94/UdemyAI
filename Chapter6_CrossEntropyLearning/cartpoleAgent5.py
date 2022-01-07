@@ -1,5 +1,6 @@
 from typing import Any
 from typing import List
+from typing import Tuple
 
 import gym
 import matplotlib.pyplot as plt
@@ -12,49 +13,32 @@ from tensorflow.keras.utils import to_categorical
 
 
 class Agent:
-    """Agent class for the cross-entropy learning algorithm."""
-
     def __init__(self, env: gym.Env) -> None:
-        """Set up the environment, the neural network and member variables.
-
-        Parameters
-        ----------
-        env : gym.Environment
-            The game environment
-        """
         self.env = env
-        self.observations = self.env.observation_space.shape[0]
-        self.actions = self.env.action_space.n
+        self.observations: int = self.env.observation_space.shape[0]
+        self.actions: int = self.env.action_space.n
         self.model = self.get_model()
 
     def get_model(self) -> Sequential:
-        """Returns a keras NN model."""
         model = Sequential()
         model.add(Dense(units=100, input_dim=self.observations))
         model.add(Activation("relu"))
-        model.add(Dense(units=self.actions))  # Output: Action [L, R]
+        model.add(Dense(units=self.actions))
         model.add(Activation("softmax"))
         model.summary()
         model.compile(
-            optimizer=Adam(learning_rate=0.001),
-            loss="categorical_crossentropy",
-            metrics=["accuracy"],
+            optimizer=Adam(learning_rate=0.007), loss="categorical_crossentropy"
         )
         return model
 
-    def get_action(self, state: np.ndarray) -> Any:
-        """Based on the state, get an action."""
-        state = state.reshape(1, -1)  # [4,] => [1, 4]
-        action = self.model(state).numpy()[0]
-        action = np.random.choice(
-            self.actions, p=action
-        )  # choice([0, 1], [0.5044534  0.49554658])
-        return action
+    def get_action(self, state: Any) -> Any:
+        state = state.reshape(1, -1)
+        policy = self.model(state, training=False).numpy()[0]  # [0.7, 0.3]
+        return np.random.choice(self.actions, p=policy)
 
-    def get_samples(self, num_episodes: int) -> tuple:
-        """Sample games."""
+    def get_samples(self, num_episodes: int) -> Tuple[List[float], List[Any]]:
         rewards = [0.0 for _ in range(num_episodes)]
-        episodes: List[Any] = [[] for i in range(num_episodes)]
+        epsiodes: List[Any] = [[] for _ in range(num_episodes)]
 
         for episode in range(num_episodes):
             state = self.env.reset()
@@ -64,52 +48,59 @@ class Agent:
                 action = self.get_action(state)
                 new_state, reward, done, _ = self.env.step(action)
                 total_reward += reward
-                episodes[episode].append((state, action))
+                epsiodes[episode].append((state, action))
                 state = new_state
                 if done:
                     rewards[episode] = total_reward
                     break
 
-        return rewards, episodes
+        return rewards, epsiodes
 
     def filter_episodes(
-        self, rewards: list, episodes: list, percentile: float
-    ) -> tuple:
-        """Helper function for the training."""
+        self,
+        rewards: List[float],
+        episodes: List[Tuple[Any, Any]],
+        percentile: float,
+    ) -> Tuple[np.ndarray, np.ndarray, float]:
         reward_bound = np.percentile(rewards, percentile)
-        x_train, y_train = [], []
-        for reward, episode in zip(rewards, episodes):
+        x_train = []
+        y_train = []
+        for reward, epsiode in zip(rewards, episodes):
             if reward >= reward_bound:
-                observation = [step[0] for step in episode]
-                action = [step[1] for step in episode]
+                observation = [step[0] for step in epsiode]
+                action = [step[1] for step in epsiode]
                 x_train.extend(observation)
                 y_train.extend(action)
         x_train = np.asarray(x_train)
-        y_train = to_categorical(
-            y_train, num_classes=self.actions
-        )  # L = 0 => [1, 0]
+        y_train = to_categorical(y_train, num_classes=self.actions)
         return x_train, y_train, reward_bound
 
     def train(
         self, percentile: float, num_iterations: int, num_episodes: int
-    ) -> None:
-        """Play games and train the NN."""
-        for _ in range(num_iterations):
+    ) -> Tuple[List[float], List[float]]:
+        reward_means: List[float] = []
+        reward_bounds: List[float] = []
+        for it in range(num_iterations):
             rewards, episodes = self.get_samples(num_episodes)
             x_train, y_train, reward_bound = self.filter_episodes(
                 rewards, episodes, percentile
             )
-            self.model.fit(x=x_train, y=y_train, verbose=0)
+            self.model.train_on_batch(x=x_train, y=y_train)
             reward_mean = np.mean(rewards)
-            print(f"Reward mean: {reward_mean}, reward bound: {reward_bound}")
-            if reward_mean > 500:
-                break
+            print(
+                f"Iteration: {it:2d} "
+                f"Reward Mean: {reward_mean:.4f} "
+                f"Reward Bound: {reward_bound:.4f}"
+            )
+            reward_bounds.append(reward_bound)
+            reward_means.append(reward_mean)
+        return reward_means, reward_bounds
 
-    def play(self, num_episodes: int, render: bool = True) -> None:
-        """Test the trained agent."""
-        for episode in range(num_episodes):
+    def play(self, episodes: int, render: bool = True) -> None:
+        for episode in range(episodes):
             state = self.env.reset()
             total_reward = 0.0
+
             while True:
                 if render:
                     self.env.render()
@@ -117,16 +108,27 @@ class Agent:
                 state, reward, done, _ = self.env.step(action)
                 total_reward += reward
                 if done:
-                    print(
-                        f"Total reward: {total_reward} in epsiode {episode + 1}"
-                    )
                     break
+
+            print(f"Episode: {episode} Total Reward: {total_reward}")
+        self.env.close()
+
+
+def main() -> None:
+    env = gym.make("CartPole-v1")
+    agent = Agent(env)
+    reward_means, reward_bounds = agent.train(
+        percentile=70.0, num_iterations=30, num_episodes=100
+    )
+    input()
+    agent.play(episodes=10)
+
+    plt.title("Training Performance")
+    plt.plot(range(len(reward_means)), reward_means, color="red")
+    plt.plot(range(len(reward_bounds)), reward_bounds, color="blue")
+    plt.legend(["reward_means", "reward_bounds"])
+    plt.show()
 
 
 if __name__ == "__main__":
-    env = gym.make("CartPole-v1")
-    agent = Agent(env)
-    print(agent.observations)
-    print(agent.actions)
-    agent.train(percentile=70.0, num_iterations=15, num_episodes=100)
-    agent.play(num_episodes=10)
+    main()

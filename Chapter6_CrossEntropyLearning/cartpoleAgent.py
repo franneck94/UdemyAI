@@ -17,19 +17,9 @@ class Agent:
         self.env = env
         self.observations: int = self.env.observation_space.shape[0]
         self.actions: int = self.env.action_space.n
-        self.model = self.get_model()
 
     def get_model(self) -> Sequential:
-        model = Sequential()
-        model.add(Dense(units=100, input_dim=self.observations))
-        model.add(Activation("relu"))
-        model.add(Dense(units=self.actions))
-        model.add(Activation("softmax"))
-        model.summary()
-        model.compile(
-            optimizer=Adam(learning_rate=0.007), loss="categorical_crossentropy"
-        )
-        return model
+        pass
 
     def get_action(self) -> Any:
         return self.env.action_space.sample()
