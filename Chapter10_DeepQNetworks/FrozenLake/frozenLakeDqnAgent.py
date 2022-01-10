@@ -134,7 +134,7 @@ class Agent:
         self.dqn.load_model(MODEL_PATH)
         self.target_dqn.load_model(TARGET_MODEL_PATH)
 
-        fig, ax = plt.subplots(figsize=(10, 10))
+        fig, ax = plt.subplots(figsize=(8, 8))
         states = np.array(
             [
                 to_categorical(i, num_classes=self.observations)

@@ -1,8 +1,21 @@
+from typing import Any
+
 import matplotlib.pyplot as plt
 import numpy as np
 
 
-def plotting_fn(s, ax):
+def action_map(action: int) -> str:
+    if action == 0:
+        return "Left"
+    elif action == 1:
+        return "Down"
+    elif action == 2:
+        return "Right"
+    else:
+        return "Up"
+
+
+def plotting_fn(s: Any, ax: Any) -> None:
     mat = np.full((4, 4), 1)
     mat[1][3] = 0
     mat[2][3] = 0
@@ -23,8 +36,8 @@ def plotting_fn(s, ax):
     plt.pause(0.3)
 
 
-def save_map(values, name="test.png"):
-    fig, ax = plt.subplots(figsize=(10, 10))
+def save_map(values: Any, name: str = "test.png") -> None:
+    fig, ax = plt.subplots(figsize=(8, 8))
     mat = np.full((4, 4), 1)
     mat[1][3] = 0
     mat[2][3] = 0
@@ -87,7 +100,7 @@ def save_map(values, name="test.png"):
     fig.savefig("./" + name)
 
 
-def plotting_q_values(state, action, values, ax):
+def plotting_q_values(state: Any, action: Any, values: Any, ax: Any) -> None:
     mat = np.full((4, 4), 1)
     mat[1][3] = 0
     mat[2][3] = 0

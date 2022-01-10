@@ -24,7 +24,7 @@ def plotting_fn(s, ax):
 
 
 def save_map(values, name="test.png"):
-    fig, ax = plt.subplots(figsize=(10, 10))
+    fig, ax = plt.subplots(figsize=(8, 8))
     mat = np.full((4, 4), 1)
     mat[1][3] = 0
     mat[2][3] = 0

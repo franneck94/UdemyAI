@@ -86,7 +86,7 @@ class Agent:
         return sum_rewards / num_episodes
 
     def play(self, num_episodes: int, render: bool = True) -> None:
-        fig, ax = plt.subplots(figsize=(10, 10))
+        fig, ax = plt.subplots(figsize=(8, 8))
         for episode in range(num_episodes):
             state = self.env.reset()
             total_reward = 0.0

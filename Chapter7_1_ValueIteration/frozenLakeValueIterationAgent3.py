@@ -4,7 +4,9 @@ import gym
 import matplotlib.pyplot as plt
 import numpy as np
 
+from plotting import action_map
 from plotting import plotting_fn
+from plotting import save_map
 
 
 class Agent:
@@ -27,8 +29,9 @@ class Agent:
         self.state = self.env.reset()
 
     def get_action(self, s_next: int) -> Any:
-        act: float = np.argmax(list(self.values[s_next].values()))
-        return act
+        q_values = list(self.values[s_next].values())
+        action = np.argmax(q_values).astype(int)
+        return action
 
     def get_random_action(self) -> Any:
         action = self.env.action_space.sample()
@@ -49,8 +52,8 @@ class Agent:
         for s in self.S:
             for a in self.A:
                 q_value = 0.0
-                transitions_s = self.transitions[s][a]  # s=0,  {1: 3, 2: 4}
-                total_counts = sum(transitions_s.values())  # sum([3, 4]) = 7
+                transitions_s = self.transitions[s][a]
+                total_counts = np.sum(list(transitions_s.values())).astype(int)
                 if total_counts > 0:
                     for s_next, count in transitions_s.items():
                         reward = self.rewards[s][a][s_next]
@@ -66,43 +69,34 @@ class Agent:
         for _ in range(num_iterations):
             self.get_samples(num_episodes=num_episodes)
             self.compute_q_values()
-            reward_mean = self.test(num_episodes=20) / 20
-            # print(reward_mean)
+            reward_mean = self.play(num_episodes=20, render=False)
             if reward_mean >= 0.9:
                 break
 
-    def test(self, num_episodes: int) -> float:
-        sum_rewards = 0.0
-        for _ in range(num_episodes):
-            state = self.env.reset()
-            total_reward = 0.0
-            while True:
-                action = self.get_action(state)
-                state, reward, done, _ = self.env.step(action)
-                total_reward += reward
-                if done:
-                    sum_rewards += total_reward
-                    break
-        return sum_rewards
-
-    def play(self, num_episodes: int, render: bool = True) -> None:
-        fig, ax = plt.subplots()
+    def play(self, num_episodes: int, render: bool = True) -> float:
+        reward_sum = 0.0
+        if render:
+            _, ax = plt.subplots(figsize=(8, 8))
         for episode in range(num_episodes):
             state = self.env.reset()
             total_reward = 0.0
             while True:
-                if render:
-                    plotting_fn(state, ax)
                 action = self.get_action(state)
+                if render:
+                    print(f"Action: {action_map(action)}")
+                    plotting_fn(state, ax)
                 state, reward, done, _ = self.env.step(action)
                 total_reward += reward
                 if done:
-                    print("Episode: ", episode, " - Reward: ", total_reward)
+                    print(f"Episode: {episode} - Reward: {total_reward}")
                     break
+            reward_sum += total_reward
+        return reward_sum / num_episodes
 
 
 if __name__ == "__main__":
     env = gym.make("FrozenLake-v1")
     agent = Agent(env)
     agent.train(num_iterations=10000, num_episodes=1000)
-    agent.play(num_episodes=10)
+    agent.play(num_episodes=20)
+    save_map(agent.values, name="viaq.png")
