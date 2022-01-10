@@ -6,30 +6,29 @@ import numpy as np
 
 from plotting import action_map
 from plotting import plotting_fn
-from plotting import save_map
 
 
 class Agent:
     def __init__(self, env: gym.Env) -> None:
         self.env = env
-        self.observations = self.env.observation_space.n
-        self.actions = self.env.action_space.n
+        self.observations: int = self.env.observation_space.n
+        self.actions: int = self.env.action_space.n
+        self.gamma = 0.9
+        self.state = self.env.reset()
         self.S = range(self.observations)
         self.A = range(self.actions)
-        self.gamma = 0.9
         self.rewards = {
-            s: {a: {s_next: 0 for s_next in self.S} for a in self.A}
+            s: {a: {s_next: 0.0 for s_next in self.S} for a in self.A}
             for s in self.S
         }
         self.transitions = {
-            s: {a: {s_next: 0 for s_next in self.S} for a in self.A}
+            s: {a: {s_next: 0.0 for s_next in self.S} for a in self.A}
             for s in self.S
         }
-        self.values = {s: {a: 0.0 for a in self.A} for s in self.S}
-        self.state = self.env.reset()
+        self.q_values = {s: {a: 0.0 for a in self.A} for s in self.S}
 
-    def get_action(self, s_next: int) -> Any:
-        q_values = list(self.values[s_next].values())
+    def get_action(self, state: Any) -> Any:
+        q_values = list(self.q_values[state].values())
         action = np.argmax(q_values).astype(int)
         return action
 
@@ -52,32 +51,33 @@ class Agent:
         for s in self.S:
             for a in self.A:
                 q_value = 0.0
-                transitions_s = self.transitions[s][a]
-                total_counts = np.sum(list(transitions_s.values())).astype(int)
-                if total_counts > 0:
-                    for s_next, count in transitions_s.items():
+                transitions_dict = self.transitions[s][a]
+                transisions_list = list(transitions_dict.values())
+                total_transitions = np.sum(transisions_list).astype(int)
+                if total_transitions > 0:
+                    for s_next, count in transitions_dict.items():
                         reward = self.rewards[s][a][s_next]
                         best_action = self.get_action(s_next)
-                        q_value += (count / total_counts) * (
+                        q_value += (count / total_transitions) * (
                             reward
-                            + self.gamma * self.values[s_next][best_action]
+                            + self.gamma * self.q_values[s_next][best_action]
                         )
-                    self.values[s][a] = q_value
+                    self.q_values[s][a] = q_value
 
-    def train(self, num_iterations: int, num_episodes: int) -> None:
-        self.get_samples(num_episodes=1000)
+    def train(self, num_iterations: int, num_epsiodes: int) -> None:
+        self.get_samples(num_episodes=1_000)
         for _ in range(num_iterations):
-            self.get_samples(num_episodes=num_episodes)
+            self.get_samples(num_episodes=num_epsiodes)
             self.compute_q_values()
-            reward_mean = self.play(num_episodes=20, render=False)
+            reward_mean = self.play(num_epsiodes=20, render=False)
             if reward_mean >= 0.9:
                 break
 
-    def play(self, num_episodes: int, render: bool = True) -> float:
+    def play(self, num_epsiodes: int, render: bool = True) -> float:
         reward_sum = 0.0
         if render:
             _, ax = plt.subplots(figsize=(8, 8))
-        for episode in range(num_episodes):
+        for episode in range(num_epsiodes):
             state = self.env.reset()
             total_reward = 0.0
             while True:
@@ -88,15 +88,19 @@ class Agent:
                 state, reward, done, _ = self.env.step(action)
                 total_reward += reward
                 if done:
-                    print(f"Episode: {episode} - Reward: {total_reward}")
+                    reward_sum += total_reward
                     break
-            reward_sum += total_reward
-        return reward_sum / num_episodes
+            print(f"Episode: {episode} Total Reward: {total_reward}")
+        self.env.close()
+        return reward_sum / num_epsiodes
+
+
+def main() -> None:
+    env = gym.make("FrozenLake-v1")
+    agent = Agent(env)
+    agent.train(num_iterations=10_000, num_epsiodes=1_000)
+    agent.play(num_epsiodes=5)
 
 
 if __name__ == "__main__":
-    env = gym.make("FrozenLake-v1")
-    agent = Agent(env)
-    agent.train(num_iterations=10000, num_episodes=1000)
-    agent.play(num_episodes=20)
-    save_map(agent.values, name="viaq.png")
+    main()
