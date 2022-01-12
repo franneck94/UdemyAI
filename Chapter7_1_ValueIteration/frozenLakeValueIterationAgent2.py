@@ -42,13 +42,13 @@ class Agent:
     def compute_q_values(self) -> None:
         pass
 
-    def train(self, num_iterations: int, num_epsiodes: int) -> None:
+    def train(self, num_iterations: int, num_episodes: int) -> None:
         pass
 
-    def play(self, num_epsiodes: int, render: bool = True) -> None:
+    def play(self, num_episodes: int, render: bool = True) -> None:
         if render:
             _, ax = plt.subplots(figsize=(8, 8))
-        for episode in range(num_epsiodes):
+        for episode in range(num_episodes):
             state = self.env.reset()
             total_reward = 0.0
             while True:
@@ -67,8 +67,8 @@ class Agent:
 def main() -> None:
     env = gym.make("FrozenLake-v1")
     agent = Agent(env)
-    agent.train(num_iterations=10_000, num_epsiodes=1_000)
-    agent.play(num_epsiodes=5)
+    agent.train(num_iterations=10_000, num_episodes=1_000)
+    agent.play(num_episodes=5)
 
 
 if __name__ == "__main__":

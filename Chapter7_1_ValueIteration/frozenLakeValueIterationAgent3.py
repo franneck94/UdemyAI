@@ -64,20 +64,20 @@ class Agent:
                         )
                     self.q_values[s][a] = q_value
 
-    def train(self, num_iterations: int, num_epsiodes: int) -> None:
+    def train(self, num_iterations: int, num_episodes: int) -> None:
         self.get_samples(num_episodes=1_000)
         for _ in range(num_iterations):
-            self.get_samples(num_episodes=num_epsiodes)
+            self.get_samples(num_episodes=num_episodes)
             self.compute_q_values()
-            reward_mean = self.play(num_epsiodes=20, render=False)
+            reward_mean = self.play(num_episodes=20, render=False)
             if reward_mean >= 0.9:
                 break
 
-    def play(self, num_epsiodes: int, render: bool = True) -> float:
+    def play(self, num_episodes: int, render: bool = True) -> float:
         reward_sum = 0.0
         if render:
             _, ax = plt.subplots(figsize=(8, 8))
-        for episode in range(num_epsiodes):
+        for episode in range(num_episodes):
             state = self.env.reset()
             total_reward = 0.0
             while True:
@@ -92,14 +92,14 @@ class Agent:
                     break
             print(f"Episode: {episode} Total Reward: {total_reward}")
         self.env.close()
-        return reward_sum / num_epsiodes
+        return reward_sum / num_episodes
 
 
 def main() -> None:
     env = gym.make("FrozenLake-v1")
     agent = Agent(env)
-    agent.train(num_iterations=10_000, num_epsiodes=1_000)
-    agent.play(num_epsiodes=5)
+    agent.train(num_iterations=10_000, num_episodes=1_000)
+    agent.play(num_episodes=5)
 
 
 if __name__ == "__main__":
