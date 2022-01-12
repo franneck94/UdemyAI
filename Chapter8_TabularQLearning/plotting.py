@@ -1,8 +1,21 @@
+from typing import Any
+
 import matplotlib.pyplot as plt
 import numpy as np
 
 
-def plotting_fn(s, ax):
+def action_map(action: int) -> str:
+    if action == 0:
+        return "Left"
+    elif action == 1:
+        return "Down"
+    elif action == 2:
+        return "Right"
+    else:
+        return "Up"
+
+
+def plotting_fn(s: Any, ax: Any) -> None:
     mat = np.full((4, 4), 1)
     mat[1][3] = 0
     mat[2][3] = 0
@@ -23,7 +36,7 @@ def plotting_fn(s, ax):
     plt.pause(0.3)
 
 
-def save_map(values, name="test.png"):
+def save_map(values: Any, name: str = "test.png") -> None:
     fig, ax = plt.subplots(figsize=(8, 8))
     mat = np.full((4, 4), 1)
     mat[1][3] = 0
@@ -49,7 +62,7 @@ def save_map(values, name="test.png"):
                 ax.text(
                     posy - 0.2,
                     posx,
-                    "L: " + str(round(values[s][a], 3)),
+                    "L: " + str(round(values[s][a], 2)),
                     weight=weight,
                     ha="right",
                     va="center",
@@ -59,7 +72,7 @@ def save_map(values, name="test.png"):
                 ax.text(
                     posy,
                     posx + 0.2,
-                    "D: " + str(round(values[s][a], 3)),
+                    "D: " + str(round(values[s][a], 2)),
                     weight=weight,
                     ha="center",
                     va="top",
@@ -69,7 +82,7 @@ def save_map(values, name="test.png"):
                 ax.text(
                     posy + 0.2,
                     posx,
-                    "R: " + str(round(values[s][a], 3)),
+                    "R: " + str(round(values[s][a], 2)),
                     weight=weight,
                     ha="left",
                     va="center",
@@ -79,7 +92,7 @@ def save_map(values, name="test.png"):
                 ax.text(
                     posy,
                     posx - 0.2,
-                    "U: " + str(round(values[s][a], 3)),
+                    "U: " + str(round(values[s][a], 2)),
                     weight=weight,
                     ha="center",
                     va="bottom",
@@ -87,7 +100,7 @@ def save_map(values, name="test.png"):
     fig.savefig("./" + name)
 
 
-def plotting_q_values(state, action, values, ax):
+def plotting_q_values(state: Any, action: Any, values: Any, ax: Any) -> None:
     mat = np.full((4, 4), 1)
     mat[1][3] = 0
     mat[2][3] = 0
@@ -117,7 +130,7 @@ def plotting_q_values(state, action, values, ax):
                 ax.text(
                     posy - 0.2,
                     posx,
-                    "L: " + str(round(values[s][a], 3)),
+                    "L: " + str(round(values[s][a], 2)),
                     weight=weight,
                     ha="right",
                     va="center",
@@ -129,7 +142,7 @@ def plotting_q_values(state, action, values, ax):
                 ax.text(
                     posy,
                     posx + 0.2,
-                    "D: " + str(round(values[s][a], 3)),
+                    "D: " + str(round(values[s][a], 2)),
                     weight=weight,
                     ha="center",
                     va="top",
@@ -141,7 +154,7 @@ def plotting_q_values(state, action, values, ax):
                 ax.text(
                     posy + 0.2,
                     posx,
-                    "R: " + str(round(values[s][a], 3)),
+                    "R: " + str(round(values[s][a], 2)),
                     weight=weight,
                     ha="left",
                     va="center",
@@ -153,11 +166,10 @@ def plotting_q_values(state, action, values, ax):
                 ax.text(
                     posy,
                     posx - 0.2,
-                    "U: " + str(round(values[s][a], 3)),
+                    "U: " + str(round(values[s][a], 2)),
                     weight=weight,
                     ha="center",
                     va="bottom",
                     color=color,
                 )
-
     plt.pause(2.0)
