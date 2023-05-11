@@ -1,0 +1,20 @@
+pip>=23.*
+
+# Libraries
+scikit-learn
+scipy
+scikit-image
+numpy
+matplotlib
+pandas
+opencv-python
+gym==0.17.*
+pygame
+
+# Linting/Tooling
+black>=23.3.0
+flake8>=6.0.0
+isort>=5.12.0
+mypy>=1.2.0
+pre-commit>=3.2.2
+ruff>=0.0.262
