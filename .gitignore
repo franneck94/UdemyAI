@@ -13,9 +13,11 @@ reports/
 lectures/
 logs/
 models/
-.ruff_cache
 ressources/
+.ruff_cache
 data/*.h5
+venv/
+.venv/
 
 ################################
 ########### PYTHON #############

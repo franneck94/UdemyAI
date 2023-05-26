@@ -1,7 +1,6 @@
 import collections
 import os
 from typing import Any
-from typing import Deque
 
 import gym
 import numpy as np
@@ -55,7 +54,7 @@ class Agent:
         self.critic.fit(state, values)
 
     def train(self, num_episodes: int) -> None:
-        last_rewards: Deque = collections.deque(maxlen=5)
+        last_rewards: collections.deque = collections.deque(maxlen=5)
 
         for episode in range(1, num_episodes + 1):
             total_reward = 0.0

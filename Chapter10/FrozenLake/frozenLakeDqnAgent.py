@@ -2,7 +2,6 @@ import collections
 import os
 import random
 from typing import Any
-from typing import Deque
 
 import gym
 import matplotlib.pyplot as plt
@@ -28,7 +27,9 @@ class Agent:
         # DQN Agent Variables
         self.replay_buffer_size = 50_000
         self.train_start = 1_000
-        self.memory: Deque = collections.deque(maxlen=self.replay_buffer_size)
+        self.memory: collections.deque = collections.deque(
+            maxlen=self.replay_buffer_size
+        )
         self.gamma = 0.995
         self.epsilon = 1.0
         self.epsilon_min = 0.01
@@ -50,7 +51,7 @@ class Agent:
             return np.argmax(self.dqn(state))
 
     def train(self, num_episodes: int) -> None:
-        last_rewards: Deque = collections.deque(
+        last_rewards: collections.deque = collections.deque(
             [0.0 for _ in range(5)], maxlen=5
         )
         best_reward_mean = 0.0

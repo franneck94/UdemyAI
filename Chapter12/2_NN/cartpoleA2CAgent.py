@@ -2,7 +2,6 @@ import collections
 import os
 import random
 from typing import Any
-from typing import Deque
 
 import gym
 import numpy as np
@@ -40,7 +39,7 @@ class Agent:
             return np.argmax(self.dqn(state))
 
     def train(self, num_episodes: int) -> None:
-        last_rewards: Deque = collections.deque(maxlen=5)
+        last_rewards: collections.deque = collections.deque(maxlen=5)
         best_reward_mean = 0.0
 
         for episode in range(1, num_episodes + 1):

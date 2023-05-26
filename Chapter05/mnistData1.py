@@ -12,8 +12,8 @@ class MNIST:
         self.x_train = self.x_train.reshape(self.x_train.shape[0], 784)
         self.x_test = self.x_test.reshape(self.x_test.shape[0], 784)
         # convert from int to float
-        self.x_train = self.x_train.astype('float32')
-        self.x_test = self.x_test.astype('float32')
+        self.x_train = self.x_train.astype("float32")
+        self.x_test = self.x_test.astype("float32")
         # rescale values
         self.x_train /= 255.0
         self.x_test /= 255.0

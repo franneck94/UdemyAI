@@ -1,6 +1,5 @@
 import collections
 from typing import Any
-from typing import Deque
 
 import gym
 import numpy as np
@@ -21,7 +20,9 @@ class FrameStackWrapper(gym.Wrapper):
     def __init__(self, env: gym.Env, num_buffer_frames: int) -> None:
         super().__init__(env)
         self.num_buffer_frames = num_buffer_frames
-        self.frames: Deque = collections.deque(maxlen=self.num_buffer_frames)
+        self.frames: collections.deque = collections.deque(
+            maxlen=self.num_buffer_frames
+        )
         low = np.repeat(
             self.observation_space.low[np.newaxis, ...],
             repeats=self.num_buffer_frames,
