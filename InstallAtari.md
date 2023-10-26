@@ -4,11 +4,7 @@
 
 Im folgenden Video zeige ich die Installation des Python Pakets Gym (Atari).
 
-### Windows
-
-conda install -c conda-forge atari_py
-
-### Linux/Mac
+### Python Lib
 
 pip install gym[atari]==0.17
 
