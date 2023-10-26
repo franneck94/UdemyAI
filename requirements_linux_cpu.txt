@@ -16,10 +16,8 @@ numpy
 matplotlib
 pandas
 opencv-python
-pyqt6
-xlrd
-openpyxl
-optuna
+gym==0.17.*
+pygame
 
 tensorflow==2.14.*
 keras==2.14.*
