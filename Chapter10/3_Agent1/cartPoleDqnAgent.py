@@ -1,5 +1,5 @@
 import collections
-import random
+import random  # noqa: F401, RUF100
 from typing import Any
 
 import gym
@@ -12,12 +12,14 @@ class Agent:
     def __init__(self, env: gym.Env) -> None:
         # DQN Env Variables
         self.env = env
-        self.observations = self.env.obersvation_space.shape
+        self.observations = self.env.observation_space.shape
         self.actions = self.env.action_space.n
         # DQN Agent Variables
         self.replay_buffer_size = 50_000
         self.train_start = 1_000
-        self.memory = collections.deque(maxlen=self.replay_buffer_size)
+        self.memory: collections.deque = collections.deque(
+            maxlen=self.replay_buffer_size
+        )
         self.gamma = 0.95
         self.epsilon = 1.0
         self.epsilon_min = 0.01

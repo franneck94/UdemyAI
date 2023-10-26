@@ -6,7 +6,7 @@ directory = "."
 
 
 def should_exclude_directory(dir_name: str) -> bool:
-    exclude_dirs = [".mypy", ".ruff_cache", ".vscode"]
+    exclude_dirs = [".mypy", ".ruff_cache", ".vscode", "__pycache__", ".git"]
     return any(
         dir_name == exclude_dir
         or dir_name.startswith(exclude_dir + os.path.sep)
@@ -35,11 +35,12 @@ def main() -> None:
                             stdout=null_file,
                         )
                         process.wait(timeout=10)
-                        if process.returncode == 0:
+                        ret_code = process.returncode
+                        if ret_code == 0:
                             print(f"\t\t{file_path} can be executed.")
                         else:
                             print(
-                                f"\t\t{file_path} code {process.returncode}"
+                                f"\t\t!!! {file_path} code {ret_code} !!!"
                             )
                 except subprocess.TimeoutExpired:
                     process.terminate()  # pyright: ignore
