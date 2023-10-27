@@ -40,11 +40,14 @@ class GraphicDisplay(tk.Tk):
         self.improvement_count = 0
         self.is_moving = 0
         (
-            self.up,
-            self.down,
-            self.left,
-            self.right,
-        ), self.shapes = self.load_images()
+            (
+                self.up,
+                self.down,
+                self.left,
+                self.right,
+            ),
+            self.shapes,
+        ) = self.load_images()
         self.canvas = self._build_canvas()
         self.text_reward(2, 2, "R : 1.0")
         self.text_reward(1, 2, "R : -1.0")
@@ -200,9 +203,7 @@ class GraphicDisplay(tk.Tk):
             while len(self.agent.policy[x][y]) != 0:
                 self.after(
                     100,
-                    self.rectangle_move(
-                        self.agent.get_action([x, y])
-                    ),  # type: ignore
+                    self.rectangle_move(self.agent.get_action([x, y])),  # type: ignore
                 )
                 x, y = self.find_rectangle()
             self.is_moving = 0
