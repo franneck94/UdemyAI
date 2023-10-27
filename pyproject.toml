@@ -32,11 +32,16 @@ known_third_party = [
     "seaborn",
     "numba",
     "gym",
-    "PyQt6",
     "PyQt5",
+    "PyQt6",
     "pyqtgraph",
     "torch",
-    "tqdm"
+    "tqdm",
+    "cv2",
+    "skimage",
+    "tensorcross",
+    "tensorflow_datasets",
+    "scikeras"
 ]
 known_first_party = []
 known_local_folder = []
@@ -116,6 +121,11 @@ convention = "numpy"
 [tool.ruff.flake8-annotations]
 allow-star-arg-any = false
 ignore-fully-untyped = false
+[tool.ruff.format]
+quote-style = "double"
+indent-style = "space"
+skip-magic-trailing-comma = false
+line-ending = "auto"
 
 [tool.pyright]
 pythonVersion = "3.10"
@@ -128,7 +138,7 @@ reportPropertyTypeMismatch = true
 reportUntypedClassDecorator = true
 reportUntypedFunctionDecorator = true
 reportUntypedNamedTuple = true
-reportUnusedImport = false
+reportUnusedImport = true
 # disable subset of "basic"
 reportGeneralTypeIssues = false
 reportMissingModuleSource = false
