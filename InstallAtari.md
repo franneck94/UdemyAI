@@ -4,7 +4,11 @@
 
 Im folgenden Video zeige ich die Installation des Python Pakets Gym (Atari).
 
-### Python Lib
+### Python Lib Windows
+
+conda install -c conda-forge atari_py
+
+### Python Lib Linux/Mac
 
 pip install gym[atari]==0.17
 
@@ -17,3 +21,9 @@ In order to import ROMS, you need to download `Roms.rar` from the [Atari 2600 VC
 `python -m atari_py.import_roms <path to folder>`
 
 This should print out the names of ROMs as it imports them.  The ROMs will be copied to your `atari_py` installation directory.
+
+# Error Guide
+
+```
+ Could not find module '...\anaconda3\envs\tensorflow\lib\site-packages\atari_py\ale_interface\ale_c.dll' (or one of its dependencies). Try using the full path with constructor syntax.
+```
