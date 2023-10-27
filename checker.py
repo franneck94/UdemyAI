@@ -17,6 +17,20 @@ def should_exclude_directory(dir_name: str) -> bool:
     return dir_name in exclude_dirs
 
 
+def check_file_for_not_implemented(file_path: str) -> bool:
+    try:
+        with open(file_path) as file:
+            file_contents = file.read()
+            if (
+                "pass" in file_contents
+                or "NotImplementedError" in file_contents
+            ):
+                return True
+    except FileNotFoundError:
+        print(f"File not found: {file_path}")
+    return False
+
+
 def main() -> None:
     for root, _, files in os.walk(directory, topdown=True):
         if should_exclude_directory(os.path.basename(root)):
@@ -33,6 +47,9 @@ def main() -> None:
                 if "checker" in file_path:
                     continue
                 try:
+                    if check_file_for_not_implemented(file_path):
+                        print(f"\File: {file_path} has unfinished code")
+                        continue
                     print(f"\tRunning file: {file_path}")
                     with open(os.devnull, "w") as null_file:
                         process = subprocess.Popen(

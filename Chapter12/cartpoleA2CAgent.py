@@ -36,7 +36,14 @@ class Agent:
         action = np.random.choice(self.num_actions, p=policy)
         return action
 
-    def update_policy(self, state, action, reward, next_state, done):
+    def update_policy(
+        self,
+        state: Any,
+        action: int,
+        reward: float,
+        next_state: Any,
+        done: bool,
+    ) -> None:
         values = np.zeros(shape=(1, self.num_values))  # (1, 1)
         advantages = np.zeros(shape=(1, self.num_actions))  # (1, 2)
 
