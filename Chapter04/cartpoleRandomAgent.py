@@ -27,7 +27,7 @@ class Agent:
                     break
 
             print(f"Episode: {episode} Total Reward: {total_reward}")
-            rewards.append(total_reward)
+            rewards[episode] = total_reward
         self.env.close()
         return rewards
 
