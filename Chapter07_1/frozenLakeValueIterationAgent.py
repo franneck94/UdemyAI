@@ -30,14 +30,14 @@ class Agent:
 
     def play(self, num_episodes: int, render: bool = True) -> None:
         for episode in range(num_episodes):
-            state = self.env.reset()
+            _ = self.env.reset()
             total_reward = 0.0
 
             while True:
                 if render:
                     self.env.render()
                 action = self.get_action()
-                state, reward, done, _ = self.env.step(action)
+                _, reward, done, _ = self.env.step(action)
                 total_reward += reward
                 if done:
                     break

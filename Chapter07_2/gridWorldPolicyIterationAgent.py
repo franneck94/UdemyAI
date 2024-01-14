@@ -1,9 +1,9 @@
 from typing import Any
 
-import gym
+import gym  # noqa: F401
 import numpy as np
 
-from environment import GOAL
+from environment import GOAL  # noqa: F401
 from environment import Env
 from environment import GraphicDisplay
 

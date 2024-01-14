@@ -23,7 +23,7 @@ class Agent:
                 if render:
                     self.env.render()
                 action = self.get_action()
-                state, reward, done, _ = self.env.step(action)
+                state, reward, done, _ = self.env.step(action)  # noqa: F841
                 total_reward += reward
                 if done:
                     rewards[episode] = total_reward

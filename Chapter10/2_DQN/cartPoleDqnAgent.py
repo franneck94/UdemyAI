@@ -5,7 +5,7 @@ from typing import Any
 import gym  # noqa: F401, RUF100
 import numpy as np  # noqa: F401, RUF100
 
-from cartPoleDqn import DQN
+from cartPoleDqn import DQN  # noqa: F401
 
 
 class Agent:

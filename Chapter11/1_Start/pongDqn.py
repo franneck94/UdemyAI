@@ -1,13 +1,13 @@
 import numpy as np
 from keras.layers import Activation
-from keras.layers import Conv2D
+from keras.layers import Conv2D  # noqa: F401
 from keras.layers import Dense
-from keras.layers import Flatten
+from keras.layers import Flatten  # noqa: F401
 from keras.layers import Input
-from keras.losses import Huber
+from keras.losses import Huber  # noqa: F401
 from keras.models import Model
 from keras.optimizers import Adam
-from keras.optimizers import RMSprop
+from keras.optimizers import RMSprop  # noqa: F401
 
 
 class DQN(Model):

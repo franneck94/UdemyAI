@@ -4,7 +4,7 @@ import random
 from typing import Any
 
 import numpy as np
-import tensorflow as tf
+import tensorflow as tf  # noqa: F401
 
 from pongDqn import DQN
 from pongDqnWrappers import make_env

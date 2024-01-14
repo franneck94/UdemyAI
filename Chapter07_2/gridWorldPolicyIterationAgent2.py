@@ -1,7 +1,7 @@
 from typing import Any
-from typing import Tuple
+from typing import Tuple  # noqa: F401
 
-import gym
+import gym  # noqa: F401
 import numpy as np
 
 from environment import GOAL

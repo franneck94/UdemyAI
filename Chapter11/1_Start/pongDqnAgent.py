@@ -7,7 +7,7 @@ import gym
 import numpy as np
 
 from pongDqn import DQN
-from pongDqnWrappers import make_env
+from pongDqnWrappers import make_env  # noqa: F401
 
 
 PROJECT_PATH = os.path.abspath("C:/Users/Jan/OneDrive/_Coding/UdemyAI")

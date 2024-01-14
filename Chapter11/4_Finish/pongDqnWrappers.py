@@ -10,7 +10,7 @@ class StartGameWrapper(gym.Wrapper):
         super().__init__(env)
         self.env.reset()
 
-    def reset(self, **kwargs: Any) -> Any:
+    def reset(self, **kwargs: Any) -> Any:  # noqa: ARG002
         self.env.reset()
         observation, _, _, _ = self.env.step(1)  # FIRE
         return observation

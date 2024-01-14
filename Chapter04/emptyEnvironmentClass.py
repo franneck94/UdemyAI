@@ -6,8 +6,8 @@ from gym import spaces
 
 
 class CustomEnv(gym.Env):
-    STATES = [0, 1, 2]
-    REWARDS = {
+    STATES = [0, 1, 2]  # noqa: RUF012
+    REWARDS = {  # noqa: RUF012
         0: {0: 0, 1: 1, 2: 1},
         1: {0: 0, 1: 1, 2: 0},
         2: {0: 0, 1: 1, 2: 0},
@@ -15,7 +15,7 @@ class CustomEnv(gym.Env):
 
     N_DISCRETE_ACTIONS = len(STATES)
     SHAPE = (1,)
-    metadata = {"render.modes": ["human"]}
+    metadata = {"render.modes": ["human"]}  # noqa: RUF012
 
     def __init__(self) -> None:
         super().__init__()
@@ -41,7 +41,7 @@ class CustomEnv(gym.Env):
     def reset(self) -> None:
         self.state = self.STATES[0]
 
-    def render(self, mode: str = "human", close: bool = False) -> Any:
+    def render(self, mode: str = "human", close: bool = False) -> Any:  # noqa: ARG002
         if self.state == 0:
             print("|X _ _|")
         elif self.state == 1:
