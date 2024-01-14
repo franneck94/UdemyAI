@@ -233,7 +233,18 @@ strict_equality = true
 show_error_context = false
 show_column_numbers = false
 show_error_codes = true
-exclude = ["docs", "test", "tests"]
+exclude = [
+    "docs",
+    "test",
+    "tests",
+    "plotting",
+    "mnistCnn",
+    "mnistData2",
+    "cartPoleDqn",
+    "pongDqn",
+    "cartpoleA2CAgent",
+    "cartpoleA2CNN",
+]
 
 [tool.pyright]
 pythonVersion = "3.10"

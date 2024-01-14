@@ -60,17 +60,17 @@ class Agent:
         episodes: list[tuple[Any, Any]],
         percentile: float,
     ) -> tuple[np.ndarray, np.ndarray, float]:
-        reward_bound = np.percentile(rewards, percentile)
-        x_train = []
-        y_train = []
+        reward_bound = float(np.percentile(rewards, percentile))
+        x_train_ = []
+        y_train_ = []
         for reward, episode in zip(rewards, episodes):
             if reward >= reward_bound:
                 observation = [step[0] for step in episode]
                 action = [step[1] for step in episode]
-                x_train.extend(observation)
-                y_train.extend(action)
-        x_train = np.asarray(x_train)
-        y_train = to_categorical(y_train, num_classes=self.actions)
+                x_train_.extend(observation)
+                y_train_.extend(action)
+        x_train = np.asarray(x_train_)
+        y_train = to_categorical(y_train_, num_classes=self.actions)
         return x_train, y_train, reward_bound
 
     def train(
@@ -84,7 +84,7 @@ class Agent:
                 rewards, episodes, percentile
             )
             self.model.train_on_batch(x=x_train, y=y_train)
-            reward_mean = np.mean(rewards)
+            reward_mean = float(np.mean(rewards))
             print(
                 f"Iteration: {it:2d} "
                 f"Reward Mean: {reward_mean:.4f} "

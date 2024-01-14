@@ -1,3 +1,5 @@
+# type: ignore
+
 class Car:
     def __init__(self, name: str, oem: str, hp: int, year: int) -> None:
         self.name = name

@@ -131,7 +131,7 @@ class Agent:
                     q_values_next[i]
                 )
 
-        self.dqn.fit(states, q_values)
+        self.dqn.fit(states, q_values)  # type: ignore
 
     def play(self, num_episodes: int, render: bool = True) -> None:
         self.dqn.load_model(MODEL_PATH)

@@ -21,9 +21,9 @@ POSSIBLE_ACTIONS = [0, 1, 2, 3]  # up, down, left, right
 ACTIONS = [(-1, 0), (1, 0), (0, -1), (0, 1)]  # actions in coordinates
 
 
-GOAL = [2, 2]
-DEAD1 = [1, 2]
-DEAD2 = [2, 1]
+GOAL = (2, 2)
+DEAD1 = (1, 2)
+DEAD2 = (2, 1)
 
 
 class GraphicDisplay(tk.Tk):
@@ -289,16 +289,8 @@ class Env:
 
     @staticmethod
     def check_boundary(state: Any) -> Any:
-        state[0] = (
-            0
-            if state[0] < 0
-            else min(state[0], WIDTH - 1)
-        )
-        state[1] = (
-            0
-            if state[1] < 0
-            else min(state[1], HEIGHT - 1)
-        )
+        state[0] = 0 if state[0] < 0 else min(state[0], WIDTH - 1)
+        state[1] = 0 if state[1] < 0 else min(state[1], HEIGHT - 1)
         return state
 
     def get_all_states(self) -> Any:

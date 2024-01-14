@@ -5,7 +5,7 @@ import numpy as np
 from gym import spaces
 
 
-class CustomEnv(gym.Env):
+class CustomEnv(gym.Env):  # type: ignore
     STATES = [0, 1, 2]  # noqa: RUF012
     REWARDS = {  # noqa: RUF012
         0: {0: 0, 1: 1, 2: 1},

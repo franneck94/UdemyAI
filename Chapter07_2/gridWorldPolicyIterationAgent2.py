@@ -40,7 +40,7 @@ class Agent:
 
         for state in self.S:
             value = 0.0
-            if state == GOAL:
+            if tuple(state) == GOAL:
                 continue
 
             for action in self.A:
@@ -59,7 +59,7 @@ class Agent:
         next_policy = self.policy
 
         for state in self.S:
-            if state == GOAL:
+            if tuple(state) == GOAL:
                 continue
 
             temp_vals = np.zeros(shape=(self.num_actions))

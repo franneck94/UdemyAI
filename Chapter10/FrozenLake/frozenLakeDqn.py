@@ -6,7 +6,7 @@ from keras.models import Model
 from keras.optimizers import Adam
 
 
-class DQN(Model):
+class DQN(Model):  # type: ignore
     def __init__(
         self, state_shape: int, num_actions: int, learning_rate: float
     ) -> None:

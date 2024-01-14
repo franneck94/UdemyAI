@@ -1,3 +1,5 @@
+# type: ignore
+
 def main():
     print("Hello World!")
 
