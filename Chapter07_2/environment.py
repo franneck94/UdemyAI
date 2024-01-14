@@ -6,7 +6,6 @@ from tkinter import Button
 from typing import Any
 
 import numpy as np
-
 from PIL import Image
 from PIL import ImageTk
 
