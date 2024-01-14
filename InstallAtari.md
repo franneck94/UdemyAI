@@ -24,6 +24,8 @@ This should print out the names of ROMs as it imports them.  The ROMs will be co
 
 # Error Guide
 
+```bash
+ Could not find module '...\anaconda3\envs\tensorflow\lib\site-packages\atari_py\ale_interface\ale_c.dll' (or one of its dependencies).
 ```
- Could not find module '...\anaconda3\envs\tensorflow\lib\site-packages\atari_py\ale_interface\ale_c.dll' (or one of its dependencies). Try using the full path with constructor syntax.
-```
+
+Try using the full path with constructor syntax.

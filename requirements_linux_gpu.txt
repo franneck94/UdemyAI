@@ -1,12 +1,4 @@
-setuptools>=67.8.0
-
-# Linting/Tooling
-black>=23.7.0
-isort>=5.12.0
-mypy>=1.5.1
-pre-commit>=3.4.0
-ruff>=0.0.287
-pyright>=1.1.325
+-r requirements-dev.txt
 
 # Libraries
 scikit-learn
