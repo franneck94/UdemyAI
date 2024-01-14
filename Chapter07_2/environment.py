@@ -30,7 +30,7 @@ class GraphicDisplay(tk.Tk):
     def __init__(self, agent: Any) -> None:
         super().__init__()
         self.title("Policy Iteration")
-        self.geometry("{}x{}".format(HEIGHT * UNIT, HEIGHT * UNIT + 50))
+        self.geometry(f"{HEIGHT * UNIT}x{HEIGHT * UNIT + 50}")
         self.texts: list[Any] = []
         self.arrows: list[Any] = []
         self.env = Env()
@@ -292,16 +292,12 @@ class Env:
         state[0] = (
             0
             if state[0] < 0
-            else WIDTH - 1
-            if state[0] > WIDTH - 1
-            else state[0]
+            else min(state[0], WIDTH - 1)
         )
         state[1] = (
             0
             if state[1] < 0
-            else HEIGHT - 1
-            if state[1] > HEIGHT - 1
-            else state[1]
+            else min(state[1], HEIGHT - 1)
         )
         return state
 

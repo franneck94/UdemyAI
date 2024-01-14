@@ -48,7 +48,7 @@ def main() -> None:
                     continue
                 try:
                     if check_file_for_not_implemented(file_path):
-                        print(f"\File: {file_path} has unfinished code")
+                        print(f"\tFile: {file_path} has unfinished code")
                         continue
                     print(f"\tRunning file: {file_path}")
                     with open(os.devnull, "w") as null_file:

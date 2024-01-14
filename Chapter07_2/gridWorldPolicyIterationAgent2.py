@@ -30,7 +30,7 @@ class Agent:
 
     def get_action(self, state: tuple[int, int]) -> Any:
         if state == GOAL:
-            return
+            return None
         policy_in_state = self.policy[state[0]][state[1]]
         action = np.random.choice(self.A, p=policy_in_state)
         return action

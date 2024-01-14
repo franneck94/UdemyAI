@@ -32,7 +32,7 @@ class Agent:
 
     def get_sample(self) -> None:
         action = self.get_random_action()
-        new_state, reward, done, _ = self.env.step(action)
+        new_state, _, done, _ = self.env.step(action)
         if done:
             self.state = self.env.reset()
         else:

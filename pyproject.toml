@@ -104,6 +104,12 @@ ignore = [
     "PLW1641",
     "E203",
     "PLW1514",
+    "PLR",
+    "ANN",
+    "RET505",
+    "RET504",
+    "FURB101",
+    "UP035",
 ]
 fixable = [
     "W",

@@ -34,7 +34,6 @@ class CustomEnv(gym.Env):
             self.state = min(self.state + 1, len(self.STATES) - 1)
         else:
             reward = 0
-            pass
 
         done = self.state == 2
         return self.state, reward, done, {}
