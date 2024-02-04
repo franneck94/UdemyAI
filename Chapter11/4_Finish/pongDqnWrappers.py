@@ -52,8 +52,7 @@ class FrameStackWrapper(gym.Wrapper):
         self.frames = collections.deque(maxlen=self.num_buffer_frames)
         for _ in range(self.num_buffer_frames):
             self.frames.append(np.zeros(shape=(84, 84), dtype=np.float32))
-        frame_stack = np.zeros(shape=(1, 84, 84, 4), dtype=np.float32)
-        return frame_stack
+        return np.zeros(shape=(1, 84, 84, 4), dtype=np.float32)
 
 
 def make_env(env_name: str, num_buffer_frames: int) -> gym.Env:
@@ -68,8 +67,7 @@ def make_env(env_name: str, num_buffer_frames: int) -> gym.Env:
         scale_obs=True,
     )
     env = FrameStackWrapper(env, num_buffer_frames)
-    env = StartGameWrapper(env)
-    return env
+    return StartGameWrapper(env)
 
 
 if __name__ == "__main__":

@@ -6,7 +6,7 @@ from keras.optimizers import Adam  # noqa: F401, RUF100
 
 
 class DQN(Model):
-    def __init__(self):
+    def __init__(self) -> None:
         pass
 
     def call(self):

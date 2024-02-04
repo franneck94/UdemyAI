@@ -33,8 +33,7 @@ class Agent:
 
     def get_action(self, state: np.ndarray) -> Any:
         policy = self.actor(state)[0]
-        action = np.random.choice(self.num_actions, p=policy)
-        return action
+        return np.random.choice(self.num_actions, p=policy)
 
     def update_policy(
         self,

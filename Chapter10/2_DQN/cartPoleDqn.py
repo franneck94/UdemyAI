@@ -6,7 +6,7 @@ from keras.optimizers import Adam
 
 
 class DQN(Model):
-    def __init__(self, state_shape, num_actions, learning_rate):
+    def __init__(self, state_shape, num_actions, learning_rate) -> None:
         super().__init__()
         self.state_shape = state_shape
         self.num_actions = num_actions

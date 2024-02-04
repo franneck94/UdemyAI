@@ -9,8 +9,7 @@ class Agent:
         self.env = env
 
     def get_action(self) -> Any:
-        action = self.env.action_space.sample()
-        return action
+        return self.env.action_space.sample()
 
     def play(self, episodes: int, render: bool = True) -> list:
         rewards = [0.0 for i in range(episodes)]

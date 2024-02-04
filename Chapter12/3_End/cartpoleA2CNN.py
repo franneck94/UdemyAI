@@ -48,7 +48,7 @@ class Actor(Model):
 class Critic(Model):
     def __init__(
         self, num_observations: int, num_values: int, learning_rate: float
-    ):
+    ) -> None:
         super().__init__()
         self.num_observations = num_observations
         self.num_values = num_values

@@ -9,7 +9,7 @@ from cartPoleDqn import DQN  # noqa: F401
 
 
 class Agent:
-    def __init__(self):
+    def __init__(self) -> None:
         pass
 
     def get_action(self) -> Any:

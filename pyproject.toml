@@ -109,6 +109,10 @@ ignore = [
     "ANN401",
     "B905",
     "RUF025",
+    "ANN201",
+    "ANN001",
+    "UP035",
+    "PLR2004",
 ]
 fixable = ["ALL"]
 unfixable = []
@@ -138,7 +142,7 @@ convention = "numpy"
 allow-star-arg-any = false
 ignore-fully-untyped = false
 [tool.ruff.lint.pylint]
-max-args = 5
+max-args = 8
 max-branches = 12
 max-locals = 15
 max-statements = 50

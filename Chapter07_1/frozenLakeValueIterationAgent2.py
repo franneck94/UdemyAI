@@ -29,12 +29,10 @@ class Agent:
 
     def get_action(self, state: Any) -> Any:
         q_values = list(self.q_values[state].values())
-        action = np.argmax(q_values).astype(int)
-        return action
+        return np.argmax(q_values).astype(int)
 
     def get_random_action(self) -> Any:
-        action = self.env.action_space.sample()
-        return action
+        return self.env.action_space.sample()
 
     def get_samples(self, num_episodes: int) -> None:
         pass

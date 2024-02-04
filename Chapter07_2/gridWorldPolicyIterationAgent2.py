@@ -32,8 +32,7 @@ class Agent:
         if state == GOAL:
             return None
         policy_in_state = self.policy[state[0]][state[1]]
-        action = np.random.choice(self.A, p=policy_in_state)
-        return action
+        return np.random.choice(self.A, p=policy_in_state)
 
     def policy_evaluation(self) -> None:
         next_v_values = np.zeros(shape=(self.rows, self.cols))

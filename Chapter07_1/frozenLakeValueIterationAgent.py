@@ -12,12 +12,10 @@ class Agent:
         self.actions: int = self.env.action_space.n
 
     def get_action(self) -> Any:
-        action = self.env.action_space.sample()
-        return action
+        return self.env.action_space.sample()
 
     def get_random_action(self) -> Any:
-        action = self.env.action_space.sample()
-        return action
+        return self.env.action_space.sample()
 
     def get_samples(self, num_episodes: int) -> None:
         pass

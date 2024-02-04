@@ -101,7 +101,7 @@ class GraphicDisplay(tk.Tk):
 
         return canvas
 
-    def load_images(self) -> tuple:
+    def load_images(self) -> tuple:  # noqa: PLR6301
         up = PhotoImage(Image.open(PATH + "/img/up.png").resize((13, 13)))
         right = PhotoImage(Image.open(PATH + "/img/right.png").resize((13, 13)))
         left = PhotoImage(Image.open(PATH + "/img/left.png").resize((13, 13)))
@@ -284,8 +284,7 @@ class Env:
         next_state = self.check_boundary(
             [state[0] + action[0], state[1] + action[1]]
         )
-        result_tpl = (next_state, self.reward[next_state[0]][next_state[1]])
-        return result_tpl
+        return (next_state, self.reward[next_state[0]][next_state[1]])
 
     @staticmethod
     def check_boundary(state: Any) -> Any:
