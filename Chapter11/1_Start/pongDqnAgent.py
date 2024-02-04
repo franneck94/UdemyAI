@@ -45,8 +45,7 @@ class Agent:
     def get_action(self, state: np.ndarray) -> Any:
         if np.random.rand() <= self.epsilon:
             return np.random.randint(self.actions)
-        else:
-            return np.argmax(self.dqn(state))
+        return np.argmax(self.dqn(state))
 
     def train(self, num_episodes: int) -> None:
         last_rewards: collections.deque = collections.deque(maxlen=10)
