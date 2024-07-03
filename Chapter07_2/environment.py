@@ -101,7 +101,7 @@ class GraphicDisplay(tk.Tk):
 
         return canvas
 
-    def load_images(self) -> tuple:  # noqa: PLR6301
+    def load_images(self) -> tuple:
         up = PhotoImage(Image.open(PATH + "/img/up.png").resize((13, 13)))
         right = PhotoImage(Image.open(PATH + "/img/right.png").resize((13, 13)))
         left = PhotoImage(Image.open(PATH + "/img/left.png").resize((13, 13)))

@@ -41,7 +41,7 @@ class CustomEnv(gym.Env):  # type: ignore
     def reset(self) -> None:
         self.state = self.STATES[0]
 
-    def render(self, mode: str = "human", close: bool = False) -> Any:  # noqa: ARG002
+    def render(self, mode: str = "human", close: bool = False) -> Any:
         if self.state == 0:
             print("|X _ _|")
         elif self.state == 1:

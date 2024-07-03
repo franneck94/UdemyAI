@@ -19,7 +19,7 @@ class Agent:
         self.state = self.env.reset()
         self.S = range(self.observations)
         self.A = range(self.actions)
-        self.q_values = {s: {a: 0.0 for a in self.A} for s in self.S}
+        self.q_values = {s: dict.fromkeys(self.A, 0.0) for s in self.S}
 
     def get_action(self, state: Any) -> Any:
         q_values = list(self.q_values[state].values())

@@ -30,7 +30,7 @@ class Agent:
         )
         return model
 
-    def get_action(self, state: Any) -> Any:  # noqa: ARG002
+    def get_action(self, state: Any) -> Any:
         return self.env.action_space.sample()
 
     def get_samples(self, num_episodes: int) -> tuple[list[float], list[float]]:

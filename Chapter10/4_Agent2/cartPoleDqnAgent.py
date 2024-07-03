@@ -102,7 +102,7 @@ class Agent:
 
         self.dqn.fit(states, q_values)
 
-    def play(self, num_episodes: int, render: bool = True) -> None:  # noqa: ARG002
+    def play(self, num_episodes: int, render: bool = True) -> None:
         for episode in range(1, num_episodes + 1):
             total_reward = 0.0
             state = self.env.reset()
