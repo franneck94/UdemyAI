@@ -21,7 +21,7 @@ class FrameStackWrapper(gym.Wrapper):
         super().__init__(env)
         self.num_buffer_frames = num_buffer_frames
         self.frames: collections.deque = collections.deque(
-            maxlen=self.num_buffer_frames
+            maxlen=self.num_buffer_frames,
         )
         low = np.repeat(
             self.observation_space.low[np.newaxis, ...],
@@ -34,7 +34,9 @@ class FrameStackWrapper(gym.Wrapper):
             axis=0,
         )
         self.observation_space = gym.spaces.Box(
-            low=low, high=high, dtype=self.observation_space.dtype
+            low=low,
+            high=high,
+            dtype=self.observation_space.dtype,
         )
 
     def step(self, action: int) -> tuple[np.ndarray, float, bool, dict]:
@@ -42,7 +44,9 @@ class FrameStackWrapper(gym.Wrapper):
         self.frames.append(observation)
         frame_stack = np.asarray(self.frames, dtype=np.float32)  # (4, 84, 84)
         frame_stack = np.moveaxis(
-            frame_stack, source=0, destination=-1
+            frame_stack,
+            source=0,
+            destination=-1,
         )  # (84, 84, 4)
         frame_stack = np.expand_dims(frame_stack, axis=0)  # (1, 84, 84, 4)
         return frame_stack, reward, done, info

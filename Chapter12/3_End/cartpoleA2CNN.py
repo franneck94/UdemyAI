@@ -8,7 +8,10 @@ from keras.optimizers import Adam
 
 class Actor(Model):
     def __init__(
-        self, num_observations: int, num_actions: int, learning_rate: float
+        self,
+        num_observations: int,
+        num_actions: int,
+        learning_rate: float,
     ) -> None:
         super().__init__()
         self.num_observations = num_observations
@@ -47,7 +50,10 @@ class Actor(Model):
 
 class Critic(Model):
     def __init__(
-        self, num_observations: int, num_values: int, learning_rate: float
+        self,
+        num_observations: int,
+        num_values: int,
+        learning_rate: float,
     ) -> None:
         super().__init__()
         self.num_observations = num_observations
@@ -62,7 +68,8 @@ class Critic(Model):
         critic_out = Dense(self.num_values)(x)
         model = Model(inputs=critic_in, outputs=critic_out)
         model.compile(
-            loss="mse", optimizer=Adam(learning_rate=self.learning_rate)
+            loss="mse",
+            optimizer=Adam(learning_rate=self.learning_rate),
         )
         return model
 

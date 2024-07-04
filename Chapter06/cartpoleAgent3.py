@@ -26,7 +26,8 @@ class Agent:
         model.add(Activation("softmax"))
         model.summary()
         model.compile(
-            optimizer=Adam(learning_rate=0.007), loss="categorical_crossentropy"
+            optimizer=Adam(learning_rate=0.007),
+            loss="categorical_crossentropy",
         )
         return model
 
@@ -62,21 +63,26 @@ class Agent:
         pass
 
     def train(
-        self, percentile: float, num_iterations: int, num_episodes: int
+        self,
+        percentile: float,
+        num_iterations: int,
+        num_episodes: int,
     ) -> tuple[list[float], list[float]]:
         reward_means: list[float] = []
         reward_bounds: list[float] = []
         for it in range(num_iterations):
             rewards, episodes = self.get_samples(num_episodes)
             x_train, y_train, reward_bound = self.filter_episodes(
-                rewards, episodes, percentile
+                rewards,
+                episodes,
+                percentile,
             )
             self.model.train_on_batch(x=x_train, y=y_train)
             reward_mean = np.mean(rewards)
             print(
                 f"Iteration: {it:2d} "
                 f"Reward Mean: {reward_mean:.4f} "
-                f"Reward Bound: {reward_bound:.4f}"
+                f"Reward Bound: {reward_bound:.4f}",
             )
             reward_bounds.append(reward_bound)
             reward_means.append(reward_mean)

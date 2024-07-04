@@ -44,7 +44,11 @@ class Agent:
         return (old_state, action, reward, new_state)
 
     def compute_q_values(
-        self, state: Any, action: Any, reward: float, state_next: Any
+        self,
+        state: Any,
+        action: Any,
+        reward: float,
+        state_next: Any,
     ) -> None:
         v_value_next = self.get_v_values(state_next)
         update_q_value = reward + self.gamma * v_value_next

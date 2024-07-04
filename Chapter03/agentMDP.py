@@ -20,7 +20,7 @@ def main() -> None:
             print(
                 f"New State: {state} "
                 f"Reward: {reward} "
-                f"Total-Reward: {total_reward}"
+                f"Total-Reward: {total_reward}",
             )
 
 

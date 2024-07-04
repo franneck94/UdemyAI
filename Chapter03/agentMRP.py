@@ -20,7 +20,8 @@ def main() -> None:
         action = input("Action: ")
         if action in ACTIONS:
             t = np.random.choice(
-                len(STATES), p=list(TRANSITIONS[state].values())
+                len(STATES),
+                p=list(TRANSITIONS[state].values()),
             )
             transition = STATES[t]
             reward = REWARDS[state][transition]
@@ -30,7 +31,7 @@ def main() -> None:
             print(
                 f"New State: {state} "
                 f"Reward: {reward} "
-                f"Total-Reward: {total_reward}"
+                f"Total-Reward: {total_reward}",
             )
 
 

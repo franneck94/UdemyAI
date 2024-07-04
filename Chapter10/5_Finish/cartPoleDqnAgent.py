@@ -24,7 +24,7 @@ class Agent:
         self.replay_buffer_size = 50_000
         self.train_start = 1_000
         self.memory: collections.deque = collections.deque(
-            maxlen=self.replay_buffer_size
+            maxlen=self.replay_buffer_size,
         )
         self.gamma = 0.95
         self.epsilon = 1.0
@@ -35,7 +35,9 @@ class Agent:
         self.learning_rate = 1e-3
         self.dqn = DQN(self.state_shape, self.actions, self.learning_rate)
         self.target_dqn = DQN(
-            self.state_shape, self.actions, self.learning_rate
+            self.state_shape,
+            self.actions,
+            self.learning_rate,
         )
         self.target_dqn.update_model(self.dqn)
         self.batch_size = 32
@@ -56,7 +58,7 @@ class Agent:
                 action = self.get_action(state)
                 next_state, reward, done, _ = self.env.step(action)
                 next_state = np.reshape(next_state, newshape=(1, -1)).astype(
-                    np.float32
+                    np.float32,
                 )
                 if done and total_reward < 499:
                     reward = -100.0
@@ -71,7 +73,7 @@ class Agent:
                     print(
                         f"Episode: {episode} "
                         f"Reward: {total_reward} "
-                        f"Epsilon: {self.epsilon}"
+                        f"Epsilon: {self.epsilon}",
                     )
                     last_rewards.append(total_reward)
                     current_reward_mean = np.mean(last_rewards)
@@ -113,7 +115,7 @@ class Agent:
                 q_values[i][a] = rewards[i]
             else:
                 q_values[i][a] = rewards[i] + self.gamma * np.max(
-                    q_values_next[i]
+                    q_values_next[i],
                 )
 
         self.dqn.fit(states, q_values)
@@ -130,7 +132,7 @@ class Agent:
                 action = self.get_action(state)
                 next_state, reward, done, _ = self.env.step(action)
                 next_state = np.reshape(next_state, newshape=(1, -1)).astype(
-                    np.float32
+                    np.float32,
                 )
                 total_reward += reward
                 state = next_state

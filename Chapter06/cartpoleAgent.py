@@ -35,7 +35,10 @@ class Agent:
         pass
 
     def train(
-        self, percentile: float, num_iterations: int, num_episodes: int
+        self,
+        percentile: float,
+        num_iterations: int,
+        num_episodes: int,
     ) -> tuple[list[float], list[float]]:
         pass
 

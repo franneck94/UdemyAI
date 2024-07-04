@@ -11,7 +11,10 @@ from keras.optimizers import RMSprop
 
 class DQN(Model):
     def __init__(
-        self, img_shape: tuple, num_actions: int, learning_rate: float
+        self,
+        img_shape: tuple,
+        num_actions: int,
+        learning_rate: float,
     ) -> None:
         super().__init__()
         self.img_shape = img_shape
@@ -24,7 +27,7 @@ class DQN(Model):
     def build_model(self) -> Model:
         input_img = Input(shape=self.img_shape)
         x = Conv2D(filters=32, kernel_size=8, strides=4, padding="same")(
-            input_img
+            input_img,
         )
         x = Activation("relu")(x)
         x = Conv2D(filters=64, kernel_size=4, strides=2, padding="same")(x)

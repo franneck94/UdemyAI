@@ -54,32 +54,47 @@ class GraphicDisplay(tk.Tk):
 
     def _build_canvas(self) -> Any:
         canvas = tk.Canvas(
-            self, bg="white", height=HEIGHT * UNIT, width=WIDTH * UNIT
+            self,
+            bg="white",
+            height=HEIGHT * UNIT,
+            width=WIDTH * UNIT,
         )
         # buttons
         iteration_button = Button(
-            self, text="Evaluate", command=self.evaluate_policy
+            self,
+            text="Evaluate",
+            command=self.evaluate_policy,
         )
         iteration_button.configure(width=10, activebackground="#33B5E5")
         canvas.create_window(
-            WIDTH * UNIT * 0.13, HEIGHT * UNIT + 10, window=iteration_button
+            WIDTH * UNIT * 0.13,
+            HEIGHT * UNIT + 10,
+            window=iteration_button,
         )
         policy_button = Button(
-            self, text="Improve", command=self.improve_policy
+            self,
+            text="Improve",
+            command=self.improve_policy,
         )
         policy_button.configure(width=10, activebackground="#33B5E5")
         canvas.create_window(
-            WIDTH * UNIT * 0.37, HEIGHT * UNIT + 10, window=policy_button
+            WIDTH * UNIT * 0.37,
+            HEIGHT * UNIT + 10,
+            window=policy_button,
         )
         policy_button = Button(self, text="move", command=self.move_by_policy)
         policy_button.configure(width=10, activebackground="#33B5E5")
         canvas.create_window(
-            WIDTH * UNIT * 0.62, HEIGHT * UNIT + 10, window=policy_button
+            WIDTH * UNIT * 0.62,
+            HEIGHT * UNIT + 10,
+            window=policy_button,
         )
         policy_button = Button(self, text="reset", command=self.reset)
         policy_button.configure(width=10, activebackground="#33B5E5")
         canvas.create_window(
-            WIDTH * UNIT * 0.87, HEIGHT * UNIT + 10, window=policy_button
+            WIDTH * UNIT * 0.87,
+            HEIGHT * UNIT + 10,
+            window=policy_button,
         )
 
         # create grids
@@ -107,13 +122,13 @@ class GraphicDisplay(tk.Tk):
         left = PhotoImage(Image.open(PATH + "/img/left.png").resize((13, 13)))
         down = PhotoImage(Image.open(PATH + "/img/down.png").resize((13, 13)))
         rectangle = PhotoImage(
-            Image.open(PATH + "/img/rectangle.png").resize((65, 65))
+            Image.open(PATH + "/img/rectangle.png").resize((65, 65)),
         )
         triangle = PhotoImage(
-            Image.open(PATH + "/img/triangle.png").resize((65, 65))
+            Image.open(PATH + "/img/triangle.png").resize((65, 65)),
         )
         circle = PhotoImage(
-            Image.open(PATH + "/img/circle.png").resize((65, 65))
+            Image.open(PATH + "/img/circle.png").resize((65, 65)),
         )
         return (up, down, left, right), (rectangle, triangle, circle)
 
@@ -148,7 +163,12 @@ class GraphicDisplay(tk.Tk):
         x, y = origin_y + (UNIT * col), origin_x + (UNIT * row)
         font_ = (font, str(size), style)
         text = self.canvas.create_text(
-            x, y, fill="black", text=contents, font=font_, anchor=anchor
+            x,
+            y,
+            fill="black",
+            text=contents,
+            font=font_,
+            anchor=anchor,
         )
         return self.texts.append(text)
 
@@ -166,7 +186,12 @@ class GraphicDisplay(tk.Tk):
         x, y = origin_y + (UNIT * col), origin_x + (UNIT * row)
         font_ = (font, str(size), style)
         text = self.canvas.create_text(
-            x, y, fill="black", text=contents, font=font_, anchor=anchor
+            x,
+            y,
+            fill="black",
+            text=contents,
+            font=font_,
+            anchor=anchor,
         )
         return self.texts.append(text)
 
@@ -214,22 +239,22 @@ class GraphicDisplay(tk.Tk):
         if policy[0] > 0:  # up
             origin_x, origin_y = 50 + (UNIT * row), 10 + (UNIT * col)
             self.arrows.append(
-                self.canvas.create_image(origin_x, origin_y, image=self.up)
+                self.canvas.create_image(origin_x, origin_y, image=self.up),
             )
         if policy[1] > 0:  # down
             origin_x, origin_y = 50 + (UNIT * row), 90 + (UNIT * col)
             self.arrows.append(
-                self.canvas.create_image(origin_x, origin_y, image=self.down)
+                self.canvas.create_image(origin_x, origin_y, image=self.down),
             )
         if policy[2] > 0:  # left
             origin_x, origin_y = 10 + (UNIT * row), 50 + (UNIT * col)
             self.arrows.append(
-                self.canvas.create_image(origin_x, origin_y, image=self.left)
+                self.canvas.create_image(origin_x, origin_y, image=self.left),
             )
         if policy[3] > 0:  # right
             origin_x, origin_y = 90 + (UNIT * row), 50 + (UNIT * col)
             self.arrows.append(
-                self.canvas.create_image(origin_x, origin_y, image=self.right)
+                self.canvas.create_image(origin_x, origin_y, image=self.right),
             )
 
     def draw_from_policy(self, policy: Any) -> None:
@@ -282,7 +307,7 @@ class Env:
     def step(self, state: Any, action_index: Any) -> Any:
         action = ACTIONS[action_index]
         next_state = self.check_boundary(
-            [state[0] + action[0], state[1] + action[1]]
+            [state[0] + action[0], state[1] + action[1]],
         )
         return (next_state, self.reward[next_state[0]][next_state[1]])
 

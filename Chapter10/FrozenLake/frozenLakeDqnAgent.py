@@ -28,7 +28,7 @@ class Agent:
         self.replay_buffer_size = 50_000
         self.train_start = 1_000
         self.memory: collections.deque = collections.deque(
-            maxlen=self.replay_buffer_size
+            maxlen=self.replay_buffer_size,
         )
         self.gamma = 0.995
         self.epsilon = 1.0
@@ -39,7 +39,9 @@ class Agent:
         self.learning_rate = 1e-3
         self.dqn = DQN(self.state_shape, self.actions, self.learning_rate)
         self.target_dqn = DQN(
-            self.state_shape, self.actions, self.learning_rate
+            self.state_shape,
+            self.actions,
+            self.learning_rate,
         )
         self.target_dqn.update_model(self.dqn)
         self.batch_size = 32
@@ -51,7 +53,8 @@ class Agent:
 
     def train(self, num_episodes: int) -> None:
         last_rewards: collections.deque = collections.deque(
-            [0.0 for _ in range(5)], maxlen=5
+            [0.0 for _ in range(5)],
+            maxlen=5,
         )
         best_reward_mean = 0.0
 
@@ -65,10 +68,11 @@ class Agent:
                 action = self.get_action(state)
                 next_state, reward, done, _ = self.env.step(action)
                 next_state = to_categorical(
-                    next_state, num_classes=self.observations
+                    next_state,
+                    num_classes=self.observations,
                 )
                 next_state = np.reshape(next_state, newshape=(1, -1)).astype(
-                    np.float32
+                    np.float32,
                 )
                 self.remember(state, action, reward, next_state, done)
                 self.replay()
@@ -79,7 +83,7 @@ class Agent:
                     print(
                         f"Episode: {episode} "
                         f"Reward: {total_reward} "
-                        f"Epsilon: {self.epsilon}"
+                        f"Epsilon: {self.epsilon}",
                     )
                     last_rewards.append(total_reward)
                     current_reward_mean = np.mean(last_rewards)
@@ -127,7 +131,7 @@ class Agent:
                 q_values[i][a] = rewards[i]
             else:
                 q_values[i][a] = rewards[i] + self.gamma * np.max(
-                    q_values_next[i]
+                    q_values_next[i],
                 )
 
         self.dqn.fit(states, q_values)  # type: ignore
@@ -141,7 +145,7 @@ class Agent:
             [
                 to_categorical(i, num_classes=self.observations)
                 for i in range(self.observations)
-            ]
+            ],
         )
         values = np.array([self.dqn(state.reshape(1, -1)) for state in states])
         values = np.squeeze(values)
@@ -153,7 +157,7 @@ class Agent:
             while True:
                 state = to_categorical(state, num_classes=self.observations)
                 state = np.reshape(state, (1, state.shape[0])).astype(
-                    np.float32
+                    np.float32,
                 )
                 action = self.get_action(state)
                 state, reward, done, _ = self.env.step(action)

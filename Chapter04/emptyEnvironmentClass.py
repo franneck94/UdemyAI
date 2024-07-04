@@ -21,7 +21,10 @@ class CustomEnv(gym.Env):  # type: ignore
         super().__init__()
         self.action_space = spaces.Discrete(self.N_DISCRETE_ACTIONS)
         self.observation_space = spaces.Box(
-            low=0, high=2, shape=self.SHAPE, dtype=np.uint8
+            low=0,
+            high=2,
+            shape=self.SHAPE,
+            dtype=np.uint8,
         )
         self.state = self.STATES[0]
 

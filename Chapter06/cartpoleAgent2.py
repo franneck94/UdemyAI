@@ -26,7 +26,8 @@ class Agent:
         model.add(Activation("softmax"))
         model.summary()
         model.compile(
-            optimizer=Adam(learning_rate=0.007), loss="categorical_crossentropy"
+            optimizer=Adam(learning_rate=0.007),
+            loss="categorical_crossentropy",
         )
         return model
 
@@ -45,7 +46,10 @@ class Agent:
         pass
 
     def train(
-        self, percentile: float, num_iterations: int, num_episodes: int
+        self,
+        percentile: float,
+        num_iterations: int,
+        num_episodes: int,
     ) -> tuple[list[float], list[float]]:
         pass
 

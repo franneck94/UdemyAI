@@ -30,7 +30,7 @@ class Agent:
         self.replay_buffer_size = 100_000
         self.train_start = 10_000
         self.memory: collections.deque = collections.deque(
-            maxlen=self.replay_buffer_size
+            maxlen=self.replay_buffer_size,
         )
         self.gamma = 0.95
         self.epsilon = 1.0
@@ -82,7 +82,7 @@ class Agent:
                         f"Reward: {total_reward} "
                         f"MeanReward: {round(current_reward_mean, 2)} "
                         f"Epsilon: {round(self.epsilon, 8)} "
-                        f"MemSize: {len(self.memory)}"
+                        f"MemSize: {len(self.memory)}",
                     )
 
                     if current_reward_mean > best_reward_mean:
@@ -128,7 +128,7 @@ class Agent:
                 q_values[i][a] = rewards[i]
             else:
                 q_values[i][a] = rewards[i] + self.gamma * np.max(
-                    q_values_next[i]
+                    q_values_next[i],
                 )
 
         self.dqn.fit(states, q_values)

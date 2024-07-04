@@ -18,7 +18,7 @@ class Agent:
         self.replay_buffer_size = 50_000
         self.train_start = 1_000
         self.memory: collections.deque = collections.deque(
-            maxlen=self.replay_buffer_size
+            maxlen=self.replay_buffer_size,
         )
         self.gamma = 0.95
         self.epsilon = 1.0
@@ -29,7 +29,9 @@ class Agent:
         self.learning_rate = 1e-3
         self.dqn = DQN(self.state_shape, self.actions, self.learning_rate)
         self.target_dqn = DQN(
-            self.state_shape, self.actions, self.learning_rate
+            self.state_shape,
+            self.actions,
+            self.learning_rate,
         )
         self.target_dqn.update_model(self.dqn)
         self.batch_size = 32
